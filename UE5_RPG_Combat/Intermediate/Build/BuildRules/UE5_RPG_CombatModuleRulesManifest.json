@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\Users\\sayan\\Projects\\UE5-RPG-Combat\\UE5_RPG_Combat\\Source\\UE5_RPG_Combat\\UE5_RPG_Combat.Build.cs",
+		"C:\\Users\\sayan\\Projects\\UE5-RPG-Combat\\UE5_RPG_Combat\\Source\\UE5_RPG_Combat.Target.cs",
+		"C:\\Users\\sayan\\Projects\\UE5-RPG-Combat\\UE5_RPG_Combat\\Source\\UE5_RPG_CombatEditor.Target.cs"
+	],
+	"EngineVersion": "5.6.1"
+}

@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "UE5_RPG_Combat",
+			"Path": "..\\Source\\UE5_RPG_Combat.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "UE5_RPG_CombatEditor",
+			"Path": "..\\Source\\UE5_RPG_CombatEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

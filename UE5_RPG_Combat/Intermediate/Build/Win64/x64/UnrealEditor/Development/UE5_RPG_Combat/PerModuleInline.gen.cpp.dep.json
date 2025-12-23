@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\sayan\\projects\\ue5-rpg-combat\\ue5_rpg_combat\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\ue5_rpg_combat\\permoduleinline.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\sayan\\projects\\ue5-rpg-combat\\ue5_rpg_combat\\intermediate\\build\\win64\\x64\\ue5_rpg_combateditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\sayan\\projects\\ue5-rpg-combat\\ue5_rpg_combat\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\ue5_rpg_combat\\definitions.ue5_rpg_combat.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\core\\public\\hal\\permoduleinline.inl"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
