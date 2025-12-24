@@ -150,7 +150,19 @@
 				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/__ExternalActors__/RPGCombat/Maps/TestMap/6/0L/1UZJ87WQF7Y25W6W3MM7KT.uasset",
 				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/__ExternalActors__/RPGCombat/Maps/TestMap/1/FZ/BN1GFW2KKPRYHGYBQECRJC.uasset",
 				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/__ExternalActors__/RPGCombat/Maps/TestMap/4/5T/6198DUTSC0CP0HYW2W1MBQ.uasset",
-				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/Maps/TestMap.umap"
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/Maps/TestMap.umap",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/GameMode/BP_RPGGameModeBase.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/RPGCharacter/BP_RPGCharacter.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/GameAssets/Mixamo/Paladin_J_Nordstrom_PhysicsAsset.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/GameAssets/Mixamo/Paladin_diffuse.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/GameAssets/Mixamo/Paladin_normal.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/GameAssets/Mixamo/Paladin_J_Nordstrom_Skeleton.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/GameAssets/Mixamo/Paladin_specular.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/GameAssets/Mixamo/Paladin_MAT.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/GameAssets/Mixamo/Paladin_J_Nordstrom.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/GameAssets/Mixamo/Paladin_J_Nordstrom_Anim.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/__ExternalObjects__/RPGCombat/Maps/TestMap/1/V5/C1W9BHXN7WO2L9CLHDJC1K.uasset",
+				"C:/Users/sayan/Projects/UE5-RPG-Combat/UE5_RPG_Combat/Content/RPGCombat/GameAssets/Mixamo/Animations/Sword_And_Shield_Idle.uasset"
 			]
 		}
 	]
