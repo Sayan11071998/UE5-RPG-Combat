@@ -9,9 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Paladin_J_Nordstrom_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Paladin_J_Nordstrom_Skeleton.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/BP_RPGCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/BP_RPGCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UE5_RPG_CombatEditor/Development/DependencyCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UE5_RPG_CombatEditor/Development/DependencyCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Intermediate/CachedAssetRegistryDiscovery.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/CachedAssetRegistryDiscovery.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Intermediate/CachedAssetRegistry_0.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/CachedAssetRegistry_0.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini" afterDir="false" />
@@ -48,7 +45,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Uproject.UE5_RPG_Combat.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Player-Character-Movement",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -141,7 +138,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1766599336706</updated>
-      <workItem from="1766599350135" duration="5071000" />
+      <workItem from="1766599350135" duration="6081000" />
     </task>
     <servers />
   </component>
