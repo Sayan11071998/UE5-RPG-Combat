@@ -33,6 +33,7 @@ void ARPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	{
 		// Movement Actions
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ARPGCharacter::Move);
+		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARPGCharacter::Look);
 	}
 }
 
@@ -70,5 +71,16 @@ void ARPGCharacter::Move(const FInputActionValue& InputValue)
 		// Add Movement Input
 		AddMovementInput(ForwardDirection, InputVector.Y);
 		AddMovementInput(RightDirection, InputVector.X);
+	}
+}
+
+void ARPGCharacter::Look(const FInputActionValue& InputValue)
+{
+	FVector2D InputVector = InputValue.Get<FVector2D>();
+	
+	if (IsValid(Controller))
+	{
+		AddControllerYawInput(InputVector.X);
+		AddControllerPitchInput(InputVector.Y);
 	}
 }
