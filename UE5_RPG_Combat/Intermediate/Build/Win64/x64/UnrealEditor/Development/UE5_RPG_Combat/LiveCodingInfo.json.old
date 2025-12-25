@@ -2,8 +2,8 @@
 	"RemapUnityFiles": 
 	{
 		"Module.UE5_RPG_Combat.gen.cpp.obj": [
-			"RPGCharacter.gen.cpp.obj",
 			"RPGGameModeBase.gen.cpp.obj",
+			"RPGCharacter.gen.cpp.obj",
 			"UE5_RPG_Combat.init.gen.cpp.obj"
 		]
 	}

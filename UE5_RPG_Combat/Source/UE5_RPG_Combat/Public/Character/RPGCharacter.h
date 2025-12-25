@@ -33,9 +33,13 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
 	TObjectPtr<UInputAction> LookAction;
 	
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputAction> JumpAction;
+	
 	// Movement
 	void Move(const FInputActionValue& InputValue);
 	void Look(const FInputActionValue& InputValue);
+	void Jump();
 	
 private:
 	// Spring Arm Component
