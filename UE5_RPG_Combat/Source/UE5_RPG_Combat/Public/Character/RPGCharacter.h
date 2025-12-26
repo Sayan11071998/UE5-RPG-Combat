@@ -2,10 +2,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "InputActionValue.h"
 #include "RPGCharacter.generated.h"
 
 class USpringArmComponent;
 class UCameraComponent;
+class UInputMappingContext;
+class UInputAction;
 
 UCLASS()
 class UE5_RPG_COMBAT_API ARPGCharacter : public ACharacter
@@ -20,10 +23,43 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	
+	// Input Actions
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputMappingContext> InputMapping;
+	
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputAction> MoveAction;
+	
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputAction> LookAction;
+	
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputAction> JumpAction;
+	
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputAction> RunAction;
+	
+	// Walk Speed
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
+	float WalkSpeed;
+	
+	// Run Speed
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
+	float RunSpeed;
+	
+	// Movement
+	void Move(const FInputActionValue& InputValue);
+	void Look(const FInputActionValue& InputValue);
+	void Jump();
+	void Running();
+	void StopRunning();
+	
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
+	// Spring Arm Component
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = true))
+	// Camera Component
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> FollowCameraComponent;
 };
