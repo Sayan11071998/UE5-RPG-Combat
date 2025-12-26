@@ -36,10 +36,23 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
 	TObjectPtr<UInputAction> JumpAction;
 	
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputAction> RunAction;
+	
+	// Walk Speed
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
+	float WalkSpeed;
+	
+	// Run Speed
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
+	float RunSpeed;
+	
 	// Movement
 	void Move(const FInputActionValue& InputValue);
 	void Look(const FInputActionValue& InputValue);
 	void Jump();
+	void Running();
+	void StopRunning();
 	
 private:
 	// Spring Arm Component

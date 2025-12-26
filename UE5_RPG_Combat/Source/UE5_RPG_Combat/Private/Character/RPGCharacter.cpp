@@ -5,7 +5,8 @@
 #include "EnhancedInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-ARPGCharacter::ARPGCharacter()
+ARPGCharacter::ARPGCharacter() :
+	WalkSpeed(300.f), RunSpeed(600.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
@@ -40,6 +41,8 @@ void ARPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		Input->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ARPGCharacter::Move);
 		Input->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARPGCharacter::Look);
 		Input->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ARPGCharacter::Jump);
+		Input->BindAction(RunAction, ETriggerEvent::Triggered, this, &ARPGCharacter::Running);
+		Input->BindAction(RunAction, ETriggerEvent::Completed, this, &ARPGCharacter::StopRunning);
 	}
 }
 
@@ -111,4 +114,14 @@ void ARPGCharacter::Jump()
 		// Launch Character with the Combined Velocity
 		LaunchCharacter(JumpVelocity, true, true);
 	}
+}
+
+void ARPGCharacter::Running()
+{
+	GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
+}
+
+void ARPGCharacter::StopRunning()
+{
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 }
