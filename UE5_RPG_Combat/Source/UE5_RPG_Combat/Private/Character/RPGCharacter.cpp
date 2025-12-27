@@ -4,9 +4,10 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-
-#include  "RPGDebugHelper.h"
 #include "Character/RPGAnimInstance.h"
+#include "Components/BoxComponent.h"
+
+#include "RPGDebugHelper.h"
 
 ARPGCharacter::ARPGCharacter() :
 	WalkSpeed(300.f), RunSpeed(600.f)
@@ -27,6 +28,10 @@ ARPGCharacter::ARPGCharacter() :
 	// Jump Settings
 	GetCharacterMovement()->JumpZVelocity = 300.f;
 	GetCharacterMovement()->AirControl = 0.1f;
+	
+	// Right Weapon Collision Box
+	RightWeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("RightWeaponBox"));
+	RightWeaponCollision->SetupAttachment(GetMesh(), FName(TEXT("SwordSocket")));
 }
 
 void ARPGCharacter::BeginPlay()
@@ -44,6 +49,15 @@ void ARPGCharacter::BeginPlay()
 			Subsystem->AddMappingContext(InputMapping, 0);
 		}
 	}
+	
+	// Bind Function to Overlap for Weapon Box
+	RightWeaponCollision->OnComponentBeginOverlap.AddDynamic(this, &ARPGCharacter::OnRightWeaponOverlap);
+	
+	// Setup Right Weapon Collision
+	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	RightWeaponCollision->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
+	RightWeaponCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	RightWeaponCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 }
 
 void ARPGCharacter::Tick(float DeltaTime)
@@ -70,6 +84,16 @@ void ARPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		Input->BindAction(SpinAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::SpinAttack);
 		Input->BindAction(JumpAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::JumpAttack);
 	}
+}
+
+void ARPGCharacter::ActivateRightWeapon()
+{
+	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+}
+
+void ARPGCharacter::DeactivateRightWeapon()
+{
+	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void ARPGCharacter::Move(const FInputActionValue& InputValue)
@@ -166,5 +190,14 @@ void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FNam
 		{
 			PlayAnimMontage(MontageToPlay, PlayRate, SectionName);
 		}
+	}
+}
+
+void ARPGCharacter::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (IsValid(SweepResult.GetActor()) && SweepResult.GetActor() != this)
+	{
+		Debug::Print(TEXT("Apply Damage"));
 	}
 }

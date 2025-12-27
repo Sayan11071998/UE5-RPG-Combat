@@ -10,6 +10,7 @@ class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
 class UAnimMontage;
+class UBoxComponent;
 
 UCLASS()
 class UE5_RPG_COMBAT_API ARPGCharacter : public ACharacter
@@ -20,9 +21,28 @@ public:
 	ARPGCharacter();
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	
+	virtual void ActivateRightWeapon();
+	virtual void DeactivateRightWeapon();
 
 protected:
 	virtual void BeginPlay() override;
+	
+	// Movement
+	void Move(const FInputActionValue& InputValue);
+	void Look(const FInputActionValue& InputValue);
+	void Jump();
+	void Running();
+	void StopRunning();
+	
+	// Attacks
+	void BasicAttack();
+	void HeavyAttack();
+	void SpinAttack();
+	void JumpAttack();
+	
+	// Play Anim Montage
+	void AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName = "Default", float PlayRate = 1.f);
 	
 	// Input Actions
 	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
@@ -60,21 +80,16 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
 	float RunSpeed;
 	
-	// Movement
-	void Move(const FInputActionValue& InputValue);
-	void Look(const FInputActionValue& InputValue);
-	void Jump();
-	void Running();
-	void StopRunning();
-	
-	// Attacks
-	void BasicAttack();
-	void HeavyAttack();
-	void SpinAttack();
-	void JumpAttack();
-	
-	// Play Anim Montage
-	void AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName = "Default", float PlayRate = 1.f);
+	// Right Weapon Overlap
+	UFUNCTION()
+	void OnRightWeaponOverlap(
+		UPrimitiveComponent* OverlappedComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepResult
+	);
 	
 private:
 	// Spring Arm Component
@@ -88,4 +103,7 @@ private:
 	// Montages
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Montage", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> AttackMontage;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UBoxComponent> RightWeaponCollision;
 };
