@@ -5,6 +5,8 @@
 #include "EnhancedInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+#include  "RPGDebugHelper.h"
+
 ARPGCharacter::ARPGCharacter() :
 	WalkSpeed(300.f), RunSpeed(600.f)
 {
@@ -43,6 +45,12 @@ void ARPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		Input->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ARPGCharacter::Jump);
 		Input->BindAction(RunAction, ETriggerEvent::Triggered, this, &ARPGCharacter::Running);
 		Input->BindAction(RunAction, ETriggerEvent::Completed, this, &ARPGCharacter::StopRunning);
+		
+		// Attack Actions
+		Input->BindAction(BasicAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::BasicAttack);
+		Input->BindAction(HeavyAttackAction, ETriggerEvent::Triggered, this, &ARPGCharacter::HeavyAttack);
+		Input->BindAction(SpinAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::SpinAttack);
+		Input->BindAction(JumpAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::JumpAttack);
 	}
 }
 
@@ -124,4 +132,24 @@ void ARPGCharacter::Running()
 void ARPGCharacter::StopRunning()
 {
 	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+}
+
+void ARPGCharacter::BasicAttack()
+{
+	Debug::Print(TEXT("Basic Attack"));
+}
+
+void ARPGCharacter::HeavyAttack()
+{
+	Debug::Print(TEXT("Heavy Attack"));
+}
+
+void ARPGCharacter::SpinAttack()
+{
+	Debug::Print(TEXT("Spin Attack"));
+}
+
+void ARPGCharacter::JumpAttack()
+{
+	Debug::Print(TEXT("Jump Attack"));
 }
