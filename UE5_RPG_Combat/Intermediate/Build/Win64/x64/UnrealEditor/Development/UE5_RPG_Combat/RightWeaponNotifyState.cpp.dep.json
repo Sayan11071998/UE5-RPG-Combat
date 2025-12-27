@@ -1,0 +1,30 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\sayan\\projects\\ue5-rpg-combat\\ue5_rpg_combat\\source\\ue5_rpg_combat\\private\\character\\rightweaponnotifystate.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\sayan\\projects\\ue5-rpg-combat\\ue5_rpg_combat\\intermediate\\build\\win64\\x64\\ue5_rpg_combateditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.valexpapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\sayan\\projects\\ue5-rpg-combat\\ue5_rpg_combat\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\ue5_rpg_combat\\definitions.ue5_rpg_combat.h",
+            "c:\\users\\sayan\\projects\\ue5-rpg-combat\\ue5_rpg_combat\\source\\ue5_rpg_combat\\public\\character\\rightweaponnotifystate.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\engine\\classes\\animation\\animnotifies\\animnotifystate.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\animnotifystate.generated.h",
+            "c:\\users\\sayan\\projects\\ue5-rpg-combat\\ue5_rpg_combat\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_rpg_combat\\uht\\rightweaponnotifystate.generated.h",
+            "c:\\users\\sayan\\projects\\ue5-rpg-combat\\ue5_rpg_combat\\source\\ue5_rpg_combat\\public\\character\\rpgcharacter.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\engine\\classes\\gameframework\\character.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\engine\\classes\\gameframework\\charactermovementreplication.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\net\\core\\public\\net\\core\\nettoken\\nettokenexportcontext.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\experimental\\iris\\core\\public\\iris\\serialization\\irisobjectreferencepackagemap.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\iriscore\\uht\\irisobjectreferencepackagemap.generated.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\charactermovementreplication.generated.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\source\\runtime\\engine\\classes\\gameframework\\rootmotionsource.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\rootmotionsource.generated.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\character.generated.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\plugins\\enhancedinput\\source\\enhancedinput\\public\\inputactionvalue.h",
+            "c:\\program files\\epic games\\ue_5.6\\engine\\plugins\\enhancedinput\\intermediate\\build\\win64\\unrealeditor\\inc\\enhancedinput\\uht\\inputactionvalue.generated.h",
+            "c:\\users\\sayan\\projects\\ue5-rpg-combat\\ue5_rpg_combat\\intermediate\\build\\win64\\unrealeditor\\inc\\ue5_rpg_combat\\uht\\rpgcharacter.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

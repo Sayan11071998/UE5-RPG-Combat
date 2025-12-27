@@ -3,8 +3,9 @@
 	{
 		"Module.UE5_RPG_Combat.gen.cpp.obj": [
 			"RPGAnimInstance.gen.cpp.obj",
-			"RPGGameModeBase.gen.cpp.obj",
 			"RPGCharacter.gen.cpp.obj",
+			"RPGGameModeBase.gen.cpp.obj",
+			"RightWeaponNotifyState.gen.cpp.obj",
 			"UE5_RPG_Combat.init.gen.cpp.obj"
 		]
 	}

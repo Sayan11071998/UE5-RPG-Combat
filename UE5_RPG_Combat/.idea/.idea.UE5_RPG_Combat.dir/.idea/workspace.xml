@@ -9,8 +9,32 @@
   <component name="ChangeListManager">
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Binaries/Win64/UnrealEditor-UE5_RPG_Combat.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Binaries/Win64/UnrealEditor-UE5_RPG_Combat.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/AM_RPGAttackMontage.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/AM_RPGAttackMontage.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/SourceFileCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/SourceFileCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/ActionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/ActionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/UE5_RPG_CombatEditor/Development/UE5_RPG_CombatEditor.uhtmanifest" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/UE5_RPG_CombatEditor/Development/UE5_RPG_CombatEditor.uhtmanifest" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UE5_RPG_Combat/UHT/Timestamp" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UE5_RPG_Combat/UHT/Timestamp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UE5_RPG_Combat/UHT/UE5_RPG_Combat.init.gen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UE5_RPG_Combat/UHT/UE5_RPG_Combat.init.gen.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UE5_RPG_CombatEditor/Development/DependencyCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UE5_RPG_CombatEditor/Development/DependencyCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UE5_RPG_CombatEditor/Development/Makefile.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UE5_RPG_CombatEditor/Development/Makefile.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/ActionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/ActionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/LiveCodingInfo.json" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/LiveCodingInfo.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/Module.UE5_RPG_Combat.gen.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/Module.UE5_RPG_Combat.gen.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/Module.UE5_RPG_Combat.gen.cpp.dep.json" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/Module.UE5_RPG_Combat.gen.cpp.dep.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.dll.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.dll.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.dll.rsp.old" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.dll.rsp.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.exp" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.exp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.lib.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.lib.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.lib.rsp.old" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.lib.rsp.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/CachedAssetRegistryDiscovery.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/CachedAssetRegistryDiscovery.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Intermediate/CachedAssetRegistry_0.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/CachedAssetRegistry_0.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saved/Logs/UE5_RPG_Combat-backup-2025.12.27-16.49.51.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saved/Logs/UE5_RPG_Combat-backup-2025.12.27-16.55.46.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saved/Logs/UE5_RPG_Combat.log" beforeDir="false" afterPath="$PROJECT_DIR$/Saved/Logs/UE5_RPG_Combat.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saved/SourceControl/UncontrolledChangelists.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saved/SourceControl/UncontrolledChangelists.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Character/RPGCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Character/RPGCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Character/RPGCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Character/RPGCharacter.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +48,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://6" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://8" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/Animation/AnimInstance.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/Animation/AnimNotifies/AnimNotifyState.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Private/Animation/AnimInstance.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/RPGDebugHelper.h" root0="FORCE_HIGHLIGHTING" />
   </component>

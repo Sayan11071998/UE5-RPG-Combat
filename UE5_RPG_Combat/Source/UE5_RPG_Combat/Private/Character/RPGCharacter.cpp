@@ -200,4 +200,8 @@ void ARPGCharacter::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponen
 	{
 		Debug::Print(TEXT("Apply Damage"));
 	}
+	else
+	{
+		Debug::Print(TEXT("No Damage"));
+	}
 }
