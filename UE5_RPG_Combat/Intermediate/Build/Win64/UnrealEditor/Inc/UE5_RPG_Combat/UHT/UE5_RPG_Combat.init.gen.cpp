@@ -17,13 +17,13 @@ void EmptyLinkFunctionForGeneratedCodeUE5_RPG_Combat_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x5DEAD890,
-				0x8AB93930,
+				0x2C7D81E5,
+				0x2329AB54,
 				METADATA_PARAMS(0, nullptr)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_UE5_RPG_Combat.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_UE5_RPG_Combat.OuterSingleton;
 	}
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_UE5_RPG_Combat(Z_Construct_UPackage__Script_UE5_RPG_Combat, TEXT("/Script/UE5_RPG_Combat"), Z_Registration_Info_UPackage__Script_UE5_RPG_Combat, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x5DEAD890, 0x8AB93930));
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_UE5_RPG_Combat(Z_Construct_UPackage__Script_UE5_RPG_Combat, TEXT("/Script/UE5_RPG_Combat"), Z_Registration_Info_UPackage__Script_UE5_RPG_Combat, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x2C7D81E5, 0x2329AB54));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

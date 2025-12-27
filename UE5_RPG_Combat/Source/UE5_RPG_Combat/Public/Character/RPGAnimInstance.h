@@ -17,10 +17,8 @@ public:
 	void UpdateAnimationProperties(float DeltaTime);
 	
 	// ~ Begin UAnimInstance interface
-	
 	// We can Initialize Variables and Use them in Blueprints
 	virtual void NativeInitializeAnimation() override;
-	
 	// ~ End UAnimInstance interface
 	
 private:
