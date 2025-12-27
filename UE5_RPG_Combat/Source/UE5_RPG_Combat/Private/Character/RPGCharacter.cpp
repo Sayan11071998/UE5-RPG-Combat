@@ -6,6 +6,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 #include  "RPGDebugHelper.h"
+#include "Character/RPGAnimInstance.h"
 
 ARPGCharacter::ARPGCharacter() :
 	WalkSpeed(300.f), RunSpeed(600.f)
@@ -26,6 +27,23 @@ ARPGCharacter::ARPGCharacter() :
 	// Jump Settings
 	GetCharacterMovement()->JumpZVelocity = 300.f;
 	GetCharacterMovement()->AirControl = 0.1f;
+}
+
+void ARPGCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	// Add Input Mapping Context
+	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	{
+		// Get Local Player Subsystem
+		if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
+			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		{
+			// Add Input Context
+			Subsystem->AddMappingContext(InputMapping, 0);
+		}
+	}
 }
 
 void ARPGCharacter::Tick(float DeltaTime)
@@ -51,23 +69,6 @@ void ARPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		Input->BindAction(HeavyAttackAction, ETriggerEvent::Triggered, this, &ARPGCharacter::HeavyAttack);
 		Input->BindAction(SpinAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::SpinAttack);
 		Input->BindAction(JumpAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::JumpAttack);
-	}
-}
-
-void ARPGCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-	
-	// Add Input Mapping Context
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
-	{
-		// Get Local Player Subsystem
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem =
-			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-		{
-			// Add Input Context
-			Subsystem->AddMappingContext(InputMapping, 0);
-		}
 	}
 }
 
@@ -136,20 +137,34 @@ void ARPGCharacter::StopRunning()
 
 void ARPGCharacter::BasicAttack()
 {
-	Debug::Print(TEXT("Basic Attack"));
+	AnimMontagePlay(AttackMontage, FName(TEXT("Attack1")));
 }
 
 void ARPGCharacter::HeavyAttack()
 {
-	Debug::Print(TEXT("Heavy Attack"));
+	AnimMontagePlay(AttackMontage, FName(TEXT("Attack2")));
 }
 
 void ARPGCharacter::SpinAttack()
 {
-	Debug::Print(TEXT("Spin Attack"));
+	AnimMontagePlay(AttackMontage, FName(TEXT("Attack3")));
 }
 
 void ARPGCharacter::JumpAttack()
 {
-	Debug::Print(TEXT("Jump Attack"));
+	AnimMontagePlay(AttackMontage, FName(TEXT("Attack4")), 2.f);
+}
+
+void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName, float PlayRate)
+{
+	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
+	
+	if (AnimInstance && MontageToPlay)
+	{
+		// Check to See if Montage is Playing
+		if (!AnimInstance->Montage_IsPlaying(MontageToPlay))
+		{
+			PlayAnimMontage(MontageToPlay, PlayRate, SectionName);
+		}
+	}
 }

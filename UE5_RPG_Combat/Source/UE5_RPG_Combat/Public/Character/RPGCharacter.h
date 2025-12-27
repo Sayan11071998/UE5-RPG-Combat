@@ -9,6 +9,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
 class UInputAction;
+class UAnimMontage;
 
 UCLASS()
 class UE5_RPG_COMBAT_API ARPGCharacter : public ACharacter
@@ -72,6 +73,9 @@ protected:
 	void SpinAttack();
 	void JumpAttack();
 	
+	// Play Anim Montage
+	void AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName = "Default", float PlayRate = 1.f);
+	
 private:
 	// Spring Arm Component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
@@ -80,4 +84,8 @@ private:
 	// Camera Component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> FollowCameraComponent;
+	
+	// Montages
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Montage", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAnimMontage> AttackMontage;
 };
