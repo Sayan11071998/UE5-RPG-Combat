@@ -9,24 +9,37 @@
   <component name="ChangeListManager">
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Binaries/Win64/UnrealEditor-UE5_RPG_Combat.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Binaries/Win64/UnrealEditor-UE5_RPG_Combat.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEditor.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEditor.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Animations/Sword_And_Shield_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Animations/Sword_And_Shield_Jump.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Animations/Sword_And_Shield_Run_Fwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Animations/Sword_And_Shield_Run_Left_Strafe.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Animations/Sword_And_Shield_Run_Right_Strafe.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Animations/Sword_And_Shield_Walk_Bwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Animations/Sword_And_Shield_Walk_Fwd.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Animations/Sword_And_Shield_Walk_Left_Strafe.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Animations/Sword_And_Shield_Walk_Right_Strafe.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Paladin_J_Nordstrom.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Paladin_J_Nordstrom_Anim.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Paladin_J_Nordstrom_PhysicsAsset.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Paladin_J_Nordstrom_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Paladin_MAT.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Paladin_diffuse.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Paladin_normal.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Paladin_specular.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo_UE/PaladinJNordstrom_UE.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo_UE/PaladinJNordstrom_UE_Anim.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo_UE/PaladinJNordstrom_UE_Skeleton.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo_UE/Paladin_MAT.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo_UE/Paladin_diffuse.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo_UE/Paladin_normal.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo_UE/Paladin_specular.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/ABP_RPGAnimInstance.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/ABP_RPGAnimInstance.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/BP_RPGCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/BP_RPGCharacter.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/SourceFileCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/SourceFileCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/ActionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/ActionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UE5_RPG_Combat/UHT/Timestamp" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/UnrealEditor/Inc/UE5_RPG_Combat/UHT/Timestamp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UE5_RPG_CombatEditor/Development/DependencyCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UE5_RPG_CombatEditor/Development/DependencyCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UE5_RPG_CombatEditor/Development/Makefile.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UE5_RPG_CombatEditor/Development/Makefile.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.dll.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.dll.rsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.dll.rsp.old" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.dll.rsp.old" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.exp" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.exp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.lib.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.lib.rsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.lib.rsp.old" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/Build/Win64/x64/UnrealEditor/Development/UE5_RPG_Combat/UnrealEditor-UE5_RPG_Combat.lib.rsp.old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/BlendSpaces/BS_RPGBlendSpace.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Intermediate/CachedAssetRegistryDiscovery.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/CachedAssetRegistryDiscovery.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Intermediate/CachedAssetRegistry_0.bin" beforeDir="false" afterPath="$PROJECT_DIR$/Intermediate/CachedAssetRegistry_0.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Saved/Autosaves/PackageRestoreData.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saved/Autosaves/PackageRestoreData.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Saved/Config/WindowsEditor/EditorPerProjectUserSettings.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Saved/Logs/UE5_RPG_Combat-backup-2025.12.25-12.50.24.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Saved/Logs/UE5_RPG_Combat-backup-2025.12.25-15.00.44.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Saved/Logs/UE5_RPG_Combat.log" beforeDir="false" afterPath="$PROJECT_DIR$/Saved/Logs/UE5_RPG_Combat.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Saved/SourceControl/UncontrolledChangelists.json" beforeDir="false" afterPath="$PROJECT_DIR$/Saved/SourceControl/UncontrolledChangelists.json" afterDir="false" />
     </list>
@@ -54,26 +67,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Uproject.UE5_RPG_Combat.executor": "Run",
-    "git-widget-placeholder": "Root-Motion",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.Mappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Uproject.UE5_RPG_Combat.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Root-Motion&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.Mappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="UE5_RPG_Combat" type="Uproject" factoryName="rider.uproject">
       <configuration_1 setup="1">
