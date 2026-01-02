@@ -9,8 +9,10 @@
 #include "Interfaces/HitInterface.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "RPGDebugHelper.h"
+
 ARPGCharacter::ARPGCharacter() :
-	WalkSpeed(300.f), RunSpeed(600.f), BaseDamage(20.f)
+	WalkSpeed(300.f), RunSpeed(600.f), BaseDamage(20.f), Health(100.f), MaxHealth(100.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
@@ -94,6 +96,23 @@ void ARPGCharacter::ActivateRightWeapon()
 void ARPGCharacter::DeactivateRightWeapon()
 {
 	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+	class AController* EventInstigator, AActor* DamageCauser)
+{
+	if (Health - DamageAmount <= 0)
+	{
+		Health = 0.f;
+		// Play Death Montage
+		Debug::Print(TEXT("Player Died!"));
+	}
+	else
+	{
+		Health -= DamageAmount;
+	}
+	
+	return DamageAmount;
 }
 
 void ARPGCharacter::Move(const FInputActionValue& InputValue)

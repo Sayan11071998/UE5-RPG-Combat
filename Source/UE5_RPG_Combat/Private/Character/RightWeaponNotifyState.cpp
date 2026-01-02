@@ -2,7 +2,7 @@
 #include "Character/RPGCharacter.h"
 
 void URightWeaponNotifyState::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation,
-                                          float TotalDuration, const FAnimNotifyEventReference& EventReference)
+	float TotalDuration, const FAnimNotifyEventReference& EventReference)
 {
 	if (MeshComp && MeshComp->GetOwner())
 	{

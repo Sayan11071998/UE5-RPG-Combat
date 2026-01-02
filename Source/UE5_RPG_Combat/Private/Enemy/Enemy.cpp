@@ -1,16 +1,109 @@
 #include "Enemy/Enemy.h"
+#include "Components/BoxComponent.h"
+#include "Character/RPGCharacter.h"
+#include "Enemy/EnemyAIController.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "RPGDebugHelper.h"
 
 AEnemy::AEnemy() :
 	BaseDamage(5.f), Health(100.f), MaxHealth(100.f)
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
+	
+	// Right weapon collision box
+	RightWeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("RightWeaponBox"));
+	RightWeaponCollision->SetupAttachment(GetMesh(), RightWeaponSocketName);
 }
 
 void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	// Setup enemy controller
+	EnemyAIController = Cast<AEnemyAIController>(GetController());
+	
+	// Bind function to overlap for weapon box
+	RightWeaponCollision->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::OnRightWeaponOverlap);
+	
+	// Setup right weapon collision
+	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	RightWeaponCollision->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
+	RightWeaponCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	RightWeaponCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+}
+
+void AEnemy::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor == nullptr) return;
+	
+	auto Character = Cast<ARPGCharacter>(OtherActor);
+	
+	if (Character)
+	{
+		UGameplayStatics::ApplyDamage(
+			Character,
+			BaseDamage,
+			EnemyAIController,
+			this,
+			UDamageType::StaticClass()
+		);
+	}
+}
+
+void AEnemy::MeleeAttack()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	
+	if (AnimInstance && AttackMontage)
+	{
+		if (!AnimInstance->Montage_IsPlaying(AttackMontage))
+		{
+			// Get number of montage sections
+			const int32 SectionCount = AttackMontage->CompositeSections.Num();
+		
+			// Get random animation to play
+			// Get section index and playtime to use for timer
+			const FName SectionName = GetAttackSectionName(SectionCount);
+			const int32 SectionIndex = AttackMontage->GetSectionIndex(SectionName);
+			const float SectionLength = AttackMontage->GetSectionLength(SectionIndex);
+		
+			// Play montage section
+			AnimInstance->Montage_Play(AttackMontage);
+			AnimInstance->Montage_JumpToSection(SectionName, AttackMontage);
+			GetWorldTimerManager().SetTimer(TimerAttack, this, &AEnemy::ResetAttack, SectionLength, false);
+		}
+	}
+}
+
+void AEnemy::ResetAttack()
+{
+	// Update state here
+	// MeleeAttack();
+}
+
+FName AEnemy::GetAttackSectionName(int32 SectionCount)
+{
+	FName SectionName;
+	
+	// Get random section in montage
+	const int32 Section { FMath::RandRange(1, SectionCount) };
+
+	switch (Section)
+	{
+	case 1:
+		SectionName = FName("Attack1");
+		break;
+	case 2:
+		SectionName = FName("Attack2");
+		break;
+	default:
+		SectionName = FName("Attack2");
+		break;
+	}
+	
+	return SectionName;
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -41,4 +134,14 @@ float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEv
 	}
 	
 	return DamageAmount;
+}
+
+void AEnemy::ActivateRightWeapon()
+{
+	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+}
+
+void AEnemy::DeactivateRightWeapon()
+{
+	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
