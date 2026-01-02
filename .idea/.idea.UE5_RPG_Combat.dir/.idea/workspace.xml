@@ -8,7 +8,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/RPGCombat/Enemies/BP_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/Enemies/BP_Enemy.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/RPGCombat/Maps/TestMap/4/49/P6TQ455A9CAFBUHRRAGBHY.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/RPGCombat/Maps/TestMap/4/49/P6TQ455A9CAFBUHRRAGBHY.uasset" afterDir="false" />
     </list>
@@ -148,7 +147,7 @@
       <workItem from="1766903895519" duration="1720000" />
       <workItem from="1766933949120" duration="9404000" />
       <workItem from="1767033147427" duration="1747000" />
-      <workItem from="1767362494022" duration="13500000" />
+      <workItem from="1767362494022" duration="14274000" />
     </task>
     <servers />
   </component>
