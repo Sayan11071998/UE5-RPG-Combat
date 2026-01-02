@@ -7,6 +7,7 @@
 
 class UAnimMontage;
 class UBoxComponent;
+class AEnemyAIController;
 
 UCLASS()
 class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
@@ -37,6 +38,10 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	
+	// Enemy AI Controller
+	UPROPERTY()
+	TObjectPtr<AEnemyAIController> EnemyAIController;
 	
 	// Right weapon overlap
 	UFUNCTION()

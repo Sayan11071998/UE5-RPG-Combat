@@ -24,7 +24,11 @@ public:
 	
 	virtual void ActivateRightWeapon();
 	virtual void DeactivateRightWeapon();
-
+	
+	// ~ Begin APawn interface
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+	// ~ End APawn interface
+	
 protected:
 	virtual void BeginPlay() override;
 	
