@@ -13,6 +13,56 @@ void AEnemy::BeginPlay()
 	Super::BeginPlay();
 }
 
+void AEnemy::MeleeAttack()
+{
+	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
+	
+	if (AnimInstance && AttackMontage)
+	{
+		// Get number of montage sections
+		const int32 SectionCount = AttackMontage->CompositeSections.Num();
+		
+		// Get random animation to play
+		// Get section index and playtime to use for timer
+		const FName SectionName = GetAttackSectionName(SectionCount);
+		const int32 SectionIndex = AttackMontage->GetSectionIndex(SectionName);
+		const float SectionLength = AttackMontage->GetSectionLength(SectionIndex);
+		
+		// Play montage section
+		AnimInstance->Montage_Play(AttackMontage);
+		AnimInstance->Montage_JumpToSection(SectionName, AttackMontage);
+		GetWorldTimerManager().SetTimer(TimerAttack, this, &AEnemy::ResetAttack, SectionLength, false);
+	}
+}
+
+void AEnemy::ResetAttack()
+{
+	// Reset enemy state
+}
+
+FName AEnemy::GetAttackSectionName(int32 SectionCount)
+{
+	FName SectionName;
+	
+	// Get random section in montage
+	const int32 Section { FMath::RandRange(1, SectionCount) };
+
+	switch (Section)
+	{
+	case 1:
+		SectionName = FName("Attack1");
+		break;
+	case 2:
+		SectionName = FName("Attack2");
+		break;
+	default:
+		SectionName = FName("Attack2");
+		break;
+	}
+	
+	return SectionName;
+}
+
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

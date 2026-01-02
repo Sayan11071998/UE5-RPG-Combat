@@ -33,6 +33,13 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	
+	UFUNCTION(BlueprintCallable)
+	void MeleeAttack();
+	
+	void ResetAttack();
+	
+	FName GetAttackSectionName(int32 SectionCount);
+	
 private:
 	// Base damage
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
@@ -46,4 +53,6 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> AttackMontage;
+	
+	FTimerHandle TimerAttack;
 };
