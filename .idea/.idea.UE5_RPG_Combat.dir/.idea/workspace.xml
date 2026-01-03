@@ -8,12 +8,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Character/RPGCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Character/RPGCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/Enemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Character/RPGCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Character/RPGCharacter.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/Enemy.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UE5_RPG_Combat.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/UE5_RPG_Combat.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/Enemies/BP_Enemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/Enemies/BP_Enemy.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/RPGCombat/Maps/TestMap/4/49/P6TQ455A9CAFBUHRRAGBHY.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/RPGCombat/Maps/TestMap/4/49/P6TQ455A9CAFBUHRRAGBHY.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +45,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Uproject.UE5_RPG_Combat.executor": "Debug",
+    "Uproject.UE5_RPG_Combat.executor": "Run",
     "git-widget-placeholder": "Melee-Enemy",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
@@ -151,7 +147,7 @@
       <workItem from="1766903895519" duration="1720000" />
       <workItem from="1766933949120" duration="9404000" />
       <workItem from="1767033147427" duration="1747000" />
-      <workItem from="1767362494022" duration="12485000" />
+      <workItem from="1767362494022" duration="14274000" />
     </task>
     <servers />
   </component>
