@@ -85,6 +85,10 @@ void ARPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		Input->BindAction(HeavyAttackAction, ETriggerEvent::Triggered, this, &ARPGCharacter::HeavyAttack);
 		Input->BindAction(SpinAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::SpinAttack);
 		Input->BindAction(JumpAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::JumpAttack);
+		
+		// Block actions
+		Input->BindAction(BlockAction, ETriggerEvent::Started, this, &ARPGCharacter::StartBlocking);
+		Input->BindAction(BlockAction, ETriggerEvent::Completed, this, &ARPGCharacter::StopBlocking);
 	}
 }
 
@@ -101,15 +105,36 @@ void ARPGCharacter::DeactivateRightWeapon()
 float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 	class AController* EventInstigator, AActor* DamageCauser)
 {
-	if (Health - DamageAmount <= 0)
+	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
+	
+	if (AnimInstance && AnimInstance->GetIsBlocking() == false)
 	{
-		Health = 0.f;
-		// Play Death Montage
-		Debug::Print(TEXT("Player Died!"));
+		if (Health - DamageAmount <= 0)
+		{
+			Health = 0.f;
+			// Play Death Montage
+			Debug::Print(TEXT("Player Died!"));
+		}
+		else
+		{
+			Health -= DamageAmount;
+		}
 	}
-	else
+	else // isBlocking = true
 	{
-		Health -= DamageAmount;
+		// Check if player is facing enemy - run dot product logic
+		if (PlayerFacingActor(DamageCauser))
+		{
+			Debug::Print(TEXT("Blocking and Facing Enemy"));
+			// Play hit sound for shield
+		}
+		else
+		{
+			Debug::Print(TEXT("Blocking and not Facing Enemy"));
+			
+			// Play hit flesh sound
+			Health -= DamageAmount;
+		}
 	}
 	
 	return DamageAmount;
@@ -198,6 +223,28 @@ void ARPGCharacter::JumpAttack()
 	AnimMontagePlay(AttackMontage, FName(TEXT("Attack4")), 2.f);
 }
 
+void ARPGCharacter::StartBlocking()
+{
+	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
+	
+	if (AnimInstance)
+	{
+		GetCharacterMovement()->DisableMovement();
+		AnimInstance->SetIsBlocking(true);
+	}
+}
+
+void ARPGCharacter::StopBlocking()
+{
+	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
+	
+	if (AnimInstance)
+	{
+		GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+		AnimInstance->SetIsBlocking(false);
+	}
+}
+
 void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName, float PlayRate)
 {
 	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
@@ -233,4 +280,19 @@ void ARPGCharacter::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponen
 			UDamageType::StaticClass()
 		);
 	}
+}
+
+bool ARPGCharacter::PlayerFacingActor(TObjectPtr<AActor> FacingActor)
+{
+	FVector PlayerDirection = GetActorForwardVector();
+	FVector ActorDirection = (FacingActor->GetActorLocation() - GetActorLocation()).GetSafeNormal();
+	
+	float DotProduct = FVector::DotProduct(PlayerDirection, ActorDirection);
+	
+	if (DotProduct > 0.f)
+	{
+		return true;
+	}
+		
+	return false;
 }

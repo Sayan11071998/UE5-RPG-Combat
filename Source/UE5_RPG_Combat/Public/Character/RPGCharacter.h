@@ -45,6 +45,10 @@ protected:
 	void SpinAttack();
 	void JumpAttack();
 	
+	// Blocking
+	void StartBlocking();
+	void StopBlocking();
+	
 	// Play anim montage
 	void AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName = "Default", float PlayRate = 1.f);
 	
@@ -75,6 +79,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
 	TObjectPtr<UInputAction> JumpAttackAction;
+	
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputAction> BlockAction;
 	
 	// Walk speed
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
@@ -120,4 +127,6 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float MaxHealth;
+	
+	bool PlayerFacingActor(TObjectPtr<AActor> FacingActor);
 };
