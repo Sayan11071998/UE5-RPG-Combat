@@ -36,4 +36,8 @@ private:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	bool bIsBlocking;
+	
+public:
+	FORCEINLINE bool GetIsBlocking() const { return  bIsBlocking; }
+	FORCEINLINE void SetIsBlocking(bool Blocking) { bIsBlocking = Blocking; }
 };

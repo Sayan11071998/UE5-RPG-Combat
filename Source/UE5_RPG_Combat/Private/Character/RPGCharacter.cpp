@@ -204,12 +204,22 @@ void ARPGCharacter::JumpAttack()
 
 void ARPGCharacter::StartBlocking()
 {
-	Debug::Print(TEXT("Start Blocking"));
+	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
+	
+	if (AnimInstance)
+	{
+		AnimInstance->SetIsBlocking(true);
+	}
 }
 
 void ARPGCharacter::StopBlocking()
 {
-	Debug::Print(TEXT("Stop Blocking"));
+	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
+	
+	if (AnimInstance)
+	{
+		AnimInstance->SetIsBlocking(false);
+	}
 }
 
 void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName, float PlayRate)
