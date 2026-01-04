@@ -11,6 +11,7 @@ class UInputMappingContext;
 class UInputAction;
 class UAnimMontage;
 class UBoxComponent;
+class UAIPerceptionStimuliSourceComponent;
 
 UCLASS()
 class UE5_RPG_COMBAT_API ARPGCharacter : public ACharacter
@@ -129,4 +130,10 @@ private:
 	float MaxHealth;
 	
 	bool PlayerFacingActor(TObjectPtr<AActor> FacingActor);
+	
+	// AI Perception System
+	UPROPERTY()
+	TObjectPtr<UAIPerceptionStimuliSourceComponent> StimuliSource;
+	
+	void SetupStimuliSource();
 };
