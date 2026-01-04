@@ -105,15 +105,20 @@ void ARPGCharacter::DeactivateRightWeapon()
 float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 	class AController* EventInstigator, AActor* DamageCauser)
 {
-	if (Health - DamageAmount <= 0)
+	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
+	
+	if (AnimInstance && AnimInstance->GetIsBlocking() == false)
 	{
-		Health = 0.f;
-		// Play Death Montage
-		Debug::Print(TEXT("Player Died!"));
-	}
-	else
-	{
-		Health -= DamageAmount;
+		if (Health - DamageAmount <= 0)
+		{
+			Health = 0.f;
+			// Play Death Montage
+			Debug::Print(TEXT("Player Died!"));
+		}
+		else
+		{
+			Health -= DamageAmount;
+		}
 	}
 	
 	return DamageAmount;
