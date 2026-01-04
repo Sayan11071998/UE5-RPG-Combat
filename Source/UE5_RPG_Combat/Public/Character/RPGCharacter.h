@@ -127,4 +127,6 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float MaxHealth;
+	
+	bool PlayerFacingActor(TObjectPtr<AActor> FacingActor);
 };

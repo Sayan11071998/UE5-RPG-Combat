@@ -120,6 +120,22 @@ float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& D
 			Health -= DamageAmount;
 		}
 	}
+	else // isBlocking = true
+	{
+		// Check if player is facing enemy - run dot product logic
+		if (PlayerFacingActor(DamageCauser))
+		{
+			Debug::Print(TEXT("Blocking and Facing Enemy"));
+			// Play hit sound for shield
+		}
+		else
+		{
+			Debug::Print(TEXT("Blocking and not Facing Enemy"));
+			
+			// Play hit flesh sound
+			Health -= DamageAmount;
+		}
+	}
 	
 	return DamageAmount;
 }
@@ -262,4 +278,19 @@ void ARPGCharacter::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponen
 			UDamageType::StaticClass()
 		);
 	}
+}
+
+bool ARPGCharacter::PlayerFacingActor(TObjectPtr<AActor> FacingActor)
+{
+	FVector PlayerDirection = GetActorForwardVector();
+	FVector ActorDirection = (FacingActor->GetActorLocation() - GetActorLocation()).GetSafeNormal();
+	
+	float DotProduct = FVector::DotProduct(PlayerDirection, ActorDirection);
+	
+	if (DotProduct > 0.f)
+	{
+		return true;
+	}
+		
+	return false;
 }
