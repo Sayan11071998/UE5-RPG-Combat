@@ -4,6 +4,7 @@
 #include "AIController.h"
 #include "EnemyAIController.generated.h"
 
+struct FAIStimulus;
 class AEnemy;
 class UAISenseConfig_Sight;
 
