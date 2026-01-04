@@ -85,6 +85,10 @@ void ARPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		Input->BindAction(HeavyAttackAction, ETriggerEvent::Triggered, this, &ARPGCharacter::HeavyAttack);
 		Input->BindAction(SpinAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::SpinAttack);
 		Input->BindAction(JumpAttackAction, ETriggerEvent::Completed, this, &ARPGCharacter::JumpAttack);
+		
+		// Block actions
+		Input->BindAction(BlockAction, ETriggerEvent::Started, this, &ARPGCharacter::StartBlocking);
+		Input->BindAction(BlockAction, ETriggerEvent::Completed, this, &ARPGCharacter::StopBlocking);
 	}
 }
 
@@ -196,6 +200,16 @@ void ARPGCharacter::SpinAttack()
 void ARPGCharacter::JumpAttack()
 {
 	AnimMontagePlay(AttackMontage, FName(TEXT("Attack4")), 2.f);
+}
+
+void ARPGCharacter::StartBlocking()
+{
+	Debug::Print(TEXT("Start Blocking"));
+}
+
+void ARPGCharacter::StopBlocking()
+{
+	Debug::Print(TEXT("Stop Blocking"));
 }
 
 void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName, float PlayRate)
