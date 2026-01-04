@@ -229,6 +229,7 @@ void ARPGCharacter::StartBlocking()
 	
 	if (AnimInstance)
 	{
+		GetCharacterMovement()->DisableMovement();
 		AnimInstance->SetIsBlocking(true);
 	}
 }
@@ -239,6 +240,7 @@ void ARPGCharacter::StopBlocking()
 	
 	if (AnimInstance)
 	{
+		GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 		AnimInstance->SetIsBlocking(false);
 	}
 }
