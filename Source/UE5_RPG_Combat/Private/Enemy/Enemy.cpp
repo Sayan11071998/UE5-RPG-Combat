@@ -33,6 +33,11 @@ void AEnemy::BeginPlay()
 	RightWeaponCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 }
 
+void AEnemy::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
 void AEnemy::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
@@ -106,9 +111,16 @@ FName AEnemy::GetAttackSectionName(int32 SectionCount)
 	return SectionName;
 }
 
-void AEnemy::Tick(float DeltaTime)
+void AEnemy::EnterCombat()
 {
-	Super::Tick(DeltaTime);
+	CombatStrategy = MakeShared<class AttackStrategy>();
+	CombatStrategy->Execute(this);
+}
+
+void AEnemy::ExitCombat()
+{
+	CombatStrategy = MakeShared<class PatrolStrategy>();
+	CombatStrategy->Execute(this);
 }
 
 void AEnemy::HitInterface_Implementation(FHitResult HitResult)

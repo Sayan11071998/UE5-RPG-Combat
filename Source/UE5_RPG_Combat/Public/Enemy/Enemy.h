@@ -1,6 +1,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AIBehavior/AttackStrategy.h"
+#include "AIBehavior/PatrolStrategy.h"
 #include "GameFramework/Character.h"
 #include "Interfaces/HitInterface.h"
 #include "Enemy.generated.h"
@@ -17,6 +19,10 @@ class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
 public:
 	AEnemy();
 	virtual void Tick(float DeltaTime) override;
+	
+	// Enter and exit combat
+	void EnterCombat();
+	void ExitCombat();
 	
 	// ~ Begin IHitInterface interface
 	// Override hit interface
@@ -62,6 +68,14 @@ protected:
 	FName GetAttackSectionName(int32 SectionCount);
 	
 private:
+	// Combat strategy logic
+	PatrolStrategy PatrolStrategy;
+	AttackStrategy AttackStrategy;
+	TSharedPtr<ICombatStrategy> CombatStrategy;
+	
+	// Timer attack handle
+	FTimerHandle TimerAttack;
+	
 	// Base damage
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float BaseDamage;
@@ -81,6 +95,4 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	FName RightWeaponSocketName = FName("RightWeaponSocket");
-	
-	FTimerHandle TimerAttack;
 };

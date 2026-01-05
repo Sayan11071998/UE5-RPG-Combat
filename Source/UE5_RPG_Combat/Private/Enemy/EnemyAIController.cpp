@@ -68,16 +68,14 @@ void AEnemyAIController::OnTargetDetected(AActor* Actor, FAIStimulus const Stimu
 		{
 			if (ControlledEnemy != nullptr)
 			{
-				Debug::Print(TEXT("RPG Detected"));
-				// ControlledEnemy->EnterCombat();
+				ControlledEnemy->EnterCombat();
 			}
 		}
 		else
 		{
 			if (ControlledEnemy != nullptr)
 			{
-				Debug::Print(TEXT("Exit Combat"));
-				// ControlledEnemy->ExitCombat();
+				ControlledEnemy->ExitCombat();
 			}
 		}
 	}
