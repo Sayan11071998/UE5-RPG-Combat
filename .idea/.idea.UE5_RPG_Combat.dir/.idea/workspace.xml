@@ -10,9 +10,10 @@
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/AIBehavior/AttackStrategy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/AIBehavior/AttackStrategy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/AIBehavior/PatrolStrategy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/AIBehavior/PatrolStrategy.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/Enemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/PatrolStrategy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/PatrolStrategy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/AttackStrategy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/AttackStrategy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/Enemy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/UE5_RPG_Combat.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/UE5_RPG_Combat.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,9 +28,13 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="cidr-memory-view://5" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/AIController.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/Blueprint/AIAsyncTaskBlueprintProxy.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/Perception/AIPerceptionComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/Perception/AIPerceptionTypes.h" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/AIBehavior/ICombatStrategy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Private/AIController.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Private/Blueprint/AIBlueprintHelperLibrary.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/AIBehavior/ICombatStrategy.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/AttackStrategy.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/ICombatStrategy.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/PatrolStrategy.h" root0="FORCE_HIGHLIGHTING" />
@@ -163,7 +168,7 @@
       <workItem from="1767538858787" duration="8000" />
       <workItem from="1767540331265" duration="11863000" />
       <workItem from="1767631293513" duration="1393000" />
-      <workItem from="1767632874706" duration="6148000" />
+      <workItem from="1767632874706" duration="9043000" />
     </task>
     <servers />
   </component>

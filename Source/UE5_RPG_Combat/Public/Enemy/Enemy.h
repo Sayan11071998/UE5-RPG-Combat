@@ -24,6 +24,8 @@ public:
 	void EnterCombat();
 	void ExitCombat();
 	
+	void MeleeAttack();
+	
 	// ~ Begin IHitInterface interface
 	// Override hit interface
 	virtual void HitInterface_Implementation(FHitResult HitResult) override;
@@ -59,9 +61,6 @@ protected:
 		bool bFromSweep,
 		const FHitResult& SweepResult
 	);
-	
-	UFUNCTION(BlueprintCallable)
-	void MeleeAttack();
 	
 	void ResetAttack();
 	

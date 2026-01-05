@@ -15,14 +15,13 @@ public class UE5_RPG_Combat : ModuleRules
 				"Engine",
 				"InputCore",
 				"EnhancedInput",
+				"AIModule",
+				"NavigationSystem"
 			}
 		);
 
 		PrivateDependencyModuleNames.AddRange(new string[]
-			{
-				"AIModule",
-				"NavigationSystem"
-			}
+			{ }
 		);
 
 		// Uncomment if you are using Slate UI

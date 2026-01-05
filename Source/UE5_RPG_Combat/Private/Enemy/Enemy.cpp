@@ -51,23 +51,19 @@ void AEnemy::Tick(float DeltaTime)
 	}
 }
 
-void AEnemy::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AEnemy::EnterCombat()
 {
-	if (OtherActor == nullptr) return;
-	
-	auto Character = Cast<ARPGCharacter>(OtherActor);
-	
-	if (Character)
-	{
-		UGameplayStatics::ApplyDamage(
-			Character,
-			BaseDamage,
-			EnemyAIController,
-			this,
-			UDamageType::StaticClass()
-		);
-	}
+	bCanPatrol = false;
+	CombatStrategy = MakeShared<class AttackStrategy>();
+	CombatStrategy->Execute(this);
+}
+
+void AEnemy::ExitCombat()
+{
+	bCanPatrol = true;
+	CombatStrategy = MakeShared<class PatrolStrategy>();
+	CombatStrategy->Execute(this);
+	bIsWaiting = false;
 }
 
 void AEnemy::MeleeAttack()
@@ -92,6 +88,60 @@ void AEnemy::MeleeAttack()
 			AnimInstance->Montage_JumpToSection(SectionName, AttackMontage);
 			GetWorldTimerManager().SetTimer(TimerAttack, this, &AEnemy::ResetAttack, SectionLength, false);
 		}
+	}
+}
+
+void AEnemy::HitInterface_Implementation(FHitResult HitResult)
+{
+	// Impact Sound
+	// Impact Niagara
+	// Hit Montage
+}
+
+float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator,
+	AActor* DamageCauser)
+{
+	if (Health - DamageAmount <= 0.f)
+	{
+		Health = 0.f;
+		
+		//Call blueprint function to play death montage and clean things up
+		Debug::Print(TEXT("Enemy Died!!"));
+	}
+	else
+	{
+		Health -= DamageAmount;
+	}
+	
+	return DamageAmount;
+}
+
+void AEnemy::ActivateRightWeapon()
+{
+	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+}
+
+void AEnemy::DeactivateRightWeapon()
+{
+	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void AEnemy::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor == nullptr) return;
+	
+	auto Character = Cast<ARPGCharacter>(OtherActor);
+	
+	if (Character)
+	{
+		UGameplayStatics::ApplyDamage(
+			Character,
+			BaseDamage,
+			EnemyAIController,
+			this,
+			UDamageType::StaticClass()
+		);
 	}
 }
 
@@ -129,54 +179,4 @@ void AEnemy::EnemyPatrol()
 	CombatStrategy = MakeShared<class PatrolStrategy>();
 	CombatStrategy->Execute(this);
 	bIsWaiting = false;
-}
-
-void AEnemy::EnterCombat()
-{
-	bCanPatrol = false;
-	CombatStrategy = MakeShared<class AttackStrategy>();
-	CombatStrategy->Execute(this);
-}
-
-void AEnemy::ExitCombat()
-{
-	bCanPatrol = true;
-	CombatStrategy = MakeShared<class PatrolStrategy>();
-	CombatStrategy->Execute(this);
-	bIsWaiting = false;
-}
-
-void AEnemy::HitInterface_Implementation(FHitResult HitResult)
-{
-	// Impact Sound
-	// Impact Niagara
-	// Hit Montage
-}
-
-float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator,
-	AActor* DamageCauser)
-{
-	if (Health - DamageAmount <= 0.f)
-	{
-		Health = 0.f;
-		
-		//Call blueprint function to play death montage and clean things up
-		Debug::Print(TEXT("Enemy Died!!"));
-	}
-	else
-	{
-		Health -= DamageAmount;
-	}
-	
-	return DamageAmount;
-}
-
-void AEnemy::ActivateRightWeapon()
-{
-	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-}
-
-void AEnemy::DeactivateRightWeapon()
-{
-	RightWeaponCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
