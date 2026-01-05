@@ -73,6 +73,13 @@ private:
 	AttackStrategy AttackStrategy;
 	TSharedPtr<ICombatStrategy> CombatStrategy;
 	
+	// Used in Tick for patrolling
+	bool bIsWaiting;
+	bool bCanPatrol;
+	FTimerHandle PatrolDelayTimer;
+	
+	void EnemyPatrol();
+	
 	// Timer attack handle
 	FTimerHandle TimerAttack;
 	

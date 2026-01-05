@@ -9,7 +9,7 @@
 AEnemy::AEnemy() :
 	BaseDamage(5.f), Health(100.f), MaxHealth(100.f)
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 	
 	// Right weapon collision box
 	RightWeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("RightWeaponBox"));
@@ -36,6 +36,9 @@ void AEnemy::BeginPlay()
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	CombatStrategy = MakeShared<class PatrolStrategy>();
+	CombatStrategy->Execute(this);
 }
 
 void AEnemy::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -109,6 +112,11 @@ FName AEnemy::GetAttackSectionName(int32 SectionCount)
 	}
 	
 	return SectionName;
+}
+
+void AEnemy::EnemyPatrol()
+{
+	
 }
 
 void AEnemy::EnterCombat()
