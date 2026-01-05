@@ -12,4 +12,6 @@ public:
 	// ~ Begin ICombatStrategy interface
 	virtual void Execute(TObjectPtr<AEnemy> Enemy) override;
 	// ~ End ICombatStrategy interface
+	
+	bool HasReachedDestination(TObjectPtr<AEnemy> Enemy);
 };

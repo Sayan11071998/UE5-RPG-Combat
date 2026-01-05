@@ -8,7 +8,7 @@ AttackStrategy::AttackStrategy()
 
 void AttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 {
-	Debug::Print(TEXT("Inside Execute Attack Strategy"));
+	Debug::Print(TEXT("Attack Player"));
 	
 	// Move to player and Enemy attack logic
 }

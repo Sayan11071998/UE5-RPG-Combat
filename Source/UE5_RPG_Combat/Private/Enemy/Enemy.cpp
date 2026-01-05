@@ -31,14 +31,24 @@ void AEnemy::BeginPlay()
 	RightWeaponCollision->SetCollisionObjectType(ECollisionChannel::ECC_WorldDynamic);
 	RightWeaponCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	RightWeaponCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+	
+	// Can enemy Patrol
+	bCanPatrol = true;
 }
 
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	CombatStrategy = MakeShared<class PatrolStrategy>();
-	CombatStrategy->Execute(this);
+	if (bCanPatrol)
+	{
+		if (PatrolStrategy.HasReachedDestination(this) && !bIsWaiting)
+		{
+			bIsWaiting = true;
+			float PatrolDelay = FMath::RandRange(1.f, 5.f);
+			GetWorldTimerManager().SetTimer(PatrolDelayTimer, this, &AEnemy::EnemyPatrol, PatrolDelay, false);
+		}
+	}
 }
 
 void AEnemy::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -116,19 +126,24 @@ FName AEnemy::GetAttackSectionName(int32 SectionCount)
 
 void AEnemy::EnemyPatrol()
 {
-	
+	CombatStrategy = MakeShared<class PatrolStrategy>();
+	CombatStrategy->Execute(this);
+	bIsWaiting = false;
 }
 
 void AEnemy::EnterCombat()
 {
+	bCanPatrol = false;
 	CombatStrategy = MakeShared<class AttackStrategy>();
 	CombatStrategy->Execute(this);
 }
 
 void AEnemy::ExitCombat()
 {
+	bCanPatrol = true;
 	CombatStrategy = MakeShared<class PatrolStrategy>();
 	CombatStrategy->Execute(this);
+	bIsWaiting = false;
 }
 
 void AEnemy::HitInterface_Implementation(FHitResult HitResult)
