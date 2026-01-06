@@ -5,9 +5,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "Enemy/AIBehavior/AttackStrategy.h"
 #include "Enemy/AIBehavior/PatrolStrategy.h"
+#include "Enemy/AIBehavior/StrafeStrategy.h"
 
 #include "RPGDebugHelper.h"
-#include "Enemy/AIBehavior/StrafeStrategy.h"
 
 AEnemy::AEnemy() :
 	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f)
@@ -59,8 +59,17 @@ void AEnemy::Tick(float DeltaTime)
 		if (StrafeStrategy->HasReachedDestination(this) && !bIsWaiting)
 		{
 			bIsWaiting = true;
-			StrafeStrategy = NewObject<UStrafeStrategy>();
-			StrafeStrategy->Execute(this);
+			
+			if (StrafeStrategy.IsValid())
+			{
+				StrafeStrategy->Execute(this);
+			}
+			else
+			{
+				StrafeStrategy = NewObject<UStrafeStrategy>();
+				StrafeStrategy->Execute(this);
+			}
+			
 			float StrafeDelay = FMath::RandRange(1.f, StrafeDelayTime);
 			FTimerHandle StrafeDelayTimer;
 			GetWorldTimerManager().SetTimer(StrafeDelayTimer, this, &AEnemy::EnemyStrafe, StrafeDelay, false);
@@ -85,9 +94,17 @@ void AEnemy::EnterCombat()
 
 void AEnemy::ExitCombat()
 {
-	EnemyAIController->ClearFocus(EAIFocusPriority::Gameplay);
 	bIsWaiting = false;
 	CurrentState = EAIState::Combat;
+	
+	if (EnemyAIController != nullptr)
+	{
+		EnemyAIController->ClearFocus(EAIFocusPriority::Gameplay);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Enemy AI Controller is null, and ExitCombat"));
+	}
 }
 
 void AEnemy::MeleeAttack()
@@ -214,16 +231,30 @@ FName AEnemy::GetAttackSectionName(int32 SectionCount)
 
 void AEnemy::EnemyPatrol()
 {
-	PatrolStrategy = NewObject<UPatrolStrategy>();
-	PatrolStrategy->Execute(this);
+	if (PatrolStrategy.IsValid())
+	{
+		PatrolStrategy->Execute(this);
+	}
+	else
+	{
+		PatrolStrategy = NewObject<UPatrolStrategy>();
+		PatrolStrategy->Execute(this);
+	}
 	
 	bIsWaiting = false;
 }
 
 void AEnemy::EnemyAttack()
 {
-	AttackStrategy = NewObject<UAttackStrategy>();
-	AttackStrategy->Execute(this);
+	if (AttackStrategy.IsValid())
+	{
+		AttackStrategy->Execute(this);
+	}
+	else
+	{
+		AttackStrategy = NewObject<UAttackStrategy>();
+		AttackStrategy->Execute(this);
+	}
 	
 	bIsWaiting = false;
 }
