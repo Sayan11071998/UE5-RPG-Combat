@@ -68,9 +68,8 @@ protected:
 	
 private:
 	// Combat strategy logic
-	PatrolStrategy PatrolStrategy;
-	AttackStrategy AttackStrategy;
-	TSharedPtr<ICombatStrategy> CombatStrategy;
+	// PatrolStrategy PatrolStrategy;
+	TWeakObjectPtr<UAttackStrategy> AttackStrategy;
 	
 	// Used in Tick for patrolling
 	bool bIsWaiting;

@@ -6,16 +6,12 @@
 #include "AIController.h"
 #include "Enemy/Enemy.h"
 
-#include "RPGDebugHelper.h"
-
-AttackStrategy::AttackStrategy()
+UAttackStrategy::UAttackStrategy()
 {
 }
 
-void AttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
+void UAttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 {
-	Debug::Print(TEXT("Attack Player"));
-	
 	// Move to player and Enemy attack logic
 	APawn* Pawn = UGameplayStatics::GetPlayerPawn(Enemy->GetWorld(), 0);
 	ARPGCharacter* RPGCharacter = Cast<ARPGCharacter>(Pawn);
@@ -47,7 +43,7 @@ void AttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 				{
 					PathFollowingComponent->OnRequestFinished.AddUObject(
 						this,
-						&AttackStrategy::OnMoveCompleted,
+						&UAttackStrategy::OnMoveCompleted,
 						Enemy	
 					);
 				}
@@ -56,7 +52,7 @@ void AttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 	}
 }
 
-void AttackStrategy::OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, TObjectPtr<AEnemy> Enemy)
+void UAttackStrategy::OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, TObjectPtr<AEnemy> Enemy)
 {
 	if (Result.IsSuccess())
 	{

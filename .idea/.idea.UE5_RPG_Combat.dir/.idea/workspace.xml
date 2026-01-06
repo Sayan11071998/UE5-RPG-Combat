@@ -13,7 +13,6 @@
       <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/Enemy.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/AttackStrategy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/AttackStrategy.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/Enemy.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/UE5_RPG_Combat.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/UE5_RPG_Combat.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +26,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://5" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://0" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/AIController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/Blueprint/AIAsyncTaskBlueprintProxy.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/Perception/AIPerceptionComponent.h" root0="FORCE_HIGHLIGHTING" />
@@ -168,7 +167,8 @@
       <workItem from="1767538858787" duration="8000" />
       <workItem from="1767540331265" duration="11863000" />
       <workItem from="1767631293513" duration="1393000" />
-      <workItem from="1767632874706" duration="9043000" />
+      <workItem from="1767632874706" duration="9115000" />
+      <workItem from="1767715353503" duration="1922000" />
     </task>
     <servers />
   </component>
