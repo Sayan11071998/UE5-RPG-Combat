@@ -3,8 +3,11 @@
 #include "Character/RPGCharacter.h"
 #include "Enemy/EnemyAIController.h"
 #include "Kismet/GameplayStatics.h"
+#include "Enemy/AIBehavior/AttackStrategy.h"
+#include "Enemy/AIBehavior/PatrolStrategy.h"
 
 #include "RPGDebugHelper.h"
+#include "Enemy/AIBehavior/StrafeStrategy.h"
 
 AEnemy::AEnemy() :
 	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f)
@@ -42,9 +45,26 @@ void AEnemy::Tick(float DeltaTime)
 
 	switch (CurrentState)
 	{
-	case EAIState::Combat:
-		AttackStrategy = NewObject<UAttackStrategy>();
-		AttackStrategy->Execute(this);
+	case EAIState::Attack:
+		if (!bIsWaiting)
+		{
+			bIsWaiting = true;
+			float AttackDelay = FMath::RandRange(0.75f, 2.f);
+			FTimerHandle AttackDelayTimer;
+			GetWorldTimerManager().SetTimer(AttackDelayTimer, this, &AEnemy::EnemyAttack, AttackDelay, false);
+		}
+		break;
+		
+	case  EAIState::Strafe:
+		if (StrafeStrategy->HasReachedDestination(this) && !bIsWaiting)
+		{
+			bIsWaiting = true;
+			StrafeStrategy = NewObject<UStrafeStrategy>();
+			StrafeStrategy->Execute(this);
+			float StrafeDelay = FMath::RandRange(1.f, StrafeDelayTime);
+			FTimerHandle StrafeDelayTimer;
+			GetWorldTimerManager().SetTimer(StrafeDelayTimer, this, &AEnemy::EnemyStrafe, StrafeDelay, false);
+		}
 		break;
 	
 	case EAIState::Patrol:
@@ -60,7 +80,7 @@ void AEnemy::Tick(float DeltaTime)
 
 void AEnemy::EnterCombat()
 {
-	CurrentState = EAIState::Combat;
+	CurrentState = EAIState::Attack;
 }
 
 void AEnemy::ExitCombat()
@@ -91,7 +111,21 @@ void AEnemy::MeleeAttack()
 			AnimInstance->Montage_Play(AttackMontage);
 			AnimInstance->Montage_JumpToSection(SectionName, AttackMontage);
 			GetWorldTimerManager().SetTimer(TimerAttack, this, &AEnemy::ResetAttack, SectionLength, false);
+			
+			// Call reset melee attack
+			FTimerHandle TimerResetAttack;
+			GetWorldTimerManager().SetTimer(TimerResetAttack, this, &AEnemy::ResetMeleeAttack, SectionLength, false);
 		}
+	}
+}
+
+void AEnemy::ResetMeleeAttack()
+{
+	float RandomChance = FMath::FRand();
+	
+	if (RandomChance <= 0.3f)
+	{
+		CurrentState = EAIState::Strafe;
 	}
 }
 
@@ -184,4 +218,18 @@ void AEnemy::EnemyPatrol()
 	PatrolStrategy->Execute(this);
 	
 	bIsWaiting = false;
+}
+
+void AEnemy::EnemyAttack()
+{
+	AttackStrategy = NewObject<UAttackStrategy>();
+	AttackStrategy->Execute(this);
+	
+	bIsWaiting = false;
+}
+
+void AEnemy::EnemyStrafe()
+{
+	bIsWaiting = false;
+	CurrentState = EAIState::Attack;
 }

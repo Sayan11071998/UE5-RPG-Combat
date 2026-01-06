@@ -1,8 +1,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AIBehavior/AttackStrategy.h"
-#include "AIBehavior/PatrolStrategy.h"
 #include "GameFramework/Character.h"
 #include "Interfaces/HitInterface.h"
 #include "Enemy.generated.h"
@@ -22,6 +20,9 @@ enum class EAIState : uint8
 class UAnimMontage;
 class UBoxComponent;
 class AEnemyAIController;
+class UStrafeStrategy;
+class UAttackStrategy;
+class UPatrolStrategy;
 
 UCLASS()
 class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
@@ -37,6 +38,7 @@ public:
 	void ExitCombat();
 	
 	void MeleeAttack();
+	void ResetMeleeAttack();
 	
 	// ~ Begin IHitInterface interface
 	// Override hit interface
@@ -86,12 +88,15 @@ private:
 	// Combat strategy logic
 	TWeakObjectPtr<UPatrolStrategy> PatrolStrategy;
 	TWeakObjectPtr<UAttackStrategy> AttackStrategy;
+	TWeakObjectPtr<UStrafeStrategy> StrafeStrategy;
 	
 	// Used in Tick for patrolling
 	bool bIsWaiting;
 	FTimerHandle PatrolDelayTimer;
 	
 	void EnemyPatrol();
+	void EnemyAttack();
+	void EnemyStrafe();
 	
 	// Timer attack handle
 	FTimerHandle TimerAttack;
@@ -111,6 +116,9 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float AcceptanceRange;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float StrafeDelayTime;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> AttackMontage;
