@@ -7,7 +7,7 @@
 #include "RPGDebugHelper.h"
 
 AEnemy::AEnemy() :
-	BaseDamage(5.f), Health(100.f), MaxHealth(100.f)
+	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	

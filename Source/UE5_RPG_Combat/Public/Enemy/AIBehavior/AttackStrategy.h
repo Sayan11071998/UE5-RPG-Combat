@@ -6,6 +6,7 @@
 struct FPathFollowingResult;
 struct FAIRequestID;
 class AEnemy;
+class ARPGCharacter;
 
 UCLASS()
 class UAttackStrategy : public UObject, public ICombatStrategy
@@ -19,5 +20,5 @@ public:
 	virtual void Execute(TObjectPtr<AEnemy> Enemy) override;
 	// ~ End ICombatStrategy interface
 	
-	virtual void OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, TObjectPtr<AEnemy> Enemy);
+	virtual void OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, TObjectPtr<AEnemy> Enemy, ARPGCharacter* RPGCharacter);
 };

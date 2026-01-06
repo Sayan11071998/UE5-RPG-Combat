@@ -107,6 +107,12 @@ private:
 	float MaxHealth;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float AttackRange;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float AcceptanceRange;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> AttackMontage;
 	
 	// Right weapon collision
@@ -115,4 +121,14 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	FName RightWeaponSocketName = FName("RightWeaponSocket");
+	
+public:
+	FORCEINLINE float GetAttackRange() const { return AttackRange; }
+	FORCEINLINE float GetAcceptanceRange() const { return AcceptanceRange; }
+	
+	FORCEINLINE float SetAttackRange(const float AttackRangeSet)
+	{
+		AttackRange = AttackRangeSet;
+		return AttackRange;
+	}
 };

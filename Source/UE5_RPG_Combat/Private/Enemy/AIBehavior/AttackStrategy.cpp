@@ -27,7 +27,7 @@ void UAttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 			
 			EPathFollowingRequestResult::Type MoveResult = EnemyAIController->MoveToActor(
 				RPGCharacter, 
-				150.f,
+				Enemy->GetAcceptanceRange(),
 				true,
 				true,
 				true,
@@ -44,7 +44,8 @@ void UAttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 					PathFollowingComponent->OnRequestFinished.AddUObject(
 						this,
 						&UAttackStrategy::OnMoveCompleted,
-						Enemy	
+						Enemy,
+						RPGCharacter
 					);
 				}
 			}
@@ -52,20 +53,18 @@ void UAttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 	}
 }
 
-void UAttackStrategy::OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, TObjectPtr<AEnemy> Enemy)
+void UAttackStrategy::OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, TObjectPtr<AEnemy> Enemy,
+	ARPGCharacter* RPGCharacter)
 {
 	if (Result.IsSuccess())
 	{
-		APawn* Pawn = UGameplayStatics::GetPlayerPawn(Enemy->GetWorld(), 0);
-		ARPGCharacter* RPGCharacter = Cast<ARPGCharacter>(Pawn);
-		
 		FVector RPGPos = RPGCharacter->GetActorLocation();
 		FVector EnemyPos = Enemy->GetActorLocation();
 		
 		float Distance = FVector::Dist(EnemyPos, RPGPos);
 		
 		// Making sure in range to attack the player
-		if (Distance <= 300.f)
+		if (Distance <= Enemy->GetAttackRange())
 		{
 			Enemy->MeleeAttack();
 		}
