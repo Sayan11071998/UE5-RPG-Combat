@@ -7,6 +7,18 @@
 #include "Interfaces/HitInterface.h"
 #include "Enemy.generated.h"
 
+// List of AI State
+UENUM(BlueprintType)
+enum class EAIState : uint8
+{
+	Idle	UMETA(DisplayName = "Idle"),
+	Patrol	UMETA(DisplayName = "Patrol"),
+	Attack	UMETA(DisplayName = "Attack"),
+	Combat	UMETA(DisplayName = "Combat"),
+	Strafe	UMETA(DisplayName = "Strafe"),
+	Dead	UMETA(DisplayName = "Dead"),
+};
+
 class UAnimMontage;
 class UBoxComponent;
 class AEnemyAIController;
@@ -43,6 +55,10 @@ public:
 	// Activate and Deactivate weapon boxes
 	virtual void ActivateRightWeapon();
 	virtual void DeactivateRightWeapon();
+	
+	// Used for AI States
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	EAIState CurrentState;
 
 protected:
 	virtual void BeginPlay() override;
@@ -73,7 +89,6 @@ private:
 	
 	// Used in Tick for patrolling
 	bool bIsWaiting;
-	bool bCanPatrol;
 	FTimerHandle PatrolDelayTimer;
 	
 	void EnemyPatrol();

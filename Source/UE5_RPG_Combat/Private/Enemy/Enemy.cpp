@@ -33,41 +33,41 @@ void AEnemy::BeginPlay()
 	RightWeaponCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 	
 	// Can enemy Patrol
-	bCanPatrol = true;
+	CurrentState = EAIState::Patrol;
 }
 
 void AEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-	if (bCanPatrol)
+
+	switch (CurrentState)
 	{
+	case EAIState::Combat:
+		AttackStrategy = NewObject<UAttackStrategy>();
+		AttackStrategy->Execute(this);
+		break;
+	
+	case EAIState::Patrol:
 		if (PatrolStrategy->HasReachedDestination(this) && !bIsWaiting)
 		{
 			bIsWaiting = true;
 			float PatrolDelay = FMath::RandRange(1.f, 5.f);
 			GetWorldTimerManager().SetTimer(PatrolDelayTimer, this, &AEnemy::EnemyPatrol, PatrolDelay, false);
 		}
+		break;
 	}
 }
 
 void AEnemy::EnterCombat()
 {
-	bCanPatrol = false;
-	
-	AttackStrategy = NewObject<UAttackStrategy>();
-	AttackStrategy->Execute(this);
+	CurrentState = EAIState::Combat;
 }
 
 void AEnemy::ExitCombat()
 {
 	EnemyAIController->ClearFocus(EAIFocusPriority::Gameplay);
-	bCanPatrol = true;
-	
-	PatrolStrategy = NewObject<UPatrolStrategy>();
-	PatrolStrategy->Execute(this);
-	
 	bIsWaiting = false;
+	CurrentState = EAIState::Combat;
 }
 
 void AEnemy::MeleeAttack()
