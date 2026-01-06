@@ -68,7 +68,7 @@ protected:
 	
 private:
 	// Combat strategy logic
-	// PatrolStrategy PatrolStrategy;
+	TWeakObjectPtr<UPatrolStrategy> PatrolStrategy;
 	TWeakObjectPtr<UAttackStrategy> AttackStrategy;
 	
 	// Used in Tick for patrolling

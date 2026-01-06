@@ -6,11 +6,11 @@
 #include "Enemy/Enemy.h"
 #include "Navigation/PathFollowingComponent.h"
 
-PatrolStrategy::PatrolStrategy()
+UPatrolStrategy::UPatrolStrategy()
 {
 }
 
-void PatrolStrategy::Execute(TObjectPtr<AEnemy> Enemy)
+void UPatrolStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 {
 	// Enemy patrol logic
 	// Get NavMesh data
@@ -39,7 +39,7 @@ void PatrolStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 	}
 }
 
-bool PatrolStrategy::HasReachedDestination(TObjectPtr<AEnemy> Enemy)
+bool UPatrolStrategy::HasReachedDestination(TObjectPtr<AEnemy> Enemy)
 {
 	AEnemyAIController* AIController = Cast<AEnemyAIController>(Enemy->GetController());
 	
