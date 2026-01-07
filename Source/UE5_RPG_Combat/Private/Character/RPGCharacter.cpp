@@ -117,8 +117,8 @@ float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& D
 		if (Health - DamageAmount <= 0)
 		{
 			Health = 0.f;
-			// Play Death Montage
-			Debug::Print(TEXT("Player Died!"));
+			// Player death event
+			DeathOfPlayer();
 		}
 		else
 		{

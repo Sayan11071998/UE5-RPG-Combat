@@ -103,6 +103,10 @@ protected:
 		const FHitResult& SweepResult
 	);
 	
+	// Handle logic after player dies
+	UFUNCTION(BlueprintImplementableEvent)
+	void DeathOfPlayer();
+	
 private:
 	// Spring arm component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
