@@ -49,6 +49,8 @@ protected:
 	void JumpAttack();
 	void MotionWarpAttack(float AttackDistance, FName MotionWarpName);
 	
+	void ResetWarpAttack();
+	
 	// Blocking
 	void StartBlocking();
 	void StopBlocking();
