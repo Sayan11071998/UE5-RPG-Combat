@@ -23,6 +23,7 @@ class AEnemyAIController;
 class UStrafeStrategy;
 class UAttackStrategy;
 class UPatrolStrategy;
+class USoundCue;
 
 UCLASS()
 class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
@@ -132,6 +133,10 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	FName RightWeaponSocketName = FName("RightWeaponSocket");
+	
+	// Sounds
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USoundCue> ImpactSound;
 	
 public:
 	FORCEINLINE float GetAttackRange() const { return AttackRange; }

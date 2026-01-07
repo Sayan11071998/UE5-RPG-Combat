@@ -6,8 +6,7 @@
 #include "Enemy/AIBehavior/AttackStrategy.h"
 #include "Enemy/AIBehavior/PatrolStrategy.h"
 #include "Enemy/AIBehavior/StrafeStrategy.h"
-
-#include "RPGDebugHelper.h"
+#include "Sound/SoundCue.h"
 
 AEnemy::AEnemy() :
 	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f)
@@ -149,6 +148,10 @@ void AEnemy::ResetMeleeAttack()
 void AEnemy::HitInterface_Implementation(FHitResult HitResult)
 {
 	// Impact Sound
+	if (ImpactSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
+	}
 	// Impact Niagara
 	// Hit Montage
 }
