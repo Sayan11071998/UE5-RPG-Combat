@@ -11,6 +11,8 @@
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Perception/AISense_Sight.h"
 #include "Sound/SoundCue.h"
+#include "MotionWarpingClasses.h"
+#include "MotionWarpingComponent.h"
 
 #include "RPGDebugHelper.h"
 
@@ -29,6 +31,9 @@ ARPGCharacter::ARPGCharacter() :
 	FollowCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
 	FollowCameraComponent->bUsePawnControlRotation = false;
+	
+	// Motion warping component
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpComponent"));
 	
 	// Jump settings
 	GetCharacterMovement()->JumpZVelocity = 300.f;
@@ -237,7 +242,13 @@ void ARPGCharacter::SpinAttack()
 
 void ARPGCharacter::JumpAttack()
 {
+	MotionWarpAttack(1000.f, FName(TEXT("Attack4")));
 	AnimMontagePlay(AttackMontage, FName(TEXT("Attack4")), 2.f);
+}
+
+void ARPGCharacter::MotionWarpAttack(float AttackDistance, FName MotionWarpName)
+{
+	Debug::Print(TEXT("Motion Warp Attack"));
 }
 
 void ARPGCharacter::StartBlocking()

@@ -17,7 +17,8 @@ public class UE5_RPG_Combat : ModuleRules
 				"EnhancedInput",
 				"AIModule",
 				"NavigationSystem",
-				"Niagara"
+				"Niagara",
+				"MotionWarping"
 			}
 		);
 
