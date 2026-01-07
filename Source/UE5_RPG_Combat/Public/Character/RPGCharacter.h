@@ -13,6 +13,7 @@ class UAnimMontage;
 class UBoxComponent;
 class UAIPerceptionStimuliSourceComponent;
 class USoundCue;
+class UMotionWarpingComponent;
 
 UCLASS()
 class UE5_RPG_COMBAT_API ARPGCharacter : public ACharacter
@@ -46,6 +47,9 @@ protected:
 	void HeavyAttack();
 	void SpinAttack();
 	void JumpAttack();
+	void MotionWarpAttack(float AttackDistance, FName MotionWarpName);
+	
+	void ResetWarpAttack();
 	
 	// Blocking
 	void StartBlocking();
@@ -92,6 +96,10 @@ protected:
 	// Run speed
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
 	float RunSpeed;
+	
+	// Motion Warping
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
 	
 	// Right weapon overlap
 	UFUNCTION()

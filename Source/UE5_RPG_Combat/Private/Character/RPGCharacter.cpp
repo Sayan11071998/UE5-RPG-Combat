@@ -11,6 +11,9 @@
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Perception/AISense_Sight.h"
 #include "Sound/SoundCue.h"
+#include "MotionWarpingClasses.h"
+#include "MotionWarpingComponent.h"
+#include "Enemy/Enemy.h"
 
 #include "RPGDebugHelper.h"
 
@@ -29,6 +32,9 @@ ARPGCharacter::ARPGCharacter() :
 	FollowCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
 	FollowCameraComponent->bUsePawnControlRotation = false;
+	
+	// Motion warping component
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpComponent"));
 	
 	// Jump settings
 	GetCharacterMovement()->JumpZVelocity = 300.f;
@@ -237,7 +243,47 @@ void ARPGCharacter::SpinAttack()
 
 void ARPGCharacter::JumpAttack()
 {
+	MotionWarpAttack(1000.f, FName(TEXT("Attack4")));
 	AnimMontagePlay(AttackMontage, FName(TEXT("Attack4")), 2.f);
+}
+
+void ARPGCharacter::MotionWarpAttack(float AttackDistance, FName MotionWarpName)
+{
+	const FVector Start = GetActorLocation();
+	const FVector End = Start + GetActorForwardVector() * AttackDistance;
+	
+	FHitResult HitResult;
+	
+	// Setup collision query params to ignore the player
+	FCollisionQueryParams TraceParams(FName(TEXT("AttackTrace")), true, this);
+	TraceParams.bReturnPhysicalMaterial = false;
+	
+	// Perform Line Trace
+	ECollisionChannel Ecc_Channel = ECC_Pawn;
+	
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, Ecc_Channel, TraceParams))
+	{
+		AEnemy* Enemy = Cast<AEnemy>(HitResult.GetActor());
+		
+		if (Enemy && MotionWarpingComponent)
+		{
+			if (HitResult.bBlockingHit && HitResult.GetActor() == Enemy)
+			{
+				MotionWarpingComponent->AddOrUpdateWarpTargetFromLocation(MotionWarpName, HitResult.Location);
+			}
+		}
+		else
+		{
+			Debug::Print(TEXT("Enemy is null or motion warping component is null"));
+		}
+		
+		DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 1, 0, 1);
+	}
+}
+
+void ARPGCharacter::ResetWarpAttack()
+{
+	MotionWarpingComponent->RemoveAllWarpTargets();
 }
 
 void ARPGCharacter::StartBlocking()
@@ -272,6 +318,12 @@ void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FNam
 		if (!AnimInstance->Montage_IsPlaying(MontageToPlay))
 		{
 			PlayAnimMontage(MontageToPlay, PlayRate, SectionName);
+		}
+		
+		if (MontageToPlay == AttackMontage && SectionName == FName(TEXT("Attack4")))
+		{
+			FTimerHandle WarpTimer;
+			GetWorldTimerManager().SetTimer(WarpTimer, this, &ARPGCharacter::ResetWarpAttack, 2.f, false);
 		}
 	}
 }
