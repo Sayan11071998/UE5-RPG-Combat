@@ -24,6 +24,7 @@ class UStrafeStrategy;
 class UAttackStrategy;
 class UPatrolStrategy;
 class USoundCue;
+class UNiagaraSystem;
 
 UCLASS()
 class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
@@ -137,6 +138,13 @@ private:
 	// Sounds
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USoundCue> ImpactSound;
+	
+	// Effects
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UNiagaraSystem> ImpactNiagara;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	FName ImpactBoneLocation;
 	
 public:
 	FORCEINLINE float GetAttackRange() const { return AttackRange; }

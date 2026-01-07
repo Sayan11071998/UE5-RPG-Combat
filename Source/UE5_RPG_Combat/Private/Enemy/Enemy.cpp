@@ -7,6 +7,7 @@
 #include "Enemy/AIBehavior/PatrolStrategy.h"
 #include "Enemy/AIBehavior/StrafeStrategy.h"
 #include "Sound/SoundCue.h"
+#include "NiagaraFunctionLibrary.h"
 
 AEnemy::AEnemy() :
 	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f)
@@ -152,7 +153,11 @@ void AEnemy::HitInterface_Implementation(FHitResult HitResult)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
 	}
+	
 	// Impact Niagara
+	const FVector SpawnLocation = GetMesh()->GetBoneLocation(ImpactBoneLocation, EBoneSpaces::WorldSpace);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactNiagara, SpawnLocation, GetActorRotation());
+	
 	// Hit Montage
 }
 
