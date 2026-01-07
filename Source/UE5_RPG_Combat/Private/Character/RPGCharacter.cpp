@@ -8,6 +8,8 @@
 #include "Components/BoxComponent.h"
 #include "Interfaces/HitInterface.h"
 #include "Kismet/GameplayStatics.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Sight.h"
 
 #include "RPGDebugHelper.h"
 
@@ -34,6 +36,9 @@ ARPGCharacter::ARPGCharacter() :
 	// Right weapon collision box
 	RightWeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("RightWeaponBox"));
 	RightWeaponCollision->SetupAttachment(GetMesh(), FName(TEXT("SwordSocket")));
+	
+	// Stimulus
+	SetupStimuliSource();
 }
 
 void ARPGCharacter::BeginPlay()
@@ -295,4 +300,15 @@ bool ARPGCharacter::PlayerFacingActor(TObjectPtr<AActor> FacingActor)
 	}
 		
 	return false;
+}
+
+void ARPGCharacter::SetupStimuliSource()
+{
+	StimuliSource = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimulus Source"));
+	
+	if (StimuliSource)
+	{
+		StimuliSource->RegisterForSense(TSubclassOf<UAISense_Sight>());
+		StimuliSource->RegisterWithPerceptionSystem();
+	}
 }

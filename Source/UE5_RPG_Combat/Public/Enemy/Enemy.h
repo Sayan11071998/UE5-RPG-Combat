@@ -5,9 +5,24 @@
 #include "Interfaces/HitInterface.h"
 #include "Enemy.generated.h"
 
+// List of AI State
+UENUM(BlueprintType)
+enum class EAIState : uint8
+{
+	Idle	UMETA(DisplayName = "Idle"),
+	Patrol	UMETA(DisplayName = "Patrol"),
+	Attack	UMETA(DisplayName = "Attack"),
+	Combat	UMETA(DisplayName = "Combat"),
+	Strafe	UMETA(DisplayName = "Strafe"),
+	Dead	UMETA(DisplayName = "Dead"),
+};
+
 class UAnimMontage;
 class UBoxComponent;
 class AEnemyAIController;
+class UStrafeStrategy;
+class UAttackStrategy;
+class UPatrolStrategy;
 
 UCLASS()
 class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
@@ -17,6 +32,13 @@ class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
 public:
 	AEnemy();
 	virtual void Tick(float DeltaTime) override;
+	
+	// Enter and exit combat
+	void EnterCombat();
+	void ExitCombat();
+	
+	void MeleeAttack();
+	void ResetMeleeAttack();
 	
 	// ~ Begin IHitInterface interface
 	// Override hit interface
@@ -35,6 +57,10 @@ public:
 	// Activate and Deactivate weapon boxes
 	virtual void ActivateRightWeapon();
 	virtual void DeactivateRightWeapon();
+	
+	// Used for AI States
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
+	EAIState CurrentState;
 
 protected:
 	virtual void BeginPlay() override;
@@ -54,14 +80,27 @@ protected:
 		const FHitResult& SweepResult
 	);
 	
-	UFUNCTION(BlueprintCallable)
-	void MeleeAttack();
-	
 	void ResetAttack();
 	
 	FName GetAttackSectionName(int32 SectionCount);
 	
 private:
+	// Combat strategy logic
+	TWeakObjectPtr<UPatrolStrategy> PatrolStrategy;
+	TWeakObjectPtr<UAttackStrategy> AttackStrategy;
+	TWeakObjectPtr<UStrafeStrategy> StrafeStrategy;
+	
+	// Used in Tick for patrolling
+	bool bIsWaiting;
+	FTimerHandle PatrolDelayTimer;
+	
+	void EnemyPatrol();
+	void EnemyAttack();
+	void EnemyStrafe();
+	
+	// Timer attack handle
+	FTimerHandle TimerAttack;
+	
 	// Base damage
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float BaseDamage;
@@ -73,6 +112,15 @@ private:
 	float MaxHealth;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float AttackRange;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float AcceptanceRange;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float StrafeDelayTime;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> AttackMontage;
 	
 	// Right weapon collision
@@ -82,5 +130,13 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	FName RightWeaponSocketName = FName("RightWeaponSocket");
 	
-	FTimerHandle TimerAttack;
+public:
+	FORCEINLINE float GetAttackRange() const { return AttackRange; }
+	FORCEINLINE float GetAcceptanceRange() const { return AcceptanceRange; }
+	
+	FORCEINLINE float SetAttackRange(const float AttackRangeSet)
+	{
+		AttackRange = AttackRangeSet;
+		return AttackRange;
+	}
 };
