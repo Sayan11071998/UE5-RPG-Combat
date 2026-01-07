@@ -80,6 +80,9 @@ protected:
 		const FHitResult& SweepResult
 	);
 	
+	UFUNCTION(BlueprintImplementableEvent)
+	void EnemyDeath();
+	
 	void ResetAttack();
 	
 	FName GetAttackSectionName(int32 SectionCount);

@@ -160,8 +160,9 @@ float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEv
 	{
 		Health = 0.f;
 		
-		//Call blueprint function to play death montage and clean things up
-		Debug::Print(TEXT("Enemy Died!!"));
+		EnemyAIController->UnPossess();
+		SetActorEnableCollision(false);
+		EnemyDeath();
 	}
 	else
 	{
