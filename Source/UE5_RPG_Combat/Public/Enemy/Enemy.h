@@ -23,6 +23,8 @@ class AEnemyAIController;
 class UStrafeStrategy;
 class UAttackStrategy;
 class UPatrolStrategy;
+class USoundCue;
+class UNiagaraSystem;
 
 UCLASS()
 class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
@@ -80,6 +82,9 @@ protected:
 		const FHitResult& SweepResult
 	);
 	
+	UFUNCTION(BlueprintImplementableEvent)
+	void EnemyDeath();
+	
 	void ResetAttack();
 	
 	FName GetAttackSectionName(int32 SectionCount);
@@ -129,6 +134,17 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	FName RightWeaponSocketName = FName("RightWeaponSocket");
+	
+	// Sounds
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USoundCue> ImpactSound;
+	
+	// Effects
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UNiagaraSystem> ImpactNiagara;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	FName ImpactBoneLocation;
 	
 public:
 	FORCEINLINE float GetAttackRange() const { return AttackRange; }

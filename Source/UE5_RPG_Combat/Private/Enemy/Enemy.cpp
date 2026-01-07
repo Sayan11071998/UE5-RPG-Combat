@@ -6,8 +6,8 @@
 #include "Enemy/AIBehavior/AttackStrategy.h"
 #include "Enemy/AIBehavior/PatrolStrategy.h"
 #include "Enemy/AIBehavior/StrafeStrategy.h"
-
-#include "RPGDebugHelper.h"
+#include "Sound/SoundCue.h"
+#include "NiagaraFunctionLibrary.h"
 
 AEnemy::AEnemy() :
 	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f)
@@ -149,7 +149,15 @@ void AEnemy::ResetMeleeAttack()
 void AEnemy::HitInterface_Implementation(FHitResult HitResult)
 {
 	// Impact Sound
+	if (ImpactSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation());
+	}
+	
 	// Impact Niagara
+	const FVector SpawnLocation = GetMesh()->GetBoneLocation(ImpactBoneLocation, EBoneSpaces::WorldSpace);
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), ImpactNiagara, SpawnLocation, GetActorRotation());
+	
 	// Hit Montage
 }
 
@@ -160,8 +168,9 @@ float AEnemy::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEv
 	{
 		Health = 0.f;
 		
-		//Call blueprint function to play death montage and clean things up
-		Debug::Print(TEXT("Enemy Died!!"));
+		EnemyAIController->UnPossess();
+		SetActorEnableCollision(false);
+		EnemyDeath();
 	}
 	else
 	{

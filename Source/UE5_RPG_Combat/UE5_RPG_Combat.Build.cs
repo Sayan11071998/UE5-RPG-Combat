@@ -16,7 +16,8 @@ public class UE5_RPG_Combat : ModuleRules
 				"InputCore",
 				"EnhancedInput",
 				"AIModule",
-				"NavigationSystem"
+				"NavigationSystem",
+				"Niagara"
 			}
 		);
 

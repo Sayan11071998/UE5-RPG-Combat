@@ -10,6 +10,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
 #include "Perception/AISense_Sight.h"
+#include "Sound/SoundCue.h"
 
 #include "RPGDebugHelper.h"
 
@@ -117,12 +118,17 @@ float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& D
 		if (Health - DamageAmount <= 0)
 		{
 			Health = 0.f;
-			// Play Death Montage
-			Debug::Print(TEXT("Player Died!"));
+			// Player death event
+			DeathOfPlayer();
 		}
 		else
 		{
 			Health -= DamageAmount;
+			
+			if (BodyImpactSound)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, BodyImpactSound, GetActorLocation());
+			}
 		}
 	}
 	else // isBlocking = true
@@ -130,15 +136,21 @@ float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& D
 		// Check if player is facing enemy - run dot product logic
 		if (PlayerFacingActor(DamageCauser))
 		{
-			Debug::Print(TEXT("Blocking and Facing Enemy"));
 			// Play hit sound for shield
+			if (ShieldImpactSound)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, ShieldImpactSound, GetActorLocation());
+			}
 		}
 		else
 		{
-			Debug::Print(TEXT("Blocking and not Facing Enemy"));
+			Health -= DamageAmount;
 			
 			// Play hit flesh sound
-			Health -= DamageAmount;
+			if (BodyImpactSound)
+			{
+				UGameplayStatics::PlaySoundAtLocation(this, BodyImpactSound, GetActorLocation());
+			}
 		}
 	}
 	

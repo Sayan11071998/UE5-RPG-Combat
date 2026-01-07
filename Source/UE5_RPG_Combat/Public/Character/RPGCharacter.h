@@ -12,6 +12,7 @@ class UInputAction;
 class UAnimMontage;
 class UBoxComponent;
 class UAIPerceptionStimuliSourceComponent;
+class USoundCue;
 
 UCLASS()
 class UE5_RPG_COMBAT_API ARPGCharacter : public ACharacter
@@ -103,6 +104,10 @@ protected:
 		const FHitResult& SweepResult
 	);
 	
+	// Handle logic after player dies
+	UFUNCTION(BlueprintImplementableEvent)
+	void DeathOfPlayer();
+	
 private:
 	// Spring arm component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
@@ -128,6 +133,13 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float MaxHealth;
+
+	// Sounds
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USoundCue> BodyImpactSound;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USoundCue> ShieldImpactSound;
 	
 	bool PlayerFacingActor(TObjectPtr<AActor> FacingActor);
 	
