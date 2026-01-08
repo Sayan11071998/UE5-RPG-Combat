@@ -9,8 +9,8 @@
   <component name="ChangeListManager">
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Enemies/Arrow/WithRootBone/ErikaArcher_UE_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Enemies/Arrow/WithRootBone/ErikaArcher_UE_Skeleton.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/RPGCombat/Maps/TestMap/4/49/P6TQ455A9CAFBUHRRAGBHY.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/RPGCombat/Maps/TestMap/4/49/P6TQ455A9CAFBUHRRAGBHY.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/Enemies/Archer/BP_ErikaArcher.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/Enemies/Archer/BP_ErikaArcher.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Enemies/Arrow/Animations/StandingAimRecoil_UE.uasset" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
