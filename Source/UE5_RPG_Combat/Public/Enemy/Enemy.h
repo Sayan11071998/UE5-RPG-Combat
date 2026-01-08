@@ -25,6 +25,7 @@ class UAttackStrategy;
 class UPatrolStrategy;
 class USoundCue;
 class UNiagaraSystem;
+class AEnemyProjectile;
 
 UCLASS()
 class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
@@ -39,8 +40,12 @@ public:
 	void EnterCombat();
 	void ExitCombat();
 	
+	// Attack section
 	void MeleeAttack();
 	void ResetMeleeAttack();
+	
+	// Spawn Projectile for enemy Projectile
+	void SpawnProjectile();
 	
 	// ~ Begin IHitInterface interface
 	// Override hit interface
@@ -134,6 +139,10 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	FName RightWeaponSocketName = FName("RightWeaponSocket");
+	
+	// Projectile blueprint. Set is enemy blueprint
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AEnemyProjectile> ProjectileBP;
 	
 	// Sounds
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))

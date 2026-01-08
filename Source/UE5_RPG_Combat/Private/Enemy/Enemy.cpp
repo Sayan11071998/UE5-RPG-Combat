@@ -6,6 +6,7 @@
 #include "Enemy/AIBehavior/AttackStrategy.h"
 #include "Enemy/AIBehavior/PatrolStrategy.h"
 #include "Enemy/AIBehavior/StrafeStrategy.h"
+#include "Enemy/EnemyProjectile.h"
 #include "Sound/SoundCue.h"
 #include "NiagaraFunctionLibrary.h"
 
@@ -144,6 +145,18 @@ void AEnemy::ResetMeleeAttack()
 	{
 		CurrentState = EAIState::Strafe;
 	}
+}
+
+void AEnemy::SpawnProjectile()
+{
+	// Get socket transform
+	FTransform SocketTransform = GetMesh()->GetSocketTransform(FName(TEXT("ProjectileSocket")));
+	
+	// Set spawn params
+	FActorSpawnParameters SpawnParameters;
+	
+	// Spawn the projectile
+	AEnemyProjectile* Projectile = GetWorld()->SpawnActor<AEnemyProjectile>(ProjectileBP, SocketTransform, SpawnParameters);
 }
 
 void AEnemy::HitInterface_Implementation(FHitResult HitResult)
