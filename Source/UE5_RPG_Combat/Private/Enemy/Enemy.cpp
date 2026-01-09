@@ -126,7 +126,7 @@ void AEnemy::MeleeAttack()
 			const float SectionLength = AttackMontage->GetSectionLength(SectionIndex);
 		
 			// Play montage section
-			AnimInstance->Montage_Play(AttackMontage);
+			AnimInstance->Montage_Play(AttackMontage, 0.5);
 			AnimInstance->Montage_JumpToSection(SectionName, AttackMontage);
 			GetWorldTimerManager().SetTimer(TimerAttack, this, &AEnemy::ResetAttack, SectionLength, false);
 			
