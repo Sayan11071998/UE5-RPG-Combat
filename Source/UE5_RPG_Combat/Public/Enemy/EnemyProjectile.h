@@ -55,4 +55,7 @@ private:
 	
 	// Setup projectile timer
 	FTimerHandle ProjectileTimer;
+	
+public:
+	FORCEINLINE UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
 };

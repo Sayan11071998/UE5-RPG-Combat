@@ -9,6 +9,7 @@
 #include "Enemy/EnemyProjectile.h"
 #include "Sound/SoundCue.h"
 #include "NiagaraFunctionLibrary.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 AEnemy::AEnemy() :
 	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f)
@@ -157,6 +158,28 @@ void AEnemy::SpawnProjectile()
 	
 	// Spawn the projectile
 	AEnemyProjectile* Projectile = GetWorld()->SpawnActor<AEnemyProjectile>(ProjectileBP, SocketTransform, SpawnParameters);
+	
+	if (Projectile)
+	{
+		// Get the target (player character)
+		ARPGCharacter* PlayerCharacter = Cast<ARPGCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		
+		if (PlayerCharacter)
+		{
+			// Get target location with height offset (aim for chest/torso)
+			FVector TargetLocation = PlayerCharacter->GetActorLocation();
+			TargetLocation.Z += 80.f; // Add 80 units upward (adjust this value as needed)
+			
+			// Calculate direction from projectile to target
+			FVector Direction = (TargetLocation - SocketTransform.GetLocation()).GetSafeNormal();
+			
+			// Set the projectile's velocity
+			if (Projectile->GetProjectileMovement())
+			{
+				Projectile->GetProjectileMovement()->Velocity = Direction * Projectile->GetProjectileMovement()->InitialSpeed;
+			}
+		}
+	}
 }
 
 void AEnemy::HitInterface_Implementation(FHitResult HitResult)

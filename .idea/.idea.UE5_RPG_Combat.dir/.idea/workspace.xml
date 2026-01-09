@@ -9,10 +9,11 @@
   <component name="ChangeListManager">
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/Enemies/Archer/BP_ErikaArcher.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/Enemies/Archer/BP_ErikaArcher.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/RPGCombat/Enemies/Archer/BP_WoodArrow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/Enemies/Archer/BP_WoodArrow.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Enemies/Arrow/WithRootBone/ErikaArcher_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Enemies/Arrow/WithRootBone/ErikaArcher_UE.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Enemies/Arrow/WithRootBone/ErikaArcher_UE_Skeleton.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/Enemies/Arrow/WithRootBone/ErikaArcher_UE_Skeleton.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/Enemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/EnemyProjectile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/EnemyProjectile.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +27,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://3" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://7" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Plugins/FX/Niagara/Source/Niagara/Private/NiagaraFunctionLibrary.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/AIController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/Blueprint/AIAsyncTaskBlueprintProxy.h" root0="FORCE_HIGHLIGHTING" />
@@ -181,7 +182,7 @@
       <workItem from="1767803234927" duration="9250000" />
       <workItem from="1767888575893" duration="3351000" />
       <workItem from="1767895917314" duration="490000" />
-      <workItem from="1767976624907" duration="4107000" />
+      <workItem from="1767976624907" duration="8155000" />
     </task>
     <servers />
   </component>
