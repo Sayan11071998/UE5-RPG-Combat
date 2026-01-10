@@ -5,6 +5,18 @@
 #include "InputActionValue.h"
 #include "RPGCharacter.generated.h"
 
+UENUM(BlueprintType)
+enum class EPlayerState : uint8
+{
+	Ready		UMETA(DisplayName = "Ready"),
+	NotReady	UMETA(DisplayName = "Not Ready"),
+	Attacking	UMETA(DisplayName = "Attacking"),
+	BlockDodge	UMETA(DisplayName = "Block Dodge"),
+	Attack		UMETA(DisplayName = "Attack"),
+	Stunned		UMETA(DisplayName = "Stunned"),
+	Dead		UMETA(DisplayName = "Dead")
+};
+
 class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
@@ -32,6 +44,9 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	// ~ End APawn interface
 	
+	// Current state
+	EPlayerState CurrentState;
+	
 protected:
 	virtual void BeginPlay() override;
 	
@@ -54,6 +69,12 @@ protected:
 	// Blocking
 	void StartBlocking();
 	void StopBlocking();
+	void ResetDodgeRoll();
+	
+	// Dodge Roll
+	void DodgeBack();
+	void DodgeLeft();
+	void DodgeRight();
 	
 	// Play anim montage
 	void AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName = "Default", float PlayRate = 1.f);
@@ -89,6 +110,15 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
 	TObjectPtr<UInputAction> BlockAction;
 	
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputAction> DodgeBackAction;
+	
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputAction> DodgeLeftAction;
+	
+	UPROPERTY(EditAnywhere, Category = "Enhanced Input")
+	TObjectPtr<UInputAction> DodgeRightAction;
+	
 	// Walk speed
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
 	float WalkSpeed;
@@ -117,6 +147,9 @@ protected:
 	void DeathOfPlayer();
 	
 private:
+	// Timers
+	FTimerHandle TimerDodgeRoll;
+	
 	// Spring arm component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
@@ -128,6 +161,9 @@ private:
 	// Montages
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Montage", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> AttackMontage;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Montage", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAnimMontage> DodgeMontage;
 	
 	// Player combat properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
