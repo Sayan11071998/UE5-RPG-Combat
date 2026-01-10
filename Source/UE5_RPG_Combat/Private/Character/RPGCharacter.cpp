@@ -101,6 +101,11 @@ void ARPGCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 		// Block actions
 		Input->BindAction(BlockAction, ETriggerEvent::Started, this, &ARPGCharacter::StartBlocking);
 		Input->BindAction(BlockAction, ETriggerEvent::Completed, this, &ARPGCharacter::StopBlocking);
+		
+		// Dodge actions
+		Input->BindAction(DodgeBackAction, ETriggerEvent::Triggered, this, &ARPGCharacter::DodgeBack);
+		Input->BindAction(DodgeLeftAction, ETriggerEvent::Triggered, this, &ARPGCharacter::DodgeLeft);
+		Input->BindAction(DodgeRightAction, ETriggerEvent::Triggered, this, &ARPGCharacter::DodgeRight);
 	}
 }
 
@@ -306,6 +311,21 @@ void ARPGCharacter::StopBlocking()
 		GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 		AnimInstance->SetIsBlocking(false);
 	}
+}
+
+void ARPGCharacter::DodgeBack()
+{
+	Debug::Print(TEXT("Dodge Back"));
+}
+
+void ARPGCharacter::DodgeLeft()
+{
+	Debug::Print(TEXT("Dodge Left"));
+}
+
+void ARPGCharacter::DodgeRight()
+{
+	Debug::Print(TEXT("Dodge Right"));
 }
 
 void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName, float PlayRate)
