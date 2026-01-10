@@ -9,10 +9,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/RPGCharacter/WithRootBone/Animations/Dodge/SwordAndShield_StandingDodgeBackward_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/RPGCharacter/WithRootBone/Animations/Dodge/SwordAndShield_StandingDodgeBackward_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/RPGCharacter/WithRootBone/Animations/Dodge/SwordAndShield_StandingDodgeLeft_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/RPGCharacter/WithRootBone/Animations/Dodge/SwordAndShield_StandingDodgeLeft_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/RPGCharacter/WithRootBone/Animations/Dodge/SwordAndShield_StandingDodgeRight_UE.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/GameAssets/Mixamo/RPGCharacter/WithRootBone/Animations/Dodge/SwordAndShield_StandingDodgeRight_UE.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/BP_RPGCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/BP_RPGCharacter.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Character/RPGCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Character/RPGCharacter.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Character/RPGCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Character/RPGCharacter.h" afterDir="false" />
     </list>
@@ -185,7 +181,7 @@
       <workItem from="1767895917314" duration="490000" />
       <workItem from="1767976624907" duration="8873000" />
       <workItem from="1768056069195" duration="283000" />
-      <workItem from="1768056878087" duration="7023000" />
+      <workItem from="1768056878087" duration="7914000" />
     </task>
     <servers />
   </component>

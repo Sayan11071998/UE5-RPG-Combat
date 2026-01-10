@@ -124,8 +124,6 @@ void ARPGCharacter::DeactivateRightWeapon()
 float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
 	class AController* EventInstigator, AActor* DamageCauser)
 {
-	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
-	
 	if (CurrentState != EPlayerState::BlockDodge)
 	{
 		if (Health - DamageAmount <= 0)
@@ -149,8 +147,10 @@ float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& D
 		// Check if player is facing enemy - run dot product logic
 		if (PlayerFacingActor(DamageCauser))
 		{
+			URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
+			
 			// Play hit sound for shield
-			if (ShieldImpactSound)
+			if (ShieldImpactSound && AnimInstance->GetIsBlocking())
 			{
 				UGameplayStatics::PlaySoundAtLocation(this, ShieldImpactSound, GetActorLocation());
 			}
@@ -317,28 +317,30 @@ void ARPGCharacter::StopBlocking()
 	}
 }
 
+void ARPGCharacter::ResetDodgeRoll()
+{
+	CurrentState = EPlayerState::Ready;
+}
+
 void ARPGCharacter::DodgeBack()
 {
-	Debug::Print(TEXT("Dodge Back"));
-	
 	CurrentState = EPlayerState::BlockDodge;
 	AnimMontagePlay(DodgeMontage, FName(TEXT("DodgeBack")));
+	GetWorldTimerManager().SetTimer(TimerDodgeRoll, this, &ARPGCharacter::ResetDodgeRoll, 1.5f, false);
 }
 
 void ARPGCharacter::DodgeLeft()
 {
-	Debug::Print(TEXT("Dodge Left"));
-	
 	CurrentState = EPlayerState::BlockDodge;
 	AnimMontagePlay(DodgeMontage, FName(TEXT("DodgeLeft")));
+	GetWorldTimerManager().SetTimer(TimerDodgeRoll, this, &ARPGCharacter::ResetDodgeRoll, 1.5f, false);
 }
 
 void ARPGCharacter::DodgeRight()
 {
-	Debug::Print(TEXT("Dodge Right"));
-	
 	CurrentState = EPlayerState::BlockDodge;
 	AnimMontagePlay(DodgeMontage, FName(TEXT("DodgeRight")));
+	GetWorldTimerManager().SetTimer(TimerDodgeRoll, this, &ARPGCharacter::ResetDodgeRoll, 1.5f, false);
 }
 
 void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName, float PlayRate)

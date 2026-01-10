@@ -69,6 +69,7 @@ protected:
 	// Blocking
 	void StartBlocking();
 	void StopBlocking();
+	void ResetDodgeRoll();
 	
 	// Dodge Roll
 	void DodgeBack();
@@ -146,6 +147,9 @@ protected:
 	void DeathOfPlayer();
 	
 private:
+	// Timers
+	FTimerHandle TimerDodgeRoll;
+	
 	// Spring arm component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
