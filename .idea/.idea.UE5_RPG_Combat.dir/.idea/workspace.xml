@@ -9,8 +9,10 @@
   <component name="ChangeListManager">
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Character/RPGCharacter.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Character/RPGCharacter.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Character/RPGCharacter.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Character/RPGCharacter.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/RPGCombat/Maps/TestMap/3/2U/H2F0LX7LGUH7CCLNYTKHD4.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/RPGCombat/Maps/TestMap/3/2U/H2F0LX7LGUH7CCLNYTKHD4.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/RPGCombat/Maps/TestMap/4/49/P6TQ455A9CAFBUHRRAGBHY.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/RPGCombat/Maps/TestMap/4/49/P6TQ455A9CAFBUHRRAGBHY.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/AIBehavior/AttackStrategy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/AIBehavior/AttackStrategy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/AttackStrategy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/AttackStrategy.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +26,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://7" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://2" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Plugins/FX/Niagara/Source/Niagara/Private/NiagaraFunctionLibrary.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/AIController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/Blueprint/AIAsyncTaskBlueprintProxy.h" root0="FORCE_HIGHLIGHTING" />
@@ -33,6 +35,9 @@
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Private/AIController.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Private/Blueprint/AIBlueprintHelperLibrary.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Core/Private/UObject/UE5MainStreamObjectVersion.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/CoreUObject/Public/UObject/SparseDelegate.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/Animation/AnimNotifies/AnimNotify.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/Sound/SoundClass.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/Sound/SoundCue.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/AIBehavior/ICombatStrategy.cpp" root0="FORCE_HIGHLIGHTING" />
@@ -66,14 +71,14 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Uproject.UE5_RPG_Combat.executor": "Debug",
-    "git-widget-placeholder": "Motion-Warping",
+    "git-widget-placeholder": "Ranged-System",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.inline.completion",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -173,7 +178,12 @@
       <workItem from="1767631293513" duration="1393000" />
       <workItem from="1767632874706" duration="9115000" />
       <workItem from="1767715353503" duration="11840000" />
-      <workItem from="1767803234927" duration="8969000" />
+      <workItem from="1767803234927" duration="9250000" />
+      <workItem from="1767888575893" duration="3351000" />
+      <workItem from="1767895917314" duration="490000" />
+      <workItem from="1767976624907" duration="8873000" />
+      <workItem from="1768056069195" duration="283000" />
+      <workItem from="1768056878087" duration="2827000" />
     </task>
     <servers />
   </component>

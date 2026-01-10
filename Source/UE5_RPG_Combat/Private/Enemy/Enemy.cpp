@@ -6,11 +6,13 @@
 #include "Enemy/AIBehavior/AttackStrategy.h"
 #include "Enemy/AIBehavior/PatrolStrategy.h"
 #include "Enemy/AIBehavior/StrafeStrategy.h"
+#include "Enemy/EnemyProjectile.h"
 #include "Sound/SoundCue.h"
 #include "NiagaraFunctionLibrary.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 AEnemy::AEnemy() :
-	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f)
+	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f), AttackSpeed(1.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
@@ -107,7 +109,7 @@ void AEnemy::ExitCombat()
 	}
 }
 
-void AEnemy::MeleeAttack()
+void AEnemy::Attack()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	
@@ -125,24 +127,58 @@ void AEnemy::MeleeAttack()
 			const float SectionLength = AttackMontage->GetSectionLength(SectionIndex);
 		
 			// Play montage section
-			AnimInstance->Montage_Play(AttackMontage);
+			AnimInstance->Montage_Play(AttackMontage, AttackSpeed);
 			AnimInstance->Montage_JumpToSection(SectionName, AttackMontage);
 			GetWorldTimerManager().SetTimer(TimerAttack, this, &AEnemy::ResetAttack, SectionLength, false);
 			
 			// Call reset melee attack
 			FTimerHandle TimerResetAttack;
-			GetWorldTimerManager().SetTimer(TimerResetAttack, this, &AEnemy::ResetMeleeAttack, SectionLength, false);
+			GetWorldTimerManager().SetTimer(TimerResetAttack, this, &AEnemy::ResetAttack, SectionLength, false);
 		}
 	}
 }
 
-void AEnemy::ResetMeleeAttack()
+void AEnemy::ResetAttack()
 {
 	float RandomChance = FMath::FRand();
 	
 	if (RandomChance <= 0.3f)
 	{
 		CurrentState = EAIState::Strafe;
+	}
+}
+
+void AEnemy::SpawnProjectile()
+{
+	// Get socket transform
+	FTransform SocketTransform = GetMesh()->GetSocketTransform(FName(TEXT("ProjectileSocket")));
+	
+	// Set spawn params
+	FActorSpawnParameters SpawnParameters;
+	
+	// Spawn the projectile
+	AEnemyProjectile* Projectile = GetWorld()->SpawnActor<AEnemyProjectile>(ProjectileBP, SocketTransform, SpawnParameters);
+	
+	if (Projectile)
+	{
+		// Get the target (player character)
+		ARPGCharacter* PlayerCharacter = Cast<ARPGCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+		
+		if (PlayerCharacter)
+		{
+			// Get target location with height offset (aim for chest/torso)
+			FVector TargetLocation = PlayerCharacter->GetActorLocation();
+			TargetLocation.Z += 80.f; // Add 80 units upward (adjust this value as needed)
+			
+			// Calculate direction from projectile to target
+			FVector Direction = (TargetLocation - SocketTransform.GetLocation()).GetSafeNormal();
+			
+			// Set the projectile's velocity
+			if (Projectile->GetProjectileMovement())
+			{
+				Projectile->GetProjectileMovement()->Velocity = Direction * Projectile->GetProjectileMovement()->InitialSpeed;
+			}
+		}
 	}
 }
 
@@ -207,12 +243,6 @@ void AEnemy::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 			UDamageType::StaticClass()
 		);
 	}
-}
-
-void AEnemy::ResetAttack()
-{
-	// Update state here
-	// MeleeAttack();
 }
 
 FName AEnemy::GetAttackSectionName(int32 SectionCount)

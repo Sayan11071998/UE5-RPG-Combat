@@ -25,6 +25,7 @@ class UAttackStrategy;
 class UPatrolStrategy;
 class USoundCue;
 class UNiagaraSystem;
+class AEnemyProjectile;
 
 UCLASS()
 class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
@@ -39,8 +40,12 @@ public:
 	void EnterCombat();
 	void ExitCombat();
 	
-	void MeleeAttack();
-	void ResetMeleeAttack();
+	// Attack section
+	void Attack();
+	void ResetAttack();
+	
+	// Spawn Projectile for enemy Projectile
+	void SpawnProjectile();
 	
 	// ~ Begin IHitInterface interface
 	// Override hit interface
@@ -85,8 +90,6 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void EnemyDeath();
 	
-	void ResetAttack();
-	
 	FName GetAttackSectionName(int32 SectionCount);
 	
 private:
@@ -123,6 +126,9 @@ private:
 	float AcceptanceRange;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float AttackSpeed;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float StrafeDelayTime;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
@@ -134,6 +140,10 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	FName RightWeaponSocketName = FName("RightWeaponSocket");
+	
+	// Projectile blueprint. Set is enemy blueprint
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<AEnemyProjectile> ProjectileBP;
 	
 	// Sounds
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
