@@ -25,6 +25,12 @@ void UAttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 			// Set focus on the player
 			EnemyAIController->SetFocus(RPGCharacter);
 			
+			// Check player and enemy distance for acceptance range to attack
+			if (PlayerEnemyDistance(Enemy, RPGCharacter) <= Enemy->GetAcceptanceRange())
+			{
+				Enemy->Attack();
+			}
+			
 			EPathFollowingRequestResult::Type MoveResult = EnemyAIController->MoveToActor(
 				RPGCharacter, 
 				Enemy->GetAcceptanceRange(),
@@ -58,15 +64,20 @@ void UAttackStrategy::OnMoveCompleted(FAIRequestID, const FPathFollowingResult& 
 {
 	if (Result.IsSuccess())
 	{
-		FVector RPGPos = RPGCharacter->GetActorLocation();
-		FVector EnemyPos = Enemy->GetActorLocation();
-		
-		float Distance = FVector::Dist(EnemyPos, RPGPos);
-		
 		// Making sure in range to attack the player
-		if (Distance <= Enemy->GetAttackRange())
+		if (PlayerEnemyDistance(Enemy, RPGCharacter) <= Enemy->GetAttackRange())
 		{
 			Enemy->Attack();
 		}
 	}
+}
+
+float UAttackStrategy::PlayerEnemyDistance(TObjectPtr<AEnemy> Enemy, TObjectPtr<ARPGCharacter> RPGCharacter)
+{
+	FVector RPGPos = RPGCharacter->GetActorLocation();
+	FVector EnemyPos = Enemy->GetActorLocation();
+		
+	float Distance = FVector::Dist(EnemyPos, RPGPos);
+	
+	return Distance;
 }

@@ -21,4 +21,7 @@ public:
 	// ~ End ICombatStrategy interface
 	
 	virtual void OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, TObjectPtr<AEnemy> Enemy, ARPGCharacter* RPGCharacter);
+
+private:
+	float PlayerEnemyDistance(TObjectPtr<AEnemy> Enemy, TObjectPtr<ARPGCharacter> RPGCharacter);
 };
