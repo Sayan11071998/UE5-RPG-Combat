@@ -41,8 +41,8 @@ public:
 	void ExitCombat();
 	
 	// Attack section
-	void MeleeAttack();
-	void ResetMeleeAttack();
+	void Attack();
+	void ResetAttack();
 	
 	// Spawn Projectile for enemy Projectile
 	void SpawnProjectile();
@@ -90,8 +90,6 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void EnemyDeath();
 	
-	void ResetAttack();
-	
 	FName GetAttackSectionName(int32 SectionCount);
 	
 private:
@@ -126,6 +124,9 @@ private:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float AcceptanceRange;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	float AttackSpeed;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float StrafeDelayTime;

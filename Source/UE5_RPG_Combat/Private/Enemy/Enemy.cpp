@@ -12,7 +12,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 
 AEnemy::AEnemy() :
-	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f)
+	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f), AttackSpeed(1.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
@@ -109,7 +109,7 @@ void AEnemy::ExitCombat()
 	}
 }
 
-void AEnemy::MeleeAttack()
+void AEnemy::Attack()
 {
 	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
 	
@@ -127,18 +127,18 @@ void AEnemy::MeleeAttack()
 			const float SectionLength = AttackMontage->GetSectionLength(SectionIndex);
 		
 			// Play montage section
-			AnimInstance->Montage_Play(AttackMontage, 0.5);
+			AnimInstance->Montage_Play(AttackMontage, AttackSpeed);
 			AnimInstance->Montage_JumpToSection(SectionName, AttackMontage);
 			GetWorldTimerManager().SetTimer(TimerAttack, this, &AEnemy::ResetAttack, SectionLength, false);
 			
 			// Call reset melee attack
 			FTimerHandle TimerResetAttack;
-			GetWorldTimerManager().SetTimer(TimerResetAttack, this, &AEnemy::ResetMeleeAttack, SectionLength, false);
+			GetWorldTimerManager().SetTimer(TimerResetAttack, this, &AEnemy::ResetAttack, SectionLength, false);
 		}
 	}
 }
 
-void AEnemy::ResetMeleeAttack()
+void AEnemy::ResetAttack()
 {
 	float RandomChance = FMath::FRand();
 	
@@ -243,12 +243,6 @@ void AEnemy::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 			UDamageType::StaticClass()
 		);
 	}
-}
-
-void AEnemy::ResetAttack()
-{
-	// Update state here
-	// MeleeAttack();
 }
 
 FName AEnemy::GetAttackSectionName(int32 SectionCount)
