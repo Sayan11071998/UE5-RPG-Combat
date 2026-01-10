@@ -52,6 +52,8 @@ void ARPGCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CurrentState = EPlayerState::Ready;
+	
 	// Add input mapping context
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
@@ -124,7 +126,7 @@ float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& D
 {
 	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
 	
-	if (AnimInstance && AnimInstance->GetIsBlocking() == false)
+	if (CurrentState != EPlayerState::BlockDodge)
 	{
 		if (Health - DamageAmount <= 0)
 		{
@@ -297,6 +299,7 @@ void ARPGCharacter::StartBlocking()
 	
 	if (AnimInstance)
 	{
+		CurrentState = EPlayerState::BlockDodge;
 		GetCharacterMovement()->DisableMovement();
 		AnimInstance->SetIsBlocking(true);
 	}
@@ -308,6 +311,7 @@ void ARPGCharacter::StopBlocking()
 	
 	if (AnimInstance)
 	{
+		CurrentState = EPlayerState::Ready;
 		GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 		AnimInstance->SetIsBlocking(false);
 	}
@@ -316,16 +320,25 @@ void ARPGCharacter::StopBlocking()
 void ARPGCharacter::DodgeBack()
 {
 	Debug::Print(TEXT("Dodge Back"));
+	
+	CurrentState = EPlayerState::BlockDodge;
+	AnimMontagePlay(DodgeMontage, FName(TEXT("DodgeBack")));
 }
 
 void ARPGCharacter::DodgeLeft()
 {
 	Debug::Print(TEXT("Dodge Left"));
+	
+	CurrentState = EPlayerState::BlockDodge;
+	AnimMontagePlay(DodgeMontage, FName(TEXT("DodgeLeft")));
 }
 
 void ARPGCharacter::DodgeRight()
 {
 	Debug::Print(TEXT("Dodge Right"));
+	
+	CurrentState = EPlayerState::BlockDodge;
+	AnimMontagePlay(DodgeMontage, FName(TEXT("DodgeRight")));
 }
 
 void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName, float PlayRate)

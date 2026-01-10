@@ -5,6 +5,18 @@
 #include "InputActionValue.h"
 #include "RPGCharacter.generated.h"
 
+UENUM(BlueprintType)
+enum class EPlayerState : uint8
+{
+	Ready		UMETA(DisplayName = "Ready"),
+	NotReady	UMETA(DisplayName = "Not Ready"),
+	Attacking	UMETA(DisplayName = "Attacking"),
+	BlockDodge	UMETA(DisplayName = "Block Dodge"),
+	Attack		UMETA(DisplayName = "Attack"),
+	Stunned		UMETA(DisplayName = "Stunned"),
+	Dead		UMETA(DisplayName = "Dead")
+};
+
 class USpringArmComponent;
 class UCameraComponent;
 class UInputMappingContext;
@@ -31,6 +43,9 @@ public:
 	// ~ Begin APawn interface
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	// ~ End APawn interface
+	
+	// Current state
+	EPlayerState CurrentState;
 	
 protected:
 	virtual void BeginPlay() override;
