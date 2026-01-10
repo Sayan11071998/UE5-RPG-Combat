@@ -44,6 +44,12 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	// ~ End APawn interface
 	
+	// Save and Load player data
+	UFUNCTION(BlueprintCallable, Category = "SaveData")
+	void SavePlayerData();
+	
+	void LoadPlayerData();
+	
 	// Current state
 	EPlayerState CurrentState;
 	

@@ -14,6 +14,7 @@
 #include "MotionWarpingClasses.h"
 #include "MotionWarpingComponent.h"
 #include "Enemy/Enemy.h"
+#include "Core/PlayerSaveGame.h"
 
 #include "RPGDebugHelper.h"
 
@@ -51,6 +52,8 @@ ARPGCharacter::ARPGCharacter() :
 void ARPGCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	LoadPlayerData();
 	
 	CurrentState = EPlayerState::Ready;
 	
@@ -168,6 +171,32 @@ float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& D
 	}
 	
 	return DamageAmount;
+}
+
+void ARPGCharacter::SavePlayerData()
+{
+	UPlayerSaveGame* SaveGameInstance = Cast<UPlayerSaveGame>(UGameplayStatics::CreateSaveGameObject(UPlayerSaveGame::StaticClass()));
+	
+	if (SaveGameInstance)
+	{
+		SaveGameInstance->Health = Health;
+		
+		// Save created object to file
+		if (!UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("PlayerSaveSlot"), 0))
+		{
+			Debug::Print(TEXT("SaveGameToSlot failed"));
+		}
+	}
+}
+
+void ARPGCharacter::LoadPlayerData()
+{
+	UPlayerSaveGame* LoadGameInstance = Cast<UPlayerSaveGame>(UGameplayStatics::LoadGameFromSlot(TEXT("PlayerSaveSlot"), 0));
+	
+	if (LoadGameInstance)
+	{
+		Health = LoadGameInstance->Health;
+	}
 }
 
 void ARPGCharacter::Move(const FInputActionValue& InputValue)
