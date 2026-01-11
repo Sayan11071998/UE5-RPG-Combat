@@ -322,8 +322,6 @@ void ARPGCharacter::MotionWarpAttack(float AttackDistance, FName MotionWarpName)
 		{
 			Debug::Print(TEXT("Enemy is null or motion warping component is null"));
 		}
-		
-		DrawDebugLine(GetWorld(), Start, End, FColor::Red, false, 1, 0, 1);
 	}
 }
 
