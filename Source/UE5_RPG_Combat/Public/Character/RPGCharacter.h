@@ -44,6 +44,12 @@ public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	// ~ End APawn interface
 	
+	// Save and Load player data
+	UFUNCTION(BlueprintCallable, Category = "SaveData")
+	void SavePlayerData();
+	
+	void LoadPlayerData();
+	
 	// Current state
 	EPlayerState CurrentState;
 	
@@ -150,6 +156,9 @@ private:
 	// Timers
 	FTimerHandle TimerDodgeRoll;
 	
+	// Last checkpoint location
+	FVector CheckpointLocation;
+	
 	// Spring arm component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
@@ -185,11 +194,11 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USoundCue> ShieldImpactSound;
 	
-	bool PlayerFacingActor(TObjectPtr<AActor> FacingActor);
-	
 	// AI Perception System
 	UPROPERTY()
 	TObjectPtr<UAIPerceptionStimuliSourceComponent> StimuliSource;
+	
+	bool PlayerFacingActor(TObjectPtr<AActor> FacingActor);
 	
 	void SetupStimuliSource();
 };
