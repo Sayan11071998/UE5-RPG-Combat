@@ -156,6 +156,10 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	FName ImpactBoneLocation;
 	
+	// Enemy name
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	FName EnemyName;
+	
 public:
 	FORCEINLINE float GetAttackRange() const { return AttackRange; }
 	FORCEINLINE float GetAcceptanceRange() const { return AcceptanceRange; }
