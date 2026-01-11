@@ -55,6 +55,14 @@ void ARPGCharacter::BeginPlay()
 	
 	LoadPlayerData();
 	
+	// Spawn player at checkpoint location
+	UWorld* World = GetWorld();
+	
+	if (World && CheckpointLocation != FVector::ZeroVector)
+	{
+		SetActorLocation(CheckpointLocation);
+	}
+	
 	CurrentState = EPlayerState::Ready;
 	
 	// Add input mapping context
@@ -180,6 +188,7 @@ void ARPGCharacter::SavePlayerData()
 	if (SaveGameInstance)
 	{
 		SaveGameInstance->Health = Health;
+		SaveGameInstance->CheckpointLocation = GetActorLocation();
 		
 		// Save created object to file
 		if (!UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("PlayerSaveSlot"), 0))
@@ -196,6 +205,7 @@ void ARPGCharacter::LoadPlayerData()
 	if (LoadGameInstance)
 	{
 		Health = LoadGameInstance->Health;
+		CheckpointLocation = LoadGameInstance->CheckpointLocation;
 	}
 }
 

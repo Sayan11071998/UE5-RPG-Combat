@@ -156,6 +156,9 @@ private:
 	// Timers
 	FTimerHandle TimerDodgeRoll;
 	
+	// Last checkpoint location
+	FVector CheckpointLocation;
+	
 	// Spring arm component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
@@ -191,11 +194,11 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USoundCue> ShieldImpactSound;
 	
-	bool PlayerFacingActor(TObjectPtr<AActor> FacingActor);
-	
 	// AI Perception System
 	UPROPERTY()
 	TObjectPtr<UAIPerceptionStimuliSourceComponent> StimuliSource;
+	
+	bool PlayerFacingActor(TObjectPtr<AActor> FacingActor);
 	
 	void SetupStimuliSource();
 };
