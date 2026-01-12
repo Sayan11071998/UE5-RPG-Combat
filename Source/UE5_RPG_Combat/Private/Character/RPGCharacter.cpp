@@ -16,8 +16,6 @@
 #include "Enemy/Enemy.h"
 #include "Core/PlayerSaveGame.h"
 
-#include "RPGDebugHelper.h"
-
 ARPGCharacter::ARPGCharacter() :
 	WalkSpeed(300.f), RunSpeed(600.f), BaseDamage(20.f), Health(100.f), MaxHealth(100.f)
 {
@@ -52,6 +50,9 @@ ARPGCharacter::ARPGCharacter() :
 void ARPGCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	// Caching the reference of Anim Instance
+	CachedAnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
 	
 	LoadPlayerData();
 	
@@ -158,10 +159,8 @@ float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& D
 		// Check if player is facing enemy - run dot product logic
 		if (PlayerFacingActor(DamageCauser))
 		{
-			URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
-			
 			// Play hit sound for shield
-			if (ShieldImpactSound && AnimInstance->GetIsBlocking())
+			if (ShieldImpactSound && CachedAnimInstance && CachedAnimInstance->GetIsBlocking())
 			{
 				UGameplayStatics::PlaySoundAtLocation(this, ShieldImpactSound, GetActorLocation());
 			}
@@ -193,7 +192,7 @@ void ARPGCharacter::SavePlayerData()
 		// Save created object to file
 		if (!UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("PlayerSaveSlot"), 0))
 		{
-			Debug::Print(TEXT("SaveGameToSlot failed"));
+			UE_LOG(LogTemp, Warning, TEXT("SaveGameToSlot failed"));
 		}
 	}
 }
@@ -320,7 +319,7 @@ void ARPGCharacter::MotionWarpAttack(float AttackDistance, FName MotionWarpName)
 		}
 		else
 		{
-			Debug::Print(TEXT("Enemy is null or motion warping component is null"));
+			UE_LOG(LogTemp, Warning, TEXT("Enemy is null or motion warping component is nul"));
 		}
 	}
 }
@@ -332,25 +331,21 @@ void ARPGCharacter::ResetWarpAttack()
 
 void ARPGCharacter::StartBlocking()
 {
-	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
-	
-	if (AnimInstance)
+	if (CachedAnimInstance)
 	{
 		CurrentState = EPlayerState::BlockDodge;
 		GetCharacterMovement()->DisableMovement();
-		AnimInstance->SetIsBlocking(true);
+		CachedAnimInstance->SetIsBlocking(true);
 	}
 }
 
 void ARPGCharacter::StopBlocking()
 {
-	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
-	
-	if (AnimInstance)
+	if (CachedAnimInstance)
 	{
 		CurrentState = EPlayerState::Ready;
 		GetCharacterMovement()->SetMovementMode(MOVE_Walking);
-		AnimInstance->SetIsBlocking(false);
+		CachedAnimInstance->SetIsBlocking(false);
 	}
 }
 
@@ -382,12 +377,10 @@ void ARPGCharacter::DodgeRight()
 
 void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName, float PlayRate)
 {
-	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
-	
-	if (AnimInstance && MontageToPlay)
+	if (CachedAnimInstance && MontageToPlay)
 	{
 		// Check to see if montage is playing
-		if (!AnimInstance->Montage_IsPlaying(MontageToPlay))
+		if (!CachedAnimInstance->Montage_IsPlaying(MontageToPlay))
 		{
 			PlayAnimMontage(MontageToPlay, PlayRate, SectionName);
 		}

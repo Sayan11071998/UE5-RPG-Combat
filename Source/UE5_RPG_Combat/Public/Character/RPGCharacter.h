@@ -26,6 +26,7 @@ class UBoxComponent;
 class UAIPerceptionStimuliSourceComponent;
 class USoundCue;
 class UMotionWarpingComponent;
+class URPGAnimInstance;
 
 UCLASS()
 class UE5_RPG_COMBAT_API ARPGCharacter : public ACharacter
@@ -136,6 +137,10 @@ protected:
 	// Motion Warping
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
+	
+	// Cached Anim Instance
+	UPROPERTY()
+	TObjectPtr<URPGAnimInstance> CachedAnimInstance;
 	
 	// Right weapon overlap
 	UFUNCTION()
