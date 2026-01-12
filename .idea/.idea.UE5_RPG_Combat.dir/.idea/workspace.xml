@@ -66,7 +66,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Uproject.UE5_RPG_Combat.executor": "Run",
-    "git-widget-placeholder": "Boss-Creation",
+    "git-widget-placeholder": "Polishing-Build",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -181,7 +181,7 @@
       <workItem from="1768056878087" duration="12148000" />
       <workItem from="1768139963892" duration="5073000" />
       <workItem from="1768156897709" duration="1481000" />
-      <workItem from="1768234481460" duration="472000" />
+      <workItem from="1768234481460" duration="1886000" />
     </task>
     <servers />
   </component>
