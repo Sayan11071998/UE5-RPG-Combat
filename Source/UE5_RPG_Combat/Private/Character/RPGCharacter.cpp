@@ -210,6 +210,12 @@ void ARPGCharacter::LoadPlayerData()
 
 void ARPGCharacter::Move(const FInputActionValue& InputValue)
 {
+	if (
+		CurrentState == EPlayerState::BlockDodge ||
+		CurrentState == EPlayerState::Attacking ||
+		CurrentState == EPlayerState::Dead	
+	) return;
+	
 	FVector2D InputVector = InputValue.Get<FVector2D>();
 	
 	if (IsValid(Controller))
