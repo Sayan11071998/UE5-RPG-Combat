@@ -396,24 +396,26 @@ void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FNam
 void ARPGCharacter::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (IsValid(SweepResult.GetActor()) && SweepResult.GetActor() != this)
+	if (!IsValid(SweepResult.GetActor()) || SweepResult.GetActor() == this) return;
+	
+	AEnemy* Enemy = Cast<AEnemy>(SweepResult.GetActor());
+	if (!Enemy) return;
+	
+	IHitInterface* HitInterface = Cast<IHitInterface>(Enemy);
+		
+	if (HitInterface)
 	{
-		IHitInterface* HitInterface = Cast<IHitInterface>(SweepResult.GetActor());
-		
-		if (HitInterface)
-		{
-			HitInterface->HitInterface_Implementation(SweepResult);
-		}
-		
-		// Apply damage to enemy
-		UGameplayStatics::ApplyDamage(
-			SweepResult.GetActor(),
-			BaseDamage,
-			GetController(),
-			this,
-			UDamageType::StaticClass()
-		);
+		HitInterface->HitInterface_Implementation(SweepResult);
 	}
+		
+	// Apply damage to enemy
+	UGameplayStatics::ApplyDamage(
+		Enemy,
+		BaseDamage,
+		GetController(),
+		this,
+		UDamageType::StaticClass()	
+	);
 }
 
 bool ARPGCharacter::PlayerFacingActor(TObjectPtr<AActor> FacingActor)
