@@ -206,6 +206,12 @@ void ARPGCharacter::LoadPlayerData()
 		Health = LoadGameInstance->Health;
 		CheckpointLocation = LoadGameInstance->CheckpointLocation;
 	}
+	else
+	{
+		// First Time Playing - Defaults
+		Health = MaxHealth;
+		CheckpointLocation = FVector::ZeroVector;
+	}
 }
 
 void ARPGCharacter::Move(const FInputActionValue& InputValue)
