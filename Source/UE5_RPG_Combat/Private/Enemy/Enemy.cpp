@@ -25,6 +25,11 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Strategy Creation
+	PatrolStrategy = NewObject<UPatrolStrategy>(this);
+	AttackStrategy = NewObject<UAttackStrategy>(this);
+	StrafeStrategy = NewObject<UStrafeStrategy>(this);
+	
 	// Setup enemy controller
 	EnemyAIController = Cast<AEnemyAIController>(GetController());
 	
@@ -58,19 +63,10 @@ void AEnemy::Tick(float DeltaTime)
 		break;
 		
 	case  EAIState::Strafe:
-		if (StrafeStrategy->HasReachedDestination(this) && !bIsWaiting)
+		if (StrafeStrategy.IsValid() && StrafeStrategy->HasReachedDestination(this) && !bIsWaiting)
 		{
 			bIsWaiting = true;
-			
-			if (StrafeStrategy.IsValid())
-			{
-				StrafeStrategy->Execute(this);
-			}
-			else
-			{
-				StrafeStrategy = NewObject<UStrafeStrategy>();
-				StrafeStrategy->Execute(this);
-			}
+			StrafeStrategy->Execute(this);
 			
 			float StrafeDelay = FMath::RandRange(1.f, StrafeDelayTime);
 			FTimerHandle StrafeDelayTimer;
@@ -79,7 +75,7 @@ void AEnemy::Tick(float DeltaTime)
 		break;
 	
 	case EAIState::Patrol:
-		if (PatrolStrategy->HasReachedDestination(this) && !bIsWaiting)
+		if (PatrolStrategy.IsValid() && PatrolStrategy->HasReachedDestination(this) && !bIsWaiting)
 		{
 			bIsWaiting = true;
 			float PatrolDelay = FMath::RandRange(1.f, 5.f);
@@ -274,11 +270,6 @@ void AEnemy::EnemyPatrol()
 	{
 		PatrolStrategy->Execute(this);
 	}
-	else
-	{
-		PatrolStrategy = NewObject<UPatrolStrategy>();
-		PatrolStrategy->Execute(this);
-	}
 	
 	bIsWaiting = false;
 }
@@ -287,11 +278,6 @@ void AEnemy::EnemyAttack()
 {
 	if (AttackStrategy.IsValid())
 	{
-		AttackStrategy->Execute(this);
-	}
-	else
-	{
-		AttackStrategy = NewObject<UAttackStrategy>();
 		AttackStrategy->Execute(this);
 	}
 	
