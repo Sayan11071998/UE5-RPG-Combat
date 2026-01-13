@@ -208,7 +208,7 @@ void ARPGCharacter::LoadPlayerData()
 	}
 	else
 	{
-		// First Time Playing - Defaults
+		// First time playing - defaults
 		Health = MaxHealth;
 		CheckpointLocation = FVector::ZeroVector;
 	}

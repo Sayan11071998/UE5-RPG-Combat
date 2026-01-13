@@ -15,8 +15,8 @@ public:
 	UStrafeStrategy();
 	
 	// ~ Begin ICombatStrategy interface
-	virtual void Execute(TObjectPtr<AEnemy> Enemy) override;
+	virtual void Execute(AEnemy* Enemy) override;
 	// ~ End ICombatStrategy interface
 	
-	bool HasReachedDestination(TObjectPtr<AEnemy> Enemy);
+	bool HasReachedDestination(AEnemy* Enemy) const;
 };
