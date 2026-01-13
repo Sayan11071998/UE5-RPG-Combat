@@ -55,6 +55,8 @@ void AEnemyProjectile::OnProjectileOverlap(UPrimitiveComponent* OverlappedCompon
 			this,
 			UDamageType::StaticClass()	
 		);
+		
+		DestroyProjectile();
 	}
 	else
 	{
