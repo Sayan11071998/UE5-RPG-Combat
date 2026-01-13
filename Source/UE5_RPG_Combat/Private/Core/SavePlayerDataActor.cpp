@@ -6,6 +6,10 @@ ASavePlayerDataActor::ASavePlayerDataActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
+	// Root component creation
+	USceneComponent* Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	SetRootComponent(Root);
+	
 	// Create the sphere component and attach to root
 	SphereComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 	SphereComponent->SetupAttachment(RootComponent);
