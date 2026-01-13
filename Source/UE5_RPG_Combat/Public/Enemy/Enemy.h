@@ -87,8 +87,8 @@ protected:
 		const FHitResult& SweepResult
 	);
 	
-	UFUNCTION(BlueprintImplementableEvent)
-	void EnemyDeath();
+	// UFUNCTION(BlueprintImplementableEvent)
+	// void EnemyDeath();
 	
 	FName GetAttackSectionName(int32 SectionCount);
 	
@@ -105,6 +105,7 @@ private:
 	void EnemyPatrol();
 	void EnemyAttack();
 	void EnemyStrafe();
+	void EnemyDeath();
 	
 	// Timer attack handle
 	FTimerHandle TimerAttack;
@@ -134,8 +135,12 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float StrafeDelayTime;
 	
+	// Montages
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> AttackMontage;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAnimMontage> DeathMontage;
 	
 	// Right weapon collision
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
@@ -162,6 +167,9 @@ private:
 	// Enemy name
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	FName EnemyName;
+	
+	// Cached Anim Instance
+	TObjectPtr<UAnimInstance> CachedAnimInstance;
 	
 public:
 	FORCEINLINE float GetAttackRange() const { return AttackRange; }

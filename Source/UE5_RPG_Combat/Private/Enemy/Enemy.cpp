@@ -25,6 +25,9 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Caching reference of Anim Instance
+	CachedAnimInstance = GetMesh()->GetAnimInstance();
+	
 	// Strategy Creation
 	PatrolStrategy = NewObject<UPatrolStrategy>(this);
 	AttackStrategy = NewObject<UAttackStrategy>(this);
@@ -107,11 +110,9 @@ void AEnemy::ExitCombat()
 
 void AEnemy::Attack()
 {
-	UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance();
-	
-	if (AnimInstance && AttackMontage)
+	if (CachedAnimInstance && AttackMontage)
 	{
-		if (!AnimInstance->Montage_IsPlaying(AttackMontage))
+		if (!CachedAnimInstance->Montage_IsPlaying(AttackMontage))
 		{
 			// Get number of montage sections
 			const int32 SectionCount = AttackMontage->CompositeSections.Num();
@@ -123,8 +124,8 @@ void AEnemy::Attack()
 			const float SectionLength = AttackMontage->GetSectionLength(SectionIndex);
 		
 			// Play montage section
-			AnimInstance->Montage_Play(AttackMontage, AttackSpeed);
-			AnimInstance->Montage_JumpToSection(SectionName, AttackMontage);
+			CachedAnimInstance->Montage_Play(AttackMontage, AttackSpeed);
+			CachedAnimInstance->Montage_JumpToSection(SectionName, AttackMontage);
 			GetWorldTimerManager().SetTimer(TimerAttack, this, &AEnemy::ResetAttack, SectionLength, false);
 			
 			// Call reset melee attack
@@ -293,4 +294,45 @@ void AEnemy::EnemyStrafe()
 {
 	bIsWaiting = false;
 	CurrentState = EAIState::Attack;
+}
+
+void AEnemy::EnemyDeath()
+{
+	// Set state to death
+	CurrentState = EAIState::Dead;
+	
+	// Unpossess AI Controller
+	if (EnemyAIController)
+	{
+		EnemyAIController->UnPossess();
+	}
+	
+	// Disable collision
+	SetActorEnableCollision(false);
+	
+	// Play death montage
+	if (CachedAnimInstance && DeathMontage)
+	{
+		CachedAnimInstance->Montage_Play(DeathMontage, 1.0f);
+		
+		// Get montage length for destroy delay
+		float DeathMontageLength = DeathMontage->GetPlayLength();
+		
+		// Destroy actor after animation complete
+		FTimerHandle DeathTimerHandle;
+		GetWorldTimerManager().SetTimer(
+			DeathTimerHandle,
+			[this]()
+			{
+				Destroy();
+			},
+			DeathMontageLength,
+			false
+		);
+	}
+	else
+	{
+		// If no montages destroy immediately
+		Destroy();
+	}
 }
