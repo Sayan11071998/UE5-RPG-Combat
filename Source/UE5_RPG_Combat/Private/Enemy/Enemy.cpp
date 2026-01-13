@@ -142,6 +142,11 @@ void AEnemy::ResetAttack()
 	{
 		CurrentState = EAIState::Strafe;
 	}
+	else
+	{
+		// Go back to attacking instead of staying in undefined state
+		CurrentState = EAIState::Attack;
+	}
 }
 
 void AEnemy::SpawnProjectile()
