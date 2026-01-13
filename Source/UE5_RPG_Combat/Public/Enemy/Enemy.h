@@ -128,6 +128,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float AttackSpeed;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true", ClampMin = "0.0", ClampMax = "1.0"))
+	float StrafeChance = 0.3f;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	float StrafeDelayTime;
 	

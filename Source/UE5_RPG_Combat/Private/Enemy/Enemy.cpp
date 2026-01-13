@@ -138,7 +138,7 @@ void AEnemy::ResetAttack()
 {
 	float RandomChance = FMath::FRand();
 	
-	if (RandomChance <= 0.3f)
+	if (RandomChance <= StrafeChance)
 	{
 		CurrentState = EAIState::Strafe;
 	}

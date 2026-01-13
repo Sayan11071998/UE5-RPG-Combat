@@ -17,14 +17,21 @@
 #include "Core/PlayerSaveGame.h"
 
 ARPGCharacter::ARPGCharacter() :
-	WalkSpeed(300.f), RunSpeed(600.f), BaseDamage(20.f), Health(100.f), MaxHealth(100.f)
+	WalkSpeed(300.f),
+	RunSpeed(600.f),
+	JumpZVelocity(300.f),
+	AirControlAmount(0.1f),
+	CameraArmLength(400.f),
+	BaseDamage(20.f),
+	Health(100.f),
+	MaxHealth(100.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
 	// Create camera boom
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	SpringArmComponent->SetupAttachment(RootComponent);
-	SpringArmComponent->TargetArmLength = 400.f;
+	SpringArmComponent->TargetArmLength = CameraArmLength;
 	SpringArmComponent->bUsePawnControlRotation = true;
 	
 	// Create follow camera
@@ -36,12 +43,12 @@ ARPGCharacter::ARPGCharacter() :
 	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpComponent"));
 	
 	// Jump settings
-	GetCharacterMovement()->JumpZVelocity = 300.f;
-	GetCharacterMovement()->AirControl = 0.1f;
+	GetCharacterMovement()->JumpZVelocity = JumpZVelocity;
+	GetCharacterMovement()->AirControl = AirControlAmount;
 	
 	// Right weapon collision box
 	RightWeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("RightWeaponBox"));
-	RightWeaponCollision->SetupAttachment(GetMesh(), FName(TEXT("SwordSocket")));
+	RightWeaponCollision->SetupAttachment(GetMesh(), WeaponSocketName);
 	
 	// Stimulus
 	SetupStimuliSource();

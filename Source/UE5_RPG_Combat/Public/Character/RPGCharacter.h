@@ -134,6 +134,12 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Movement")
 	float RunSpeed;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float JumpZVelocity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
+	float AirControlAmount;
+	
 	// Motion Warping
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<UMotionWarpingComponent> MotionWarpingComponent;
@@ -172,6 +178,10 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCameraComponent> FollowCameraComponent;
 	
+	// Camera arm length
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Camera", meta = (AllowPrivateAccess = "true"))
+	float CameraArmLength;
+	
 	// Montages
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Montage", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAnimMontage> AttackMontage;
@@ -180,6 +190,9 @@ private:
 	TObjectPtr<UAnimMontage> DodgeMontage;
 	
 	// Player combat properties
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
+	FName WeaponSocketName = FName("SwordSocket");
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UBoxComponent> RightWeaponCollision;
 	
