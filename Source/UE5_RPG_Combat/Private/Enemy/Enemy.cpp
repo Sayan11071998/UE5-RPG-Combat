@@ -9,6 +9,7 @@
 #include "Enemy/EnemyProjectile.h"
 #include "Sound/SoundCue.h"
 #include "NiagaraFunctionLibrary.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 AEnemy::AEnemy() :
@@ -310,6 +311,10 @@ void AEnemy::EnemyDeath()
 	// Disable collision
 	SetActorEnableCollision(false);
 	
+	// Disable character movement
+	GetCharacterMovement()->DisableMovement();
+	GetCharacterMovement()->StopMovementImmediately();
+	
 	// Play death montage
 	if (CachedAnimInstance && DeathMontage)
 	{
@@ -326,7 +331,7 @@ void AEnemy::EnemyDeath()
 			{
 				Destroy();
 			},
-			DeathMontageLength,
+			DeathMontageLength - 0.5f,
 			false
 		);
 	}
