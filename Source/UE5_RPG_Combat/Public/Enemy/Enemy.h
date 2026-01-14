@@ -26,6 +26,7 @@ class UPatrolStrategy;
 class USoundCue;
 class UNiagaraSystem;
 class AEnemyProjectile;
+class UProjectilePool;
 
 UCLASS()
 class UE5_RPG_COMBAT_API AEnemy : public ACharacter, public IHitInterface
@@ -68,9 +69,13 @@ public:
 	// Used for AI States
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat")
 	EAIState CurrentState;
+	
+	// Get the projectile pool (static so all enemies share it)
+	static UProjectilePool* GetProjectilePool(UWorld* World);
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	
 	// Enemy AI Controller
 	UPROPERTY()
@@ -86,9 +91,6 @@ protected:
 		bool bFromSweep,
 		const FHitResult& SweepResult
 	);
-	
-	// UFUNCTION(BlueprintImplementableEvent)
-	// void EnemyDeath();
 	
 	FName GetAttackSectionName(int32 SectionCount);
 	
@@ -149,7 +151,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	FName RightWeaponSocketName = FName("RightWeaponSocket");
 	
-	// Projectile blueprint. Set is enemy blueprint
+	// Projectile blueprint. Set in enemy blueprint
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
 	TSubclassOf<AEnemyProjectile> ProjectileBP;
 	
@@ -170,6 +172,9 @@ private:
 	
 	// Cached Anim Instance
 	TObjectPtr<UAnimInstance> CachedAnimInstance;
+	
+	// Static projectile pool shared by all enemies
+	static UProjectilePool* ProjectilePool;
 	
 public:
 	FORCEINLINE float GetAttackRange() const { return AttackRange; }

@@ -7,10 +7,13 @@
 #include "Enemy/AIBehavior/PatrolStrategy.h"
 #include "Enemy/AIBehavior/StrafeStrategy.h"
 #include "Enemy/EnemyProjectile.h"
+#include "Enemy/ProjectilePool.h"
 #include "Sound/SoundCue.h"
 #include "NiagaraFunctionLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/ProjectileMovementComponent.h"
+
+// Initialize static projectile pool
+UProjectilePool* AEnemy::ProjectilePool = nullptr;
 
 AEnemy::AEnemy() :
 	BaseDamage(5.f), Health(100.f), MaxHealth(100.f), AttackRange(300.f), AcceptanceRange(200.f), AttackSpeed(1.f)
@@ -46,8 +49,22 @@ void AEnemy::BeginPlay()
 	RightWeaponCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 	RightWeaponCollision->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 	
+	// Initialize projectile pool if needed
+	if (!ProjectilePool && ProjectileBP)
+	{
+		ProjectilePool = GetProjectilePool(GetWorld());
+	}
+	
 	// Can enemy Patrol
 	CurrentState = EAIState::Patrol;
+}
+
+void AEnemy::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+	
+	// Note: We don't clear the pool here since it's shared across all enemies
+	// The pool will be cleaned up when the world is destroyed
 }
 
 void AEnemy::Tick(float DeltaTime)
@@ -153,14 +170,17 @@ void AEnemy::ResetAttack()
 
 void AEnemy::SpawnProjectile()
 {
+	if (!ProjectilePool)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ProjectilePool is null! Cannot spawn projectile."));
+		return;
+	}
+	
 	// Get socket transform
 	FTransform SocketTransform = GetMesh()->GetSocketTransform(FName(TEXT("ProjectileSocket")));
 	
-	// Set spawn params
-	FActorSpawnParameters SpawnParameters;
-	
-	// Spawn the projectile
-	AEnemyProjectile* Projectile = GetWorld()->SpawnActor<AEnemyProjectile>(ProjectileBP, SocketTransform, SpawnParameters);
+	// Get projectile from pool
+	AEnemyProjectile* Projectile = ProjectilePool->GetProjectile();
 	
 	if (Projectile)
 	{
@@ -171,18 +191,44 @@ void AEnemy::SpawnProjectile()
 		{
 			// Get target location with height offset (aim for chest/torso)
 			FVector TargetLocation = PlayerCharacter->GetActorLocation();
-			TargetLocation.Z += 80.f; // Add 80 units upward (adjust this value as needed)
+			TargetLocation.Z += 80.f; // Add 80 units upward
 			
 			// Calculate direction from projectile to target
 			FVector Direction = (TargetLocation - SocketTransform.GetLocation()).GetSafeNormal();
 			
-			// Set the projectile's velocity
-			if (Projectile->GetProjectileMovement())
-			{
-				Projectile->GetProjectileMovement()->Velocity = Direction * Projectile->GetProjectileMovement()->InitialSpeed;
-			}
+			// Initialize the projectile
+			Projectile->InitializeProjectile(SocketTransform.GetLocation(), Direction);
+		}
+		else
+		{
+			// If no player, shoot forward
+			FVector Direction = GetActorForwardVector();
+			Projectile->InitializeProjectile(SocketTransform.GetLocation(), Direction);
 		}
 	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed to get projectile from pool!"));
+	}
+}
+
+UProjectilePool* AEnemy::GetProjectilePool(UWorld* World)
+{
+	if (!ProjectilePool && World)
+	{
+		// Create a new pool
+		ProjectilePool = NewObject<UProjectilePool>();
+		
+		// We can adjust pool size here (default is 10)
+		// Larger pool = less dynamic allocation but more memory
+		const int32 InitialPoolSize = 20;
+		
+		// We need a valid projectile class - this should be set in the first enemy that spawns
+		// For now, we'll initialize it later when an enemy with a ProjectileBP is created
+		UE_LOG(LogTemp, Log, TEXT("ProjectilePool created, awaiting initialization"));
+	}
+	
+	return ProjectilePool;
 }
 
 void AEnemy::HitInterface_Implementation(FHitResult HitResult)
@@ -286,6 +332,14 @@ void AEnemy::EnemyAttack()
 	if (AttackStrategy.IsValid())
 	{
 		AttackStrategy->Execute(this);
+	}
+	
+	// Initialize pool if we have a projectile BP and pool isn't initialized yet
+	if (ProjectileBP && ProjectilePool && ProjectilePool->GetPoolSize() == 0)
+	{
+		const int32 InitialPoolSize = 20;
+		ProjectilePool->InitializePool(GetWorld(), ProjectileBP, InitialPoolSize);
+		UE_LOG(LogTemp, Log, TEXT("ProjectilePool initialized with %d projectiles"), InitialPoolSize);
 	}
 	
 	bIsWaiting = false;
