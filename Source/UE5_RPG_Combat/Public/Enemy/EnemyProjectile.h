@@ -7,6 +7,7 @@
 class UStaticMeshComponent;
 class UProjectileMovementComponent;
 class USphereComponent;
+class UProjectilePool;
 
 UCLASS()
 class UE5_RPG_COMBAT_API AEnemyProjectile : public AActor
@@ -26,11 +27,20 @@ public:
 		bool bFromSweep,
 		const FHitResult& SweepResult
 	);
+	
+	// Initialize projectile with direction and position
+	void InitializeProjectile(const FVector& StartLocation, const FVector& Direction);
+	
+	// Reset projectile state for reuse
+	void ResetProjectile();
+	
+	// Set the owner pool
+	void SetOwnerPool(UProjectilePool* Pool);
 
 protected:
 	virtual void BeginPlay() override;
 	
-	// Destroy actor when timer is complete
+	// Destroy or return to pool when timer is complete
 	void DestroyProjectile();
 	
 private:
@@ -55,6 +65,13 @@ private:
 	
 	// Setup projectile timer
 	FTimerHandle ProjectileTimer;
+	
+	// Reference to the pool that owns this projectile
+	UPROPERTY()
+	TObjectPtr<UProjectilePool> OwnerPool;
+	
+	// Track if projectile has hit something
+	bool bHasHit;
 	
 public:
 	FORCEINLINE UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }

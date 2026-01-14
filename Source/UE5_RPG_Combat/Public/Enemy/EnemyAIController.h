@@ -17,6 +17,10 @@ public:
 	AEnemyAIController();
 	virtual void BeginPlay() override;
 	
+	// ~ Begin AAIController interface
+	virtual void OnPossess(APawn* InPawn) override;
+	// ~ End AAIController interface
+	
 protected:
 	UPROPERTY()
 	TObjectPtr<AEnemy> ControlledEnemy;
@@ -26,7 +30,6 @@ protected:
 	TObjectPtr<UAISenseConfig_Sight> SightConfig;
 	
 private:
-	void SetupControlledPawn();
 	void SetupPerceptionSystem();
 	
 	UFUNCTION()

@@ -3,9 +3,10 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Enemy/ProjectilePool.h"
 
 AEnemyProjectile::AEnemyProjectile() :
-	ProjectileDamage(10.f), ProjectileLife(5.f)
+	ProjectileDamage(10.f), ProjectileLife(5.f), bHasHit(false)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
@@ -18,6 +19,7 @@ AEnemyProjectile::AEnemyProjectile() :
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
 	ProjectileMovement->InitialSpeed = 3000.f;
 	ProjectileMovement->MaxSpeed = 3000.f;
+	ProjectileMovement->bShouldBounce = false;
 }
 
 void AEnemyProjectile::BeginPlay()
@@ -28,9 +30,59 @@ void AEnemyProjectile::BeginPlay()
 	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &AEnemyProjectile::OnProjectileOverlap);
 }
 
+void AEnemyProjectile::InitializeProjectile(const FVector& StartLocation, const FVector& Direction)
+{
+	// Reset state
+	bHasHit = false;
+	
+	// Set location
+	SetActorLocation(StartLocation);
+	SetActorRotation(Direction.Rotation());
+	
+	// Set velocity
+	if (ProjectileMovement)
+	{
+		ProjectileMovement->Velocity = Direction * ProjectileMovement->InitialSpeed;
+	}
+	
+	// Start lifetime timer
+	GetWorldTimerManager().ClearTimer(ProjectileTimer);
+	GetWorldTimerManager().SetTimer(ProjectileTimer, this, &AEnemyProjectile::DestroyProjectile, ProjectileLife, false);
+}
+
+void AEnemyProjectile::ResetProjectile()
+{
+	// Clear timer
+	GetWorldTimerManager().ClearTimer(ProjectileTimer);
+	
+	// Reset state
+	bHasHit = false;
+	
+	// Stop movement
+	if (ProjectileMovement)
+	{
+		ProjectileMovement->Velocity = FVector::ZeroVector;
+		ProjectileMovement->StopMovementImmediately();
+	}
+}
+
+void AEnemyProjectile::SetOwnerPool(UProjectilePool* Pool)
+{
+	OwnerPool = Pool;
+}
+
 void AEnemyProjectile::DestroyProjectile()
 {
-	Destroy();
+	// If we have an owner pool, return to it instead of destroying
+	if (OwnerPool)
+	{
+		OwnerPool->ReturnProjectile(this);
+	}
+	else
+	{
+		// Fallback: destroy if no pool
+		Destroy();
+	}
 }
 
 void AEnemyProjectile::Tick(float DeltaTime)
@@ -41,6 +93,9 @@ void AEnemyProjectile::Tick(float DeltaTime)
 void AEnemyProjectile::OnProjectileOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	// Prevent multiple hits
+	if (bHasHit) return;
+	
 	// Check if it hits the player
 	if (OtherActor == nullptr) return;
 	
@@ -48,6 +103,8 @@ void AEnemyProjectile::OnProjectileOverlap(UPrimitiveComponent* OverlappedCompon
 	
 	if (Character)
 	{
+		bHasHit = true;
+		
 		UGameplayStatics::ApplyDamage(
 			Character,
 			ProjectileDamage, 
@@ -55,9 +112,16 @@ void AEnemyProjectile::OnProjectileOverlap(UPrimitiveComponent* OverlappedCompon
 			this,
 			UDamageType::StaticClass()	
 		);
+		
+		DestroyProjectile();
 	}
 	else
 	{
-		GetWorldTimerManager().SetTimer(ProjectileTimer, this, &AEnemyProjectile::DestroyProjectile, ProjectileLife, false);
+		// Hit something else (wall, ground, etc.)
+		if (OtherComp && OtherComp->Mobility == EComponentMobility::Static)
+		{
+			bHasHit = true;
+			DestroyProjectile();
+		}
 	}
 }

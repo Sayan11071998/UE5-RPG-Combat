@@ -1,12 +1,9 @@
 #include "Enemy/EnemyAIController.h"
 #include "Enemy/Enemy.h"
 #include "Perception/AIPerceptionTypes.h"
-#include "Perception/AISense_Sight.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 #include "Character/RPGCharacter.h"
-
-#include "RPGDebugHelper.h"
 
 AEnemyAIController::AEnemyAIController()
 {
@@ -16,23 +13,17 @@ AEnemyAIController::AEnemyAIController()
 void AEnemyAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	// Add a small delay to ensure the pawn is fully initialized
-	FTimerHandle TimerPawnInit;
-	GetWorld()->GetTimerManager().SetTimer(TimerPawnInit, this, &AEnemyAIController::SetupControlledPawn, 0.1f, false);
 }
 
-void AEnemyAIController::SetupControlledPawn()
+void AEnemyAIController::OnPossess(APawn* InPawn)
 {
-	AEnemy* Enemy = Cast<AEnemy>(GetPawn());
+	Super::OnPossess(InPawn);
 	
-	if (Enemy != nullptr)
+	ControlledEnemy = Cast<AEnemy>(InPawn);
+    
+	if (!ControlledEnemy)
 	{
-		ControlledEnemy = Enemy;
-	}
-	else
-	{
-		Debug::Print(TEXT("AEnemyAIController::SetupControlledPawn No Controlled pawn found"));
+		UE_LOG(LogTemp, Warning, TEXT("AEnemyAIController::OnPossess - Failed to cast pawn to AEnemy"));
 	}
 }
 

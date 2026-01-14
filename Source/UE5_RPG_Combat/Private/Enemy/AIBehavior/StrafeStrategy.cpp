@@ -10,7 +10,7 @@ UStrafeStrategy::UStrafeStrategy()
 {
 }
 
-void UStrafeStrategy::Execute(TObjectPtr<AEnemy> Enemy)
+void UStrafeStrategy::Execute(AEnemy* Enemy)
 {
 	// Get NavMesh data
 	FNavAgentProperties NavAgentProperties;
@@ -49,7 +49,7 @@ void UStrafeStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 	}
 }
 
-bool UStrafeStrategy::HasReachedDestination(TObjectPtr<AEnemy> Enemy)
+bool UStrafeStrategy::HasReachedDestination(AEnemy* Enemy) const
 {
 	AEnemyAIController* AIController = Cast<AEnemyAIController>(Enemy->GetController());
 	

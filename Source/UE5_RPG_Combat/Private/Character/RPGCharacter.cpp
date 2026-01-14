@@ -16,17 +16,22 @@
 #include "Enemy/Enemy.h"
 #include "Core/PlayerSaveGame.h"
 
-#include "RPGDebugHelper.h"
-
 ARPGCharacter::ARPGCharacter() :
-	WalkSpeed(300.f), RunSpeed(600.f), BaseDamage(20.f), Health(100.f), MaxHealth(100.f)
+	WalkSpeed(300.f),
+	RunSpeed(600.f),
+	JumpZVelocity(300.f),
+	AirControlAmount(0.1f),
+	CameraArmLength(400.f),
+	BaseDamage(20.f),
+	Health(100.f),
+	MaxHealth(100.f)
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
 	// Create camera boom
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	SpringArmComponent->SetupAttachment(RootComponent);
-	SpringArmComponent->TargetArmLength = 400.f;
+	SpringArmComponent->TargetArmLength = CameraArmLength;
 	SpringArmComponent->bUsePawnControlRotation = true;
 	
 	// Create follow camera
@@ -38,12 +43,12 @@ ARPGCharacter::ARPGCharacter() :
 	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpComponent"));
 	
 	// Jump settings
-	GetCharacterMovement()->JumpZVelocity = 300.f;
-	GetCharacterMovement()->AirControl = 0.1f;
+	GetCharacterMovement()->JumpZVelocity = JumpZVelocity;
+	GetCharacterMovement()->AirControl = AirControlAmount;
 	
 	// Right weapon collision box
 	RightWeaponCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("RightWeaponBox"));
-	RightWeaponCollision->SetupAttachment(GetMesh(), FName(TEXT("SwordSocket")));
+	RightWeaponCollision->SetupAttachment(GetMesh(), WeaponSocketName);
 	
 	// Stimulus
 	SetupStimuliSource();
@@ -52,6 +57,9 @@ ARPGCharacter::ARPGCharacter() :
 void ARPGCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	// Caching the reference of Anim Instance
+	CachedAnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
 	
 	LoadPlayerData();
 	
@@ -158,10 +166,8 @@ float ARPGCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& D
 		// Check if player is facing enemy - run dot product logic
 		if (PlayerFacingActor(DamageCauser))
 		{
-			URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
-			
 			// Play hit sound for shield
-			if (ShieldImpactSound && AnimInstance->GetIsBlocking())
+			if (ShieldImpactSound && CachedAnimInstance && CachedAnimInstance->GetIsBlocking())
 			{
 				UGameplayStatics::PlaySoundAtLocation(this, ShieldImpactSound, GetActorLocation());
 			}
@@ -193,7 +199,7 @@ void ARPGCharacter::SavePlayerData()
 		// Save created object to file
 		if (!UGameplayStatics::SaveGameToSlot(SaveGameInstance, TEXT("PlayerSaveSlot"), 0))
 		{
-			Debug::Print(TEXT("SaveGameToSlot failed"));
+			UE_LOG(LogTemp, Warning, TEXT("SaveGameToSlot failed"));
 		}
 	}
 }
@@ -207,10 +213,22 @@ void ARPGCharacter::LoadPlayerData()
 		Health = LoadGameInstance->Health;
 		CheckpointLocation = LoadGameInstance->CheckpointLocation;
 	}
+	else
+	{
+		// First time playing - defaults
+		Health = MaxHealth;
+		CheckpointLocation = FVector::ZeroVector;
+	}
 }
 
 void ARPGCharacter::Move(const FInputActionValue& InputValue)
 {
+	if (
+		CurrentState == EPlayerState::BlockDodge ||
+		CurrentState == EPlayerState::Attacking ||
+		CurrentState == EPlayerState::Dead	
+	) return;
+	
 	FVector2D InputVector = InputValue.Get<FVector2D>();
 	
 	if (IsValid(Controller))
@@ -320,7 +338,7 @@ void ARPGCharacter::MotionWarpAttack(float AttackDistance, FName MotionWarpName)
 		}
 		else
 		{
-			Debug::Print(TEXT("Enemy is null or motion warping component is null"));
+			UE_LOG(LogTemp, Warning, TEXT("Enemy is null or motion warping component is nul"));
 		}
 	}
 }
@@ -332,25 +350,21 @@ void ARPGCharacter::ResetWarpAttack()
 
 void ARPGCharacter::StartBlocking()
 {
-	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
-	
-	if (AnimInstance)
+	if (CachedAnimInstance)
 	{
 		CurrentState = EPlayerState::BlockDodge;
 		GetCharacterMovement()->DisableMovement();
-		AnimInstance->SetIsBlocking(true);
+		CachedAnimInstance->SetIsBlocking(true);
 	}
 }
 
 void ARPGCharacter::StopBlocking()
 {
-	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
-	
-	if (AnimInstance)
+	if (CachedAnimInstance)
 	{
 		CurrentState = EPlayerState::Ready;
 		GetCharacterMovement()->SetMovementMode(MOVE_Walking);
-		AnimInstance->SetIsBlocking(false);
+		CachedAnimInstance->SetIsBlocking(false);
 	}
 }
 
@@ -382,12 +396,10 @@ void ARPGCharacter::DodgeRight()
 
 void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FName SectionName, float PlayRate)
 {
-	URPGAnimInstance* AnimInstance = Cast<URPGAnimInstance>(GetMesh()->GetAnimInstance());
-	
-	if (AnimInstance && MontageToPlay)
+	if (CachedAnimInstance && MontageToPlay)
 	{
 		// Check to see if montage is playing
-		if (!AnimInstance->Montage_IsPlaying(MontageToPlay))
+		if (!CachedAnimInstance->Montage_IsPlaying(MontageToPlay))
 		{
 			PlayAnimMontage(MontageToPlay, PlayRate, SectionName);
 		}
@@ -403,24 +415,26 @@ void ARPGCharacter::AnimMontagePlay(TObjectPtr<UAnimMontage> MontageToPlay, FNam
 void ARPGCharacter::OnRightWeaponOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (IsValid(SweepResult.GetActor()) && SweepResult.GetActor() != this)
+	if (!IsValid(SweepResult.GetActor()) || SweepResult.GetActor() == this) return;
+	
+	AEnemy* Enemy = Cast<AEnemy>(SweepResult.GetActor());
+	if (!Enemy) return;
+	
+	IHitInterface* HitInterface = Cast<IHitInterface>(Enemy);
+		
+	if (HitInterface)
 	{
-		IHitInterface* HitInterface = Cast<IHitInterface>(SweepResult.GetActor());
-		
-		if (HitInterface)
-		{
-			HitInterface->HitInterface_Implementation(SweepResult);
-		}
-		
-		// Apply damage to enemy
-		UGameplayStatics::ApplyDamage(
-			SweepResult.GetActor(),
-			BaseDamage,
-			GetController(),
-			this,
-			UDamageType::StaticClass()
-		);
+		HitInterface->HitInterface_Implementation(SweepResult);
 	}
+		
+	// Apply damage to enemy
+	UGameplayStatics::ApplyDamage(
+		Enemy,
+		BaseDamage,
+		GetController(),
+		this,
+		UDamageType::StaticClass()	
+	);
 }
 
 bool ARPGCharacter::PlayerFacingActor(TObjectPtr<AActor> FacingActor)

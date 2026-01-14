@@ -10,7 +10,7 @@ UAttackStrategy::UAttackStrategy()
 {
 }
 
-void UAttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
+void UAttackStrategy::Execute(AEnemy* Enemy)
 {
 	// Move to player and Enemy attack logic
 	APawn* Pawn = UGameplayStatics::GetPlayerPawn(Enemy->GetWorld(), 0);
@@ -47,6 +47,9 @@ void UAttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 				
 				if (PathFollowingComponent)
 				{
+					// Removing old bindings first
+					PathFollowingComponent->OnRequestFinished.RemoveAll(this);
+					
 					PathFollowingComponent->OnRequestFinished.AddUObject(
 						this,
 						&UAttackStrategy::OnMoveCompleted,
@@ -59,8 +62,7 @@ void UAttackStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 	}
 }
 
-void UAttackStrategy::OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, TObjectPtr<AEnemy> Enemy,
-	ARPGCharacter* RPGCharacter)
+void UAttackStrategy::OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, AEnemy* Enemy, ARPGCharacter* RPGCharacter)
 {
 	if (Result.IsSuccess())
 	{
@@ -72,7 +74,7 @@ void UAttackStrategy::OnMoveCompleted(FAIRequestID, const FPathFollowingResult& 
 	}
 }
 
-float UAttackStrategy::PlayerEnemyDistance(TObjectPtr<AEnemy> Enemy, TObjectPtr<ARPGCharacter> RPGCharacter)
+float UAttackStrategy::PlayerEnemyDistance(AEnemy* Enemy, ARPGCharacter* RPGCharacter) const
 {
 	FVector RPGPos = RPGCharacter->GetActorLocation();
 	FVector EnemyPos = Enemy->GetActorLocation();

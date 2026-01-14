@@ -10,7 +10,7 @@ UPatrolStrategy::UPatrolStrategy()
 {
 }
 
-void UPatrolStrategy::Execute(TObjectPtr<AEnemy> Enemy)
+void UPatrolStrategy::Execute(AEnemy* Enemy)
 {
 	// Enemy patrol logic
 	// Get NavMesh data
@@ -39,7 +39,7 @@ void UPatrolStrategy::Execute(TObjectPtr<AEnemy> Enemy)
 	}
 }
 
-bool UPatrolStrategy::HasReachedDestination(TObjectPtr<AEnemy> Enemy)
+bool UPatrolStrategy::HasReachedDestination(AEnemy* Enemy) const
 {
 	AEnemyAIController* AIController = Cast<AEnemyAIController>(Enemy->GetController());
 	

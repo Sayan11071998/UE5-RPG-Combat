@@ -17,11 +17,11 @@ public:
 	UAttackStrategy();
 	
 	// ~ Begin ICombatStrategy interface
-	virtual void Execute(TObjectPtr<AEnemy> Enemy) override;
+	virtual void Execute(AEnemy* Enemy) override;
 	// ~ End ICombatStrategy interface
 	
-	virtual void OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, TObjectPtr<AEnemy> Enemy, ARPGCharacter* RPGCharacter);
+	virtual void OnMoveCompleted(FAIRequestID, const FPathFollowingResult& Result, AEnemy* Enemy, ARPGCharacter* RPGCharacter);
 
 private:
-	float PlayerEnemyDistance(TObjectPtr<AEnemy> Enemy, TObjectPtr<ARPGCharacter> RPGCharacter);
+	float PlayerEnemyDistance(AEnemy* Enemy, ARPGCharacter* RPGCharacter) const;
 };

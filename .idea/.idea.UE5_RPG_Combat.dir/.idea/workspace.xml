@@ -9,6 +9,14 @@
   <component name="ChangeListManager">
     <list default="true" id="fa74f9f9-6bdb-4f96-a066-20df69e1ad3c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UE5_RPG_Combat.dir/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/Enemies/Archer/BP_ErikaArcher.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/Enemies/Archer/BP_ErikaArcher.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/Enemies/Archer/BP_WoodArrow.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/Enemies/Archer/BP_WoodArrow.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/BP_RPGCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/RPGCombat/RPGCharacter/BP_RPGCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/Enemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/Enemy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/EnemyProjectile.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Private/Enemy/EnemyProjectile.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/Enemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/Enemy.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/EnemyProjectile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/EnemyProjectile.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UE5_RPG_Combat.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/UE5_RPG_Combat.uproject" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +30,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="cidr-memory-view://8" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Plugins/FX/Niagara/Source/Niagara/Private/NiagaraFunctionLibrary.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/AIController.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Classes/Blueprint/AIAsyncTaskBlueprintProxy.h" root0="FORCE_HIGHLIGHTING" />
@@ -30,8 +39,10 @@
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Private/AIController.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/AIModule/Private/Blueprint/AIBlueprintHelperLibrary.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Core/Private/UObject/UE5MainStreamObjectVersion.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/CoreUObject/Public/UObject/ObjectPtr.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/CoreUObject/Public/UObject/SparseDelegate.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/Animation/AnimNotifies/AnimNotify.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/Components/PrimitiveComponent.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/Sound/SoundClass.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../../../Program Files/Epic Games/UE_5.6/Engine/Source/Runtime/Engine/Classes/Sound/SoundCue.h" root0="FORCE_HIGHLIGHTING" />
@@ -43,6 +54,7 @@
     <setting file="file://$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/Enemy/AIBehavior/StrafeStrategy.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/UE5_RPG_Combat/Public/RPGDebugHelper.h" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -65,8 +77,8 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Uproject.UE5_RPG_Combat.executor": "Run",
-    "git-widget-placeholder": "Boss-Creation",
+    "Uproject.UE5_RPG_Combat.executor": "Debug",
+    "git-widget-placeholder": "Polishing-Build",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -181,13 +193,18 @@
       <workItem from="1768056878087" duration="12148000" />
       <workItem from="1768139963892" duration="5073000" />
       <workItem from="1768156897709" duration="1481000" />
-      <workItem from="1768234481460" duration="472000" />
+      <workItem from="1768234481460" duration="3597000" />
+      <workItem from="1768325264005" duration="7760000" />
+      <workItem from="1768407216769" duration="252000" />
+      <workItem from="1768407685269" duration="312000" />
+      <workItem from="1768409117280" duration="3263000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
