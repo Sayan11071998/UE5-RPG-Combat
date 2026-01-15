@@ -1,197 +1,157 @@
-# UE5 RPG Combat System
+# 3D Third-Person Combat System
 
-A third-person melee combat system built for Unreal Engine 5 with AI-driven enemies, strategic combat behaviors, and object pooling optimization.
+A strategic melee combat system with AI-driven enemies featuring dynamic behavior states and optimized projectile pooling.
 
-![Player Combat](https://via.placeholder.com/800x400?text=Player+character+engaged+in+combat+with+sword+and+shield)
+**Tech Stack:** Unreal Engine 5.6 | C++17 | AI Perception | Strategy Pattern | Enhanced Input | Motion Warping
 
-## What This Is
+---
 
-This is a combat framework I developed for an action RPG game. I implemented a system where players fight against AI enemies that patrol areas, pursue targets, strafe around the player, and launch both melee and ranged attacks. The player has access to multiple attack types including combo chains, heavy strikes, and a motion-warped jump attack that dynamically targets enemies.
+## Development Approach
 
-I designed the AI to switch between different behavioral states - patrolling when idle, attacking when they detect the player, and strafing to create more dynamic combat encounters. I also implemented a blocking system that uses directional checks, so you can only block attacks you're actually facing.
+I built this combat framework to practice AI programming patterns and runtime optimization. The Strategy pattern keeps enemy behaviors modular - each AI state (Patrol, Attack, Strafe) is its own class implementing `ICombatStrategy`. This made adding new behaviors straightforward without bloating the Enemy class.
 
-![Animation Montage](https://via.placeholder.com/800x400?text=Animation+montage+setup+showing+attack+sections+and+motion+warping)
+The player has four attack types with socket-based collision detection using `AnimNotifyState` windows. For blocking, I implemented directional validation with dot product checks - you can only block attacks you're facing. The Motion Warping system dynamically adjusts the jump attack mid-animation to track moving enemies, which solved the problem of attacks missing their targets.
 
-## Core Systems I Built
+---
 
-### Player Combat System
+## AI Strategy Pattern
 
-- I implemented four distinct attack types: basic combo, heavy attack, spin attack, and a motion-warped jump strike that closes distance to enemies
-- I built a directional blocking mechanic that uses dot product calculations to verify the player is facing the attacker
-- I added three-directional dodge rolls with invincibility frames during the roll animation
-- I created weapon collision boxes that activate through AnimNotifyState windows for precise hit detection
+Enemy behavior switches between three strategies based on game state. Each strategy handles its own movement logic:
 
-### Enemy AI
+**PatrolStrategy:** Uses NavigationSystem to get random reachable points within 800 units. Moves to point, waits 1-5 seconds, picks new destination.
 
-- I designed a state machine handling Patrol, Attack, Combat, Strafe, and Dead states
-- I implemented the Strategy pattern for clean behavior switching between different AI modes
-- I integrated UE5's AI Perception system using sight sense for player detection
-- I added dynamic attack range adjustment and acceptance radius for engagement control
-- I included randomized strafe chance after attacks (configurable between 0-1) to make combat less predictable
+**AttackStrategy:** Calculates distance to player. Moves within acceptance range, triggers attack montages. After each attack, randomly switches to Strafe (30% chance by default).
 
-![Enemy AI](https://via.placeholder.com/800x400?text=Enemy+AI+behavior+tree+and+perception+settings)
+**StrafeStrategy:** Calculates point 180° from current facing direction, moves there to create circling behavior around player.
 
-### Projectile Pooling System
+The state machine runs in `Enemy::Tick()` with timing delays to prevent spam. I used `bIsWaiting` flags with timers to control when the next strategy execution happens. This approach gave me more direct control than Behavior Trees for this specific use case.
 
-- I created an object pool shared across all enemy instances to eliminate runtime spawning hitches
-- I pre-allocated 20 projectiles with dynamic expansion when the pool runs out
-- I implemented a return-to-pool mechanism instead of destroying projectiles
-- I added tracking for active/available projectiles to help with debugging and optimization
+---
 
-![Animation Retargeting](https://via.placeholder.com/800x400?text=Animation+retargeting+setup+between+different+character+skeletons)
+## Projectile Object Pooling
+
+Initially every enemy spawned/destroyed projectile actors per attack. With multiple enemies this caused noticeable frame hitches. I implemented a static object pool shared across all enemy instances:
+
+- Pre-allocates 20 projectiles at startup
+- Hides/disables collision instead of destroying
+- Expands dynamically if pool exhausted (logs warning for tuning)
+- Each projectile knows its owner pool via `SetOwnerPool()`
+
+The pool setup was tricky - since it's static, I had to initialize it when the first enemy spawns with a valid `ProjectileBP` reference. This eliminated the spawning hitches completely.
+
+---
+
+## Motion Warping for Jump Attack
+
+The jump attack performs a line trace forward using `ECC_Pawn` channel. If it hits an enemy within range, I set a warp target at their location using `AddOrUpdateWarpTargetFromLocation()`. The animation asset has a motion warping window that blends the root motion trajectory to land at that point.
+
+I added validation checks because initial implementation would sometimes warp to dead enemies or empty space. Now it verifies the hit actor is actually an Enemy class before setting the warp target. A timer clears warp targets after the attack completes to prevent stale data affecting subsequent attacks.
+
+---
+
+## AI Perception System
+
+Enemy AI uses UE5's AI Perception Component configured with sight sense:
+
+- 1500 unit detection radius, 120° peripheral vision
+- 5 second memory duration for last known location
+- `OnTargetPerceptionUpdated` delegate triggers `EnterCombat`/`ExitCombat`
+
+When stimulus becomes active (player enters sight), the enemy transitions to Attack state and sets focus on the player. When stimulus is lost, it clears focus and returns to idle behavior. The perception component handles line-of-sight checks and occlusion automatically.
+
+---
 
 ## Architecture
-
-Here's how I structured the main systems:
-
 ```mermaid
-graph TD
-    A[Player Character] -->|Enhanced Input| B[Combat Actions]
-    B --> C[Motion Warping Component]
-    B --> D[Animation Montages]
-    D --> E[AnimNotifyState]
-    E --> F[Weapon Collision]
+graph TB
+    subgraph Player["Player System"]
+        PC[RPGCharacter]
+        PAI[RPGAnimInstance]
+        RWN[RightWeaponNotifyState]
+        MW[MotionWarpingComponent]
+    end
     
-    G[Enemy AI Controller] -->|AI Perception| H[Sight Sense]
-    H --> I[State Machine]
-    I --> J[Strategy Pattern]
-    J --> K[Patrol Strategy]
-    J --> L[Attack Strategy]
-    J --> M[Strafe Strategy]
+    subgraph Enemy["Enemy System"]
+        E[Enemy]
+        EAC[EnemyAIController]
+        EAI[EnemyAnimInstance]
+        EWN[EnemyRightWeapon NotifyState]
+        EPA[EnemyProjectileAttack Notify]
+    end
     
-    N[Enemy Character] --> O[ProjectilePool]
-    O --> P[Active Projectiles]
-    O --> Q[Available Projectiles]
+    subgraph Strategies["AI Strategies"]
+        ICS[ICombatStrategy Interface]
+        PS[PatrolStrategy]
+        AS[AttackStrategy]
+        SS[StrafeStrategy]
+        
+        ICS -.implements.-> PS
+        ICS -.implements.-> AS
+        ICS -.implements.-> SS
+    end
     
-    R[SaveGame System] --> S[Checkpoint Actors]
-    S --> T[Player Health + Location]
+    subgraph Pooling["Projectile Pooling"]
+        PP[ProjectilePool]
+        EP[EnemyProjectile]
+        
+        PP -->|manages| EP
+    end
+    
+    subgraph Core["Core Systems"]
+        SPD[SavePlayerDataActor]
+        PSG[PlayerSaveGame]
+        HI[HitInterface]
+    end
+    
+    PC --> PAI
+    PC --> RWN
+    PC --> MW
+    PC -.implements.-> HI
+    
+    E --> EAC
+    E --> EAI
+    E --> EWN
+    E --> EPA
+    E --> PS
+    E --> AS
+    E --> SS
+    E -.implements.-> HI
+    E -->|spawns from| PP
+    
+    EAC -->|perceives| PC
+    
+    SPD --> PC
+    PSG --> PC
+    
+    style ICS fill:#e1f5ff
+    style PP fill:#ffe1e1
+    style HI fill:#e1ffe1
 ```
 
-## How I Implemented Combat
+---
 
-I built the damage system using collision boxes attached to weapon sockets. When the player attacks, an AnimNotifyState I created activates the collision box for that specific frame window. The box checks for overlaps with the Pawn collision channel and applies damage through Unreal's damage system.
-
-For the blocking mechanic, I calculate whether the player is facing the damage source using this approach:
-
-```cpp
-FVector PlayerDirection = GetActorForwardVector();
-FVector ActorDirection = (FacingActor->GetActorLocation() - GetActorLocation()).GetSafeNormal();
-float DotProduct = FVector::DotProduct(PlayerDirection, ActorDirection);
-```
-
-If the dot product is positive, the player is facing the attacker and I allow the block to succeed. Otherwise, damage goes through. I also implemented different sound cues for successful blocks versus body hits to give better feedback.
-
-I added motion warping for the jump attack by tracing forward to find enemies within range, then setting a warp target at their location. This makes the attack feel connected even when enemies are moving, which was important for making combat feel responsive.
-
-![Skeletal Mesh](https://via.placeholder.com/800x400?text=Skeletal+mesh+with+weapon+sockets+and+collision+boxes)
-
-## Enemy AI Implementation
-
-I structured the AI controller to use three strategy objects that all implement a common interface. Here's how the state transitions work:
-
-```mermaid
-stateDiagram-v2
-    [*] --> Patrol
-    Patrol --> Attack: Player Detected (Sight)
-    Attack --> Strafe: Random Chance After Attack
-    Attack --> Attack: Continue Attacking
-    Strafe --> Attack: Strafe Complete
-    Attack --> Combat: Player Lost Sight
-    Combat --> Attack: Player Re-detected
-    Combat --> Patrol: Timeout
-    Attack --> Dead: Health = 0
-```
-
-**PatrolStrategy**: I used Unreal's Navigation System to get random reachable points within a radius around the enemy. The AI moves to that point, waits between 1-5 seconds, then picks a new destination.
-
-**AttackStrategy**: I implemented this to move the enemy toward the player until they're within the acceptance range, then trigger attack montages. After each attack completes, I added a random chance to switch to strafing behavior.
-
-**StrafeStrategy**: I calculate a point 180° from the enemy's current facing direction and move them there. This creates the circling behavior you see during combat, making enemies feel more tactical.
-
-## Problems I Solved
+## Technical Challenges
 
 ### Enemy Death Animation Loop
 
-I ran into an issue where after playing the death montage, enemies would pop back up to their idle pose. This happened because the animation state machine was still running - the montage would finish, return control to the state machine, and it would automatically blend back to idle since that was the default state.
+After playing the death montage, enemies would snap back to idle pose. The animation state machine kept running - when the montage finished, it returned control to the state machine which auto-blended to idle.
 
-I solved this by implementing a three-step death sequence: I immediately unpossess the AI controller when health hits zero, disable the character movement component to prevent any velocity changes, and destroy the actor 0.5 seconds before the montage finishes. This prevents any state machine transitions from happening and removes the corpse while it's still in a believable death pose. I had to tune that 0.5 second timing carefully - too early and enemies disappear mid-fall, too late and you see the idle blend.
+Fixed with a three-step sequence: unpossess AI controller immediately at death, disable character movement to prevent velocity changes, destroy actor 0.5 seconds before montage ends. Tuning that 0.5 second timing was critical - too early and enemies disappear mid-fall, too late and the idle blend starts showing.
 
-### Projectile Spawning and Direction
+### Directional Blocking
 
-I imported an arrow mesh for enemy projectiles, but the mesh had its forward axis pointing sideways relative to how I'd set up the skeletal mesh socket. When I spawned projectiles, they'd fly off at 90° angles instead of toward the player.
+Initial blocking just checked animation state, so you could block attacks from behind. Added dot product validation between player's forward vector and direction to damage source. Block succeeds only if dot product > 0 (facing the attacker). Also added different impact sounds - metallic clang for successful blocks versus flesh impact when hit from behind. This forces players to manage positioning against multiple enemies.
 
-I considered reimporting the mesh with corrected rotation, but that would've broken all the existing animations. Instead, I added an offset transform directly to the spawn socket that rotates the mesh to face forward correctly. Then I calculate the direction vector to the player's chest height (their location plus 80 units on the Z axis) and pass that to the projectile movement component. This way the socket handles the mesh orientation issue, and my code just deals with the trajectory math. I also added the InitializeProjectile function to properly reset velocity and rotation when reusing pooled projectiles.
+### Projectile Direction Issue
 
-### Blocking From Behind
+The imported arrow mesh had its forward axis pointing sideways relative to the skeletal mesh socket. Projectiles flew at 90° angles instead of toward the player. Considered reimporting with corrected rotation but that would break existing animations. Instead added an offset transform to the spawn socket that rotates the mesh to face forward, then calculate direction vector to player's chest height (location + 80 units Z) for the projectile movement component. Socket handles mesh orientation, code handles trajectory.
 
-My initial blocking implementation just checked if the player was in the blocking animation state. This meant you could stand with your back to an enemy and still block their attacks, which felt completely wrong.
+### Stale Strategy References
 
-I fixed this by adding a dot product check between the player's forward vector and the direction to the damage causer. Now blocking only succeeds when the player is actually facing the threat (dot product > 0). This forces players to manage their positioning and facing when fighting multiple enemies, which made the combat way more engaging. I also added different impact sounds - a metallic clang for successful shield blocks versus a flesh impact sound when attacks hit from behind.
+Used `TObjectPtr` initially for strategy objects but they were getting garbage collected unpredictably. Switched to `TWeakObjectPtr` which allows `IsValid()` checks before executing strategies. Weak pointers prevent dangling references while allowing proper cleanup.
 
-### Runtime Spawning Hitches
+---
 
-Every enemy was spawning and destroying projectile actors each time they attacked. With multiple enemies on screen, this caused noticeable frame hitches during combat, especially on the first few attacks when actors were being initialized.
+## What I Learned
 
-I implemented a static object pool that all enemy instances share. The pool pre-allocates 20 projectiles at startup and cycles through them. When a projectile hits something or times out, instead of destroying it, I return it to the pool by hiding it, disabling collision, and resetting its state. I made the pool expand dynamically if we run out of projectiles (with a warning log so I can tune the initial size), but in practice 20 has been enough for most combat scenarios. This completely eliminated the spawning hitches and actually made the combat feel snappier overall.
-
-### Motion Warping Target Validation
-
-When I first implemented the jump attack with motion warping, I was setting warp targets without checking if the enemy was still valid or in range. This caused issues where the player would sometimes lunge at empty space or warp to an enemy that had just died.
-
-I added proper validation by doing a line trace from the player forward by the attack distance, checking if we hit something on the Pawn channel, then validating it's actually an Enemy class before setting the warp target. If the trace fails or hits something else, the attack just plays without warping. I also added a timer to clear warp targets after the attack completes, preventing stale targets from affecting subsequent attacks.
-
-![Blendspace](https://via.placeholder.com/800x400?text=Blendspace+setup+for+directional+movement+and+attack+montages)
-
-## Project Structure
-
-```
-Source/UE5_RPG_Combat/
-├── Character/
-│   ├── RPGCharacter          # Player with combat state machine
-│   ├── RPGAnimInstance       # Handles movement blendspaces
-│   └── RightWeaponNotifyState # Collision activation window
-├── Enemy/
-│   ├── Enemy                 # Base enemy with state machine
-│   ├── EnemyAIController     # Perception and targeting
-│   ├── EnemyAnimInstance     # Enemy movement blending
-│   ├── EnemyProjectile       # Pooled projectile actor
-│   ├── ProjectilePool        # Shared pool manager
-│   └── AIBehavior/
-│       ├── ICombatStrategy   # Strategy interface
-│       ├── PatrolStrategy    # Wandering behavior
-│       ├── AttackStrategy    # Chase and attack
-│       └── StrafeStrategy    # Circling movement
-├── Core/
-│   ├── SavePlayerDataActor   # Checkpoint trigger volumes
-│   └── PlayerSaveGame        # Serialized player data
-└── Interfaces/
-    └── HitInterface          # Hit reaction interface
-```
-
-## Technical Implementation Details
-
-I implemented the save system using Unreal's SaveGame class to serialize player health and checkpoint locations. I created checkpoint actors with sphere collision components that call SavePlayerData when the player overlaps them. On level load, I check for existing save data in BeginPlay and teleport the player to their last checkpoint if one exists.
-
-For enemy melee attacks, I used the same AnimNotifyState pattern I developed for the player. The notify activates a box component attached to the weapon socket during specific animation frames for precise hit timing.
-
-I configured the AI sight perception with a 1500 unit detection radius, 120° peripheral vision angle, and 5 second memory duration. When a stimulus becomes active (player enters sight), I call EnterCombat which transitions to the Attack state. When the stimulus is lost, ExitCombat clears the AI's focus target and returns to idle behavior.
-
-The motion warping system I set up performs a line trace using the ECC_Pawn collision channel to find enemies ahead of the player. If I find a valid enemy within the attack's range, I add a warp target at their current location using the attack's motion warp name. The animation asset has a motion warping window configured that blends the root motion trajectory to land the attack at that target position.
-
-I used Enhanced Input for all player controls, mapping combat actions to different input triggers. Block is bound to Started/Completed events for hold-to-block functionality, while attacks use Completed events to prevent input buffering issues during animation playback.
-
-## Dependencies
-
-- Unreal Engine 5.6
-- Enhanced Input System
-- AI Module (Perception, Navigation)
-- Motion Warping Plugin
-- Niagara VFX System
-
-## License
-
-[Add your license here]
-
-## Contact
-
-[Add your contact information here]
+The Strategy pattern made AI behavior more modular than cramming everything into Enemy class. Object pooling had bigger performance impact than expected - frame time difference was noticeable with just 3-4 enemies. Understanding AI Perception saved me from writing custom sight detection. Motion Warping needs careful validation - the system will warp to invalid targets without checks. Mixing C++ for core systems with Blueprint for timing values gave both performance and iteration speed.
