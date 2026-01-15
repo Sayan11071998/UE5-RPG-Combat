@@ -88,11 +88,11 @@ The player has four attack types with socket-based collision detection using `An
 
 Enemy behavior switches between three strategies based on game state. Each strategy handles its own movement logic:
 
-**PatrolStrategy:** Uses NavigationSystem to get random reachable points within 800 units. Moves to point, waits 1-5 seconds, picks new destination.
+- **PatrolStrategy:** Uses NavigationSystem to get random reachable points within 800 units. Moves to point, waits 1-5 seconds, picks new destination.
 
-**AttackStrategy:** Calculates distance to player. Moves within acceptance range, triggers attack montages. After each attack, randomly switches to Strafe (30% chance by default).
+- **AttackStrategy:** Calculates distance to player. Moves within acceptance range, triggers attack montages. After each attack, randomly switches to Strafe (30% chance by default).
 
-**StrafeStrategy:** Calculates point 180° from current facing direction, moves there to create circling behavior around player.
+- **StrafeStrategy:** Calculates point 180° from current facing direction, moves there to create circling behavior around player.
 
 The state machine runs in `Enemy::Tick()` with timing delays to prevent spam. I used `bIsWaiting` flags with timers to control when the next strategy execution happens. This approach gave me more direct control than Behavior Trees for this specific use case.
 
