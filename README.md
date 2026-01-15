@@ -10,58 +10,6 @@ A strategic melee combat system with AI-driven enemies featuring dynamic behavio
 
 I built this combat framework to practice AI programming patterns and runtime optimization. The Strategy pattern keeps enemy behaviors modular - each AI state (Patrol, Attack, Strafe) is its own class implementing `ICombatStrategy`. This made adding new behaviors straightforward without bloating the Enemy class.
 
-The player has four attack types with socket-based collision detection using `AnimNotifyState` windows. For blocking, I implemented directional validation with dot product checks - you can only block attacks you're facing. The Motion Warping system dynamically adjusts the jump attack mid-animation to track moving enemies, which solved the problem of attacks missing their targets.
-
----
-
-## AI Strategy Pattern
-
-Enemy behavior switches between three strategies based on game state. Each strategy handles its own movement logic:
-
-**PatrolStrategy:** Uses NavigationSystem to get random reachable points within 800 units. Moves to point, waits 1-5 seconds, picks new destination.
-
-**AttackStrategy:** Calculates distance to player. Moves within acceptance range, triggers attack montages. After each attack, randomly switches to Strafe (30% chance by default).
-
-**StrafeStrategy:** Calculates point 180° from current facing direction, moves there to create circling behavior around player.
-
-The state machine runs in `Enemy::Tick()` with timing delays to prevent spam. I used `bIsWaiting` flags with timers to control when the next strategy execution happens. This approach gave me more direct control than Behavior Trees for this specific use case.
-
----
-
-## Projectile Object Pooling
-
-Initially every enemy spawned/destroyed projectile actors per attack. With multiple enemies this caused noticeable frame hitches. I implemented a static object pool shared across all enemy instances:
-
-- Pre-allocates 20 projectiles at startup
-- Hides/disables collision instead of destroying
-- Expands dynamically if pool exhausted (logs warning for tuning)
-- Each projectile knows its owner pool via `SetOwnerPool()`
-
-The pool setup was tricky - since it's static, I had to initialize it when the first enemy spawns with a valid `ProjectileBP` reference. This eliminated the spawning hitches completely.
-
----
-
-## Motion Warping for Jump Attack
-
-The jump attack performs a line trace forward using `ECC_Pawn` channel. If it hits an enemy within range, I set a warp target at their location using `AddOrUpdateWarpTargetFromLocation()`. The animation asset has a motion warping window that blends the root motion trajectory to land at that point.
-
-I added validation checks because initial implementation would sometimes warp to dead enemies or empty space. Now it verifies the hit actor is actually an Enemy class before setting the warp target. A timer clears warp targets after the attack completes to prevent stale data affecting subsequent attacks.
-
----
-
-## AI Perception System
-
-Enemy AI uses UE5's AI Perception Component configured with sight sense:
-
-- 1500 unit detection radius, 120° peripheral vision
-- 5 second memory duration for last known location
-- `OnTargetPerceptionUpdated` delegate triggers `EnterCombat`/`ExitCombat`
-
-When stimulus becomes active (player enters sight), the enemy transitions to Attack state and sets focus on the player. When stimulus is lost, it clears focus and returns to idle behavior. The perception component handles line-of-sight checks and occlusion automatically.
-
----
-
-## Architecture
 ```mermaid
 graph TB
     subgraph Player["Player System"]
@@ -127,6 +75,61 @@ graph TB
     style PP fill:#ffe1e1
     style HI fill:#e1ffe1
 ```
+
+The player has four attack types with socket-based collision detection using `AnimNotifyState` windows. For blocking, I implemented directional validation with dot product checks - you can only block attacks you're facing. The Motion Warping system dynamically adjusts the jump attack mid-animation to track moving enemies, which solved the problem of attacks missing their targets.
+
+![Image](https://github.com/user-attachments/assets/3dc24d33-6928-4dc0-adaa-20fe16aebbe5)
+
+![Image](https://github.com/user-attachments/assets/62d142f2-677f-40ca-9d97-a597cf25cb23)
+
+---
+
+## AI Strategy Pattern
+
+Enemy behavior switches between three strategies based on game state. Each strategy handles its own movement logic:
+
+**PatrolStrategy:** Uses NavigationSystem to get random reachable points within 800 units. Moves to point, waits 1-5 seconds, picks new destination.
+
+**AttackStrategy:** Calculates distance to player. Moves within acceptance range, triggers attack montages. After each attack, randomly switches to Strafe (30% chance by default).
+
+**StrafeStrategy:** Calculates point 180° from current facing direction, moves there to create circling behavior around player.
+
+The state machine runs in `Enemy::Tick()` with timing delays to prevent spam. I used `bIsWaiting` flags with timers to control when the next strategy execution happens. This approach gave me more direct control than Behavior Trees for this specific use case.
+
+---
+
+## Projectile Object Pooling
+
+Initially every enemy spawned/destroyed projectile actors per attack. With multiple enemies this caused noticeable frame hitches. I implemented a static object pool shared across all enemy instances:
+
+- Pre-allocates 20 projectiles at startup
+- Hides/disables collision instead of destroying
+- Expands dynamically if pool exhausted (logs warning for tuning)
+- Each projectile knows its owner pool via `SetOwnerPool()`
+
+The pool setup was tricky - since it's static, I had to initialize it when the first enemy spawns with a valid `ProjectileBP` reference. This eliminated the spawning hitches completely.
+
+---
+
+## Motion Warping for Jump Attack
+
+The jump attack performs a line trace forward using `ECC_Pawn` channel. If it hits an enemy within range, I set a warp target at their location using `AddOrUpdateWarpTargetFromLocation()`. The animation asset has a motion warping window that blends the root motion trajectory to land at that point.
+
+I added validation checks because initial implementation would sometimes warp to dead enemies or empty space. Now it verifies the hit actor is actually an Enemy class before setting the warp target. A timer clears warp targets after the attack completes to prevent stale data affecting subsequent attacks.
+
+![Image](https://github.com/user-attachments/assets/0680fe79-3e5f-478a-8495-b363534cc405)
+
+---
+
+## AI Perception System
+
+Enemy AI uses UE5's AI Perception Component configured with sight sense:
+
+- 1500 unit detection radius, 120° peripheral vision
+- 5 second memory duration for last known location
+- `OnTargetPerceptionUpdated` delegate triggers `EnterCombat`/`ExitCombat`
+
+When stimulus becomes active (player enters sight), the enemy transitions to Attack state and sets focus on the player. When stimulus is lost, it clears focus and returns to idle behavior. The perception component handles line-of-sight checks and occlusion automatically.
 
 ---
 
